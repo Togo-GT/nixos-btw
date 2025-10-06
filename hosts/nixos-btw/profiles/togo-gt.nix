@@ -70,5 +70,9 @@
   # ==========================================================
   # DISPLAY AND APPLICATION SETTINGS
   # ==========================================================
-  services.displayManager.autoLogin.enable = true;
+services.displayManager.autoLogin = {
+  enable = true;
+  user = "togo-gt";
+};
+
 }
