@@ -3,20 +3,20 @@
 # =====================================
 # System module: boot.nix
 
-{  pkgs, ... }:
+{ pkgs, config, unstable, ... }:
 {
   boot = {
     # =====================================
     # BOOTLOADER CONFIGURATION
     # =====================================
-    # Alternative GRUB configuration (commented out):
+    #   Alternative GRUB configuration (commented out):
     #  boot.loader.grub.enable = true;
-    #  boot.loader.grub.version = 2;
-    #  boot.loader.grub.device        = "/dev/sda";
+    # boot.loader.grub.version = 2;
+    # boot.loader.grub.device        = "/dev/sda";
 
     loader.systemd-boot.enable = true;        # Use systemd-boot as bootloader
     loader.efi.canTouchEfiVariables = true;   # Allow modifying EFI variables
-    kernelPackages = pkgs.linuxPackages_latest;  # Use latest available kernel
+    kernelPackages = pkgs.linuxPackages;      # Use default kernel (stable)
 
     # =====================================
     # KERNEL PARAMETERS

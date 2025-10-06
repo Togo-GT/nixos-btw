@@ -3,13 +3,14 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, unstable, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -18,7 +19,15 @@
     nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
       inherit system;
 
+      # Pass inputs to all modules
+      specialArgs = { inherit inputs unstable; };
+
       modules = [
+        # Import the overlay from separate file
+        {
+         # nixpkgs.overlays = [ (import ./nixos/overlays/ventoy.nix inputs) ];
+        }
+
         ./hosts/nixos-btw/configuration.nix
 
         home-manager.nixosModules.home-manager
@@ -28,12 +37,10 @@
           home-manager.extraSpecialArgs = { inherit inputs pkgs; };
 
           home-manager.users.togo-gt = {
-            imports = [ ./home.nix ];  # ✅ CORRECTED path - points to your home.nix file
+            home.stateVersion = "25.05";
           };
         }
       ];
-
-      specialArgs = { inherit inputs; };
     };
   };
 }

@@ -2,7 +2,7 @@
 # PIPEWIRE AUDIO CONFIGURATION
 # =====================================
 # Services module: pipewire-audio.nix
-{ config, pkgs, lib, ... }:
+{ ... }:
 {
   # =====================================
   # PIPEWIRE AUDIO SYSTEM

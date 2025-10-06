@@ -1,7 +1,7 @@
 # =====================================
 # HARDWARE TOOLS CONFIGURATION
 # =====================================
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   hardwarePackages = with pkgs; [

@@ -3,7 +3,7 @@
 # =====================================
 # Services module: services.nix
 
-{ config, pkgs, lib, ... }:
+{ ... }:
 {
   #############################
   # SYSTEM SERVICES
@@ -11,6 +11,7 @@
   services.fstrim.enable = true;     # Enable periodic SSD TRIM operations
   services.earlyoom.enable = true;   # Early Out-of-Memory killer
   services.flatpak.enable = true;    # Flatpak application support
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # =====================================
   # POWER MANAGEMENT

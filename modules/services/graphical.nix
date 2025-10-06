@@ -14,7 +14,7 @@
     #-----------------------------
     open = false;                    # Use proprietary drivers (false) vs open-source (true)
     nvidiaSettings = true;           # Enable NVIDIA control panel
-    package = config.boot.kernelPackages.nvidiaPackages.stable;  # Use stable NVIDIA drivers
+    package = config.boot.kernelPackages.nvidiaPackages.beta;  # ← CHANGE TO BETA
 
     # =====================================
     # PRIME RENDERING (OPTIMUS TECHNOLOGY)
@@ -26,66 +26,39 @@
     };
   };
 
-  # =====================================
-  # CPU AND MICROCODE UPDATES
-  # =====================================
-  hardware.cpu.intel.updateMicrocode = true;  # Intel CPU microcode updates for security/stability
+  # Rest of your configuration remains the same...
+  hardware.cpu.intel.updateMicrocode = true;
 
-  # =====================================
-  # GRAPHICS SYSTEM SETTINGS
-  # =====================================
   hardware.graphics = {
-    enable = true;     # Enable graphics support
-    enable32Bit = true; # Enable 32-bit graphics support (for Steam, Wine, etc.)
+    enable = true;
+    enable32Bit = true;
   };
 
-  # =====================================
-  # X SERVER CONFIGURATION
-  # =====================================
   services.xserver = {
-    enable = true;                   # Enable X11 display server
-    videoDrivers = [ "nvidia" ];     # Use NVIDIA graphics drivers
+    enable = true;
+    videoDrivers = [ "nvidia" ];
   };
 
-  # =====================================
-  # DISPLAY MANAGER (SDDM) CONFIGURATION
-  # =====================================
-  # Important for Plasma 6 + NVIDIA compatibility
   services.displayManager.sddm = {
-    enable = true;                   # Enable SDDM display manager
-    wayland.enable = true;           # Enable Wayland session support
+    enable = true;
+    wayland.enable = true;
   };
 
-  # =====================================
-  # DESKTOP ENVIRONMENT (PLASMA 6)
-  # =====================================
-  services.desktopManager.plasma6.enable = true;  # Enable KDE Plasma 6 desktop
+  services.desktopManager.plasma6.enable = true;
 
-  # =====================================
-  # WAYLAND SESSION VARIABLES FOR NVIDIA
-  # =====================================
   environment.sessionVariables = {
-    # Improve Wayland compatibility with NVIDIA
-    GBM_BACKEND = "nvidia-drm";                    # Use NVIDIA as GBM backend
-    __GLX_VENDOR_LIBRARY_NAME = "nvidia";          # Force NVIDIA GLX vendor
-    # Important to avoid black screens in Wayland
-    WLR_NO_HARDWARE_CURSORS = "1";                 # Software cursor rendering
+    GBM_BACKEND = "nvidia-drm";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
-  # =====================================
-  # XDG DESKTOP PORTALS
-  # =====================================
-  # Required for file dialogs, screen sharing, etc.
   xdg.portal = {
-    enable = true;  # Enable XDG desktop portals
+    enable = true;
     extraPortals = with pkgs; [
-      kdePackages.xdg-desktop-portal-kde  # KDE portal integration
-      xdg-desktop-portal-gtk              # GTK portal integration
+      kdePackages.xdg-desktop-portal-kde
+      xdg-desktop-portal-gtk
     ];
   };
 
-  # =====================================
-  # DCONF SUPPORT
-  # =====================================
-  programs.dconf.enable = true;  # Required for GNOME/KDE configuration storage
+  programs.dconf.enable = true;
 }

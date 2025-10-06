@@ -1,4 +1,4 @@
-{ config, pkgs, unstable, ... }:
+{  pkgs, unstable, ... }:
 
 let
   systemPackages = with pkgs; [
