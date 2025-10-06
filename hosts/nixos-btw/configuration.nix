@@ -44,7 +44,7 @@
     ../../modules/services/printing.nix         # Printing service (CUPS)
     ../../modules/services/rtkit.nix            # Realtime audio privileges
     ../../modules/services/services.nix         # System daemons and services
-#    ../../modules/services/ventoy.nix           # Bootable USB creation tool
+    ../../modules/services/ventoy.nix           # Bootable USB creation tool
 
     # =====================================
     # SYSTEM-LEVEL CONFIGURATIONS

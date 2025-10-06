@@ -24,10 +24,7 @@
       specialArgs = { inherit inputs unstable; };
 
       modules = [
-        # Import the overlay from separate file
-        {
-         # nixpkgs.overlays = [ (import ./nixos/overlays/ventoy.nix inputs) ];
-        }
+
 
         ./hosts/nixos-btw/configuration.nix
 
