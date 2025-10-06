@@ -1,3 +1,4 @@
+# /home/togo-gt/nixos-btw/flake.nix
 {
   description = "NixOS flake with modular system + Home Manager";
 
