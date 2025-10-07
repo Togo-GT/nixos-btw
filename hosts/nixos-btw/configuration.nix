@@ -44,22 +44,21 @@
     ../../modules/services/printing.nix         # Printing service (CUPS)
     ../../modules/services/rtkit.nix            # Realtime audio privileges
     ../../modules/services/services.nix         # System daemons and services
-    ../../modules/services/ventoy.nix           # Bootable USB creation tool
 
     # =====================================
     # SYSTEM-LEVEL CONFIGURATIONS
     # =====================================
     ../../modules/system/audit.nix
-    ../../modules/system/boot.nix           # Bootloader and kernel settings
+    ../../modules/system/boot.nix             # Bootloader and kernel settings
     ../../modules/system/fail2ban.nix
     ../../modules/system/firewall.nix
     ../../modules/system/hardware.nix
     ../../modules/system/kernel.nix
     ../../modules/system/logging.nix
-    ../../modules/system/networking.nix     # Network configuration
+    ../../modules/system/networking.nix       # Network configuration
     ../../modules/system/nix.nix
     ../../modules/system/ssh.nix
-    ../../modules/system/stateversion.nix   # System state version lock
+    ../../modules/system/stateversion.nix     # System state version lock
 
   ];
 }
