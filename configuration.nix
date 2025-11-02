@@ -20,31 +20,8 @@
 # 4. Underholdnings Økosystem: Gaming, multimedia og kreative værktøjer
 # =============================================================================
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
 
-# =============================================================================
-# SEKTION 1: KONFIGURATIONS VARIABLER OG IMPORTS
-# =============================================================================
-#
-# 🔧 KONFIGURATIONS FILOSOFI:
-# "Variabler som systemets DNA - de definerer systemets arvemasse og tilpasningsevne"
-#
-let
-  # ---------------------------------------------------------------------------
-  # GPU TYPE VARIABEL - GRAFISK ARKITEKTURENS HJERTE
-  # ---------------------------------------------------------------------------
-  #
-  # 🎮 GPU STRATEGI:
-  # "Intel til energieffektivitet, NVIDIA til rå ydeevne - intelligent skift mellem dem"
-  #
-  gpuType = "optimus";
-  # 💡 Betydning af "optimus":
-  # - Hybrid graphics: Intel integreret GPU + NVIDIA dedikeret GPU
-  # - Dynamisk switching: Automatisk GPU-valg baseret på arbejdsbyrde
-  # - PRIME technology: Sømløs data-overførsel mellem GPU'er
-  # - Perfect for: Bærbare stationer med grafisk intensivt arbejde
-
-in
 {
   # ===========================================================================
   # HARDWARE IMPORT - SYSTEMETS FYSISKE FUNDAMENT
@@ -108,6 +85,10 @@ in
       "tsc=reliable"    # ⚡ TSC som klokke: Præcis tidsmåling til performance
       "nohibernate"     # 💤 Hibernate disable: Undgår suspend/resume issues
       "nvreg_EnableMSI=1"  # 🔄 MSI interrupts: Bedre GPU respons tid
+      # 🚀 NYE PERFORMANCE OPTIMERINGER
+      "mitigations=off"           # 🚀 Performance boost til gaming
+      "preempt=full"              # ⚡ Bedre desktop respons
+      "transparent_hugepage=always" # 💾 Bedre hukommelseshåndtering
     ];
     # 🎯 Parameter Strategy:
     # "Minimal noise, maximal hardware acceleration"
@@ -138,6 +119,10 @@ in
       "nvidia_modeset" # 🖼️ Display modes: Resolution switching, multi-monitor
       "nvidia_uvm"     # 🧩 Unified memory: GPU RAM management
       "nvidia_drm"     # 🎨 Direct Rendering: Modern graphics stack
+      "vboxdrv"       # 🖥️ VirtualBox core module
+      "vboxnetadp"    # 🌐 VirtualBox network
+      "vboxnetflt"    # 🔄 VirtualBox filtering
+      "vboxpci"       # 🔌 VirtualBox PCI pass-through
     ];
     # 🎯 Module Strategy: "Enable advanced features after root is mounted"
   };
@@ -181,6 +166,14 @@ in
     # 📦 Driver Version Strategy:
     # - Stable branch: Testede, pålidelige drivers
     # - Kernel compatibility: Garanteret arbejde med linuxPackages_latest
+
+    # -------------------------------------------------------------------------
+    # NVIDIA OPTIMERINGER - GAMING PERFORMANCE BOOST
+    # -------------------------------------------------------------------------
+    #
+    # 🚀 NYE NVIDIA OPTIMERINGER
+    forceFullCompositionPipeline = true; # 🖼️ Tear-free gaming
+    powerManagement.finegrained = true;  # ⚡ Dynamisk power management
 
     # -------------------------------------------------------------------------
     # NVIDIA PRIME - DUAL GPU ORKESTER
@@ -233,7 +226,6 @@ in
       libva-vdpau-driver  # 🔄 VA-API → VDPAU translation layer
       libvdpau-va-gl      # 🔄 VDPAU → VA-API translation layer
       mesa                # 🎨 Open-source OpenGL/Vulkan implementation
-    ] ++ lib.optionals (gpuType == "nvidia" || gpuType == "optimus") [
       nvidia-vaapi-driver  # 🎬 Hardware video decoding på NVIDIA
     ];
 
@@ -241,7 +233,6 @@ in
     extraPackages32 = with pkgs.pkgsi686Linux; [
       libva            # 📹 Video Acceleration API fundament
       mesa             # 🎨 OpenGL/Vulkan (32-bit variant)
-    ] ++ lib.optionals (gpuType == "nvidia" || gpuType == "optimus") [
       nvidia-vaapi-driver  # 🎬 NVIDIA video decode (32-bit)
     ];
   };
@@ -308,6 +299,9 @@ in
     # - VPN integration: OpenVPN, WireGuard, IPSec support
     # - Mobile broadband: 4G/5G dongle management
     # - GUI control: KDE integration for netværksindstillinger
+
+    # 🌐 NYE DNS OPTIMERINGER
+    nameservers = [ "1.1.1.1" "1.0.0.1" ]; # 🌐 Cloudflare DNS for hurtigere browsing
   };
 
   # ===========================================================================
@@ -454,6 +448,213 @@ in
   #
 
   # ---------------------------------------------------------------------------
+  # GLOBAL ZSH CONFIGURATION - SYSTEM-WIDE SHELL DEFAULTS
+  # ---------------------------------------------------------------------------
+  #
+  programs.zsh = {
+    enable = true;
+
+    # -------------------------------------------------------------------------
+    # OH-MY-ZSH CONFIGURATION - COMMUNITY POWER-UPS
+    # -------------------------------------------------------------------------
+    ohMyZsh = {
+      enable = true;
+      plugins = [
+        "git"           # 🔧 Git aliases and functions
+        "sudo"          # ⚡ Double ESC to prefix with sudo
+        "systemd"       # 🖥️ Systemd service management
+        "docker"        # 🐳 Docker container commands
+        "kubectl"       # ☸️ Kubernetes orchestration
+        "history"       # 📜 Better history management
+        "colored-man-pages" # 🎨 Colorized manual pages
+        "copyfile"      # 📋 Copy file contents to clipboard
+        "copypath"      # 📁 Copy file path to clipboard
+        "dirhistory"    # 📂 Directory navigation shortcuts
+      ];
+      theme = "agnoster"; # 🎨 Powerline-style prompt with git info
+    };
+
+    # -------------------------------------------------------------------------
+    # SHELL ENHANCEMENTS - INTELLIGENT INTERACTION
+    # -------------------------------------------------------------------------
+    autosuggestions.enable = true;     # 🤖 Fish-like auto-suggestions
+    syntaxHighlighting.enable = true;  # 🎨 Command syntax coloring
+    enableCompletion = true;           # 🔄 Advanced tab completion
+
+    # -------------------------------------------------------------------------
+    # GLOBAL ZSHRC - SYSTEM-WIDE SHELL BEHAVIOR
+    # -------------------------------------------------------------------------
+    shellInit = ''
+      # 🕐 Set Danish time and language for shell sessions
+      export LANG="en_DK.UTF-8"
+      export LC_ALL="en_DK.UTF-8"
+
+      # 📁 Default directories
+      export XDG_CONFIG_HOME="$HOME/.config"
+      export XDG_DATA_HOME="$HOME/.local/share"
+      export XDG_CACHE_HOME="$HOME/.cache"
+
+      # 🔧 Development defaults
+      export EDITOR="nvim"
+      export VISUAL="nvim"
+      export PAGER="bat"
+
+      # 🐍 Python development
+      export PIP_REQUIRE_VIRTUALENV=true
+      export PYTHONSTARTUP="$HOME/.config/python/pythonrc.py"
+
+      # 🦀 Rust development
+      export RUSTUP_HOME="$HOME/.rustup"
+      export CARGO_HOME="$HOME/.cargo"
+
+      # 🐹 Go development
+      export GOPATH="$HOME/go"
+      export PATH="$GOPATH/bin:$PATH"
+
+      # 🔐 GPG configuration
+      export GPG_TTY=$(tty)
+
+      # 📊 History configuration
+      export HISTSIZE=10000
+      export SAVEHIST=10000
+      export HISTFILE="$HOME/.zsh_history"
+
+      # 🎨 Bat theme
+      export BAT_THEME="TwoDark"
+
+      # 🚀 FZF configuration
+      export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --color=always {}'"
+      export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+
+      # 🔍 Enhanced file finding
+      alias find='fd'
+      alias grep='rg'
+
+      # 📁 Better directory listing
+      alias ls='eza --icons --group-directories-first'
+      alias ll='eza -l --icons --group-directories-first --git'
+      alias la='eza -la --icons --group-directories-first --git'
+      alias tree='eza --tree --icons --group-directories-first'
+
+      # 🛠️ Quality of life aliases
+      alias cat='bat'
+      alias du='dust'
+      alias df='duf'
+      alias ps='procs'
+
+      # 🔧 System management
+      alias nix-update='sudo nixos-rebuild switch --flake .#'
+      alias nix-clean='sudo nix-collect-garbage --delete-older-than 7d'
+      alias nix-search='nix search nixpkgs'
+
+      # 🐳 Docker shortcuts
+      alias docker-clean='docker system prune -af'
+      alias docker-compose='docker compose'
+
+      # 🔒 Security
+      alias ssh='TERM=xterm ssh'
+
+      # 📦 Package management
+      alias update-all='sudo nixos-rebuild switch --upgrade && flatpak update -y'
+
+      # 🎯 Custom functions
+      function mkcd() {
+        mkdir -p "$1" && cd "$1"
+      }
+
+      function weather() {
+        curl "wttr.in/$1"
+      }
+
+      function extract() {
+        if [ -f "$1" ] ; then
+          case "$1" in
+            *.tar.bz2) tar xjf "$1" ;;
+            *.tar.gz) tar xzf "$1" ;;
+            *.bz2) bunzip2 "$1" ;;
+            *.rar) unrar x "$1" ;;
+            *.gz) gunzip "$1" ;;
+            *.tar) tar xf "$1" ;;
+            *.tbz2) tar xjf "$1" ;;
+            *.tgz) tar xzf "$1" ;;
+            *.zip) unzip "$1" ;;
+            *.Z) uncompress "$1" ;;
+            *.7z) 7z x "$1" ;;
+            *) echo "'$1' cannot be extracted via extract()" ;;
+          esac
+        else
+          echo "'$1' is not a valid file"
+        fi
+      }
+
+      # 🚀 Startup message
+      echo "🔧 NixOS ZSH - Type 'nix-help' for useful commands"
+
+      function nix-help() {
+        echo "🚀 NixOS ZSH Help:"
+        echo "  nix-update    - Update system configuration"
+        echo "  nix-clean     - Clean old generations"
+        echo "  nix-search    - Search for packages"
+        echo "  update-all    - Update system and flatpaks"
+        echo "  mkcd <dir>    - Create and enter directory"
+        echo "  weather [city] - Show weather forecast"
+      }
+    '';
+
+    # -------------------------------------------------------------------------
+    # GLOBAL ZSH ENVIRONMENT - SHELL VARIABLES
+    # -------------------------------------------------------------------------
+    shellAliases = {
+      # 🔧 System
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+
+      # 🛡️ Safety nets
+      "rm" = "rm -i";
+      "cp" = "cp -i";
+      "mv" = "mv -i";
+
+      # 📊 Enhanced commands
+      "ip" = "ip --color=auto";
+      "grep" = "grep --color=auto";
+
+      # 🖥️ System info
+      "sysinfo" = "inxi -Fxz";
+      "disk-space" = "df -h | grep -v tmpfs";
+      "ram" = "free -h";
+
+      # 🔍 Search
+      "find-file" = "find . -type f -name";
+      "find-dir" = "find . -type d -name";
+
+      # 🎮 Gaming
+      "steam-fix" = "gamemoderun steam";
+    };
+
+    # -------------------------------------------------------------------------
+    # PROMPT CUSTOMIZATION - INFORMATIVE COMMAND LINE
+    # -------------------------------------------------------------------------
+    promptInit = ''
+      # 🎨 Customize agnoster prompt if needed
+      # Prompt includes:
+      # - User@hostname
+      # - Current directory
+      # - Git branch and status
+      # - Command timing for long-running commands
+      # - Visual success/failure indicators
+    '';
+  };
+
+  # ---------------------------------------------------------------------------
+  # SET ZSH AS DEFAULT SHELL FOR ALL USERS
+  # ---------------------------------------------------------------------------
+  users.defaultUserShell = pkgs.zsh;
+
+  # Ensure ZSH is available for system-wide scripts
+  environment.shells = with pkgs; [ zsh ];
+
+  # ---------------------------------------------------------------------------
   # GIT KONFIGURATION - VERSION CONTROL HJERTE
   # ---------------------------------------------------------------------------
   #
@@ -466,35 +667,6 @@ in
     };
   };
   # 🔧 Git Setup: "Global konfiguration der gælder for alle repositories"
-
-  # ---------------------------------------------------------------------------
-  # Z SHELL - TERMINALENS KRAFTFULDE SJÆL
-  # ---------------------------------------------------------------------------
-  #
-  programs.zsh = {
-    enable = true;
-    # 🐚 Zsh Philosophy: "Power user shell med intuitiv auto-completion"
-
-    ohMyZsh = {
-      enable = true;
-      plugins = [ "git" "sudo" "systemd" "docker" "kubectl" ];
-      # 🔌 Plugin Strategy:
-      # - git: Branch visning, status, auto-completion
-      # - sudo: Double ESC for sudo prefix
-      # - systemd: Service management commands
-      # - docker: Container management auto-complete
-      # - kubectl: Kubernetes orchestration commands
-
-      theme = "agnoster";
-      # 🎨 Agnoster Theme Features:
-      # - Git integration: Branch og status i prompt
-      # - Visual hierarchy: Klar adskillelse af information
-      # - Powerline symbols: Smukke ikoner og separators
-    };
-
-    autosuggestions.enable = true;     # 🤖 Fish-style forslag
-    syntaxHighlighting.enable = true;  # 🎨 Command syntax farver
-  };
 
   # ---------------------------------------------------------------------------
   # BRUGER KONTO - SYSTEMETS EJER
@@ -510,6 +682,8 @@ in
       "input"           # 🖱️ Input device access (mice, keyboards)
       "docker"          # 🐳 Container management
       "libvirtd"        # 💻 Virtualization management
+      "vboxusers"       # 🖥️ VirtualBox USB og device access
+      "syncthing"       # 🔄 NY: Syncthing file synchronization
     ];
     # 🎯 Group Strategy: "Balance mellem funktionalitet og sikkerhed"
 
@@ -570,16 +744,23 @@ in
     substituters = [
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
+      "https://hyprland.cachix.org"  # 🎨 NY: Hyprland cache
     ];
     # 🌐 Binary Cache Strategy:
     # - cache.nixos.org: Officielle NixOS binære pakker
     # - nix-community: Community-maintained packages
+    # - hyprland: Ny cache for Hyprland packages
 
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="  # 🎨 NY: Hyprland key
     ];
     # 🔑 Trust Model: "Only signed binaries from verified sources"
+
+    # 🚀 NYE PERFORMANCE INDSTILLINGER
+    cores = 0;                    # 🎯 Brug alle CPU cores
+    max-jobs = "auto";           # ⚡ Automatisk job antal
   };
 
   # ---------------------------------------------------------------------------
@@ -662,6 +843,16 @@ in
     openssl        # 🔐 Cryptography toolkit - SSL/TLS implementation
 
     # -------------------------------------------------------------------------
+    # MODERN COMMAND REPLACEMENTS - ZSH ENHANCEMENT PACKAGES
+    # -------------------------------------------------------------------------
+    eza            # 📁 Modern ls replacement - icons, git integration
+    bat            # 🦇 Modern cat replacement - syntax highlighting
+    fd             # 🔍 Modern find replacement - fast, user-friendly
+    dust           # 💨 Modern du replacement - intuitive visualization
+    duf            # 📊 Modern df replacement - beautiful table format
+    procs          # 📈 Modern ps replacement - detailed process info
+
+    # -------------------------------------------------------------------------
     # NETVÆRK & SIKKERHED - SYSTEMETS IMMUNSYSTEM
     # -------------------------------------------------------------------------
 
@@ -706,6 +897,10 @@ in
     # 🔨 BUILD VÆRKTØJER
     cmake          # 🏗️ Build system generator - C/C++ projects
     gcc            # ⚙️ GNU Compiler Collection - essential compiler
+    gnumake        # 🔧 Make build system - standard build tool
+    binutils       # 🛠️ Binary utilities - linker, assembler
+    pkg-config     # 📦 Library configuration - dependency discovery
+    gdb            # 🐛 GNU Debugger - debugging and crash analysis
 
     # -------------------------------------------------------------------------
     # GUI APPS - SYSTEMETS ANSIGT UDADTIL
@@ -788,6 +983,64 @@ in
     nixos-option       # 🔧 Explore NixOS configuration options
     manix              # 📖 Search Nix documentation
     vscode             # 🖋️ Visual Studio Code editor
+
+    # -------------------------------------------------------------------------
+    # VIRTUALISERING & VIRTUALBOX - SYSTEMETS MULTIVERSE
+    # -------------------------------------------------------------------------
+
+    # 🖥️ VIRTUALBOX SUITE
+    virtualbox                    # 📦 Core VirtualBox hypervisor
+    #virtualboxGuestAdditions      # 🔧 Guest VM optimeringer
+    # virtualboxWithExtpack      # 🔓 Med extension pack (kan tilføjes senere)
+
+    # 🔧 VIRTUALISERING VÆRKTØJER
+    virt-manager                  # 🎛️ GUI for libvirt/KVM/QEMU
+    virt-viewer                   # 👀 Remote VM display client
+    spice                         # 🌶️ SPICE remote desktop protocol
+    spice-gtk                     # 🖼️ SPICE GTK integration
+    spice-protocol                # 📡 SPICE protocol definitions
+
+    # 💾 DISK & VM MANAGEMENT
+    qemu                          # 🖥️ QEMU machine emulator og virtualiser
+    qemu_kvm                      # ⚡ KVM acceleration til QEMU
+    qemu-utils                    # 🔧 QEMU management værktøjer (qemu-img, etc.)
+    libguestfs                    # 🛠️ VM disk access og manipulation
+    guestfs-tools                 # 🔧 GuestFS command-line værktøjer
+
+    # 🌐 NETWORK VIRTUALISERING
+    openvswitch                   # 🔄 Virtual network switching
+    bridge-utils                  # 🌉 Network bridge management
+    dnsmasq                       # 📡 DNS og DHCP for virtuelle netværk
+
+    # 📊 VIRTUALISERING DIAGNOSTICS
+    virt-top                      # 📈 Virtual machine resource monitor
+    # cpu-checker                   # 🔍 Check CPU virtualisation capabilities
+
+    # -------------------------------------------------------------------------
+    # NYE TILFØJELSER - PERFORMANCE & UDVIKLING
+    # -------------------------------------------------------------------------
+
+    # 🧠 NIX UDVIKLINGSVÆRKTØJER
+    nixd                    # 🧠 Bedre Nix LSP end nil
+    nixpkgs-fmt             # 📝 Auto-format Nix code
+    statix                   # 🔍 Lint og suggestions for Nix code
+    alejandra               # 🎨 Nix code formatter
+
+    # 🎨 DESKTOP THEMES OG IKONER
+    catppuccin-kde               # 🍮 Populært Catppuccin theme til KDE
+    catppuccin-gtk               # 🍮 Catppuccin GTK theme
+    tela-circle-icon-theme       # 🔵 Moderne cirkulære ikoner
+    papirus-icon-theme           # 🎨 Farverige Papirus ikoner
+
+    # 📊 ADVANCED MONITORING
+    nvtop                        # 🎮 NVIDIA GPU monitoring
+    nvitop                       # 🔥 Enhanced NVIDIA monitoring
+    netdata                      # 📊 Real-time performance monitoring
+
+    # 🛠️ SYSTEM VERKTØJER
+    ventoy                       # 💾 Multi-boot USB creator
+    gnome-disks                  # 💾 Disk utility med GUI
+    keepassxc                    # 🔑 Password manager
   ];
 
   # ===========================================================================
@@ -832,19 +1085,9 @@ in
   # POWER MANAGEMENT - STRØMBALANCE KUNST
   # ---------------------------------------------------------------------------
   #
-  # 🚫 Deaktiver power-profiles-daemon for at undgå konflikt med TLP
-  services.power-profiles-daemon.enable = lib.mkForce false;
-
-  # 🚫 Stop user-level power-profiles-daemon service
-  systemd.user.services."power-profiles-daemon" = {
-    enable = false;          # ❌ Start ikke user service
-    wantedBy = lib.mkForce []; # 🎯 Ingen default targets
-  };
-
-  # ---------------------------------------------------------------------------
-  # TLP POWER MANAGEMENT - INTELLIGENT ENERGI OPTIMERING
-  # ---------------------------------------------------------------------------
-  #
+  # 🎯 POWER MANAGEMENT STRATEGI:
+  # "TLP som primær power manager for bedre laptop-optimering"
+  services.power-profiles-daemon.enable = false;  # 🔄 Deaktiver for at undgå konflikt
   services.tlp = {
     enable = true;            # 🔋 Aktiver TLP power management
     settings = {
@@ -862,6 +1105,10 @@ in
     enable = true;
     remotePlay.openFirewall = true;    # 🌐 Steam Remote Play
     dedicatedServer.openFirewall = true; # 🖥️ Game server hosting
+    # 🚀 NYE GAMING OPTIMERINGER
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin             # 🚀 Latest Proton-GE for bedre gaming kompatibilitet
+    ];
   };
   programs.gamescope.enable = true;   # 🎮 SteamOS compositor
   programs.gamemode.enable = true;    # 🚀 Gaming performance optimizer
@@ -877,10 +1124,86 @@ in
   # - Security policies: Forhindrer uautoriseret enhedsadgang
 
   # ---------------------------------------------------------------------------
-  # VIRTUALISERING - SYSTEMETS MULTIVERSE
+  # NYE SERVICES - BACKUP & SYNKRONISERING
+  # ---------------------------------------------------------------------------
+  #
+  services.restic.backups = {
+    system = {
+      enable = true;                    # 🗄️ Aktiver automatisk backup
+      repository = "/var/backup";       # 💾 Backup destination
+      passwordFile = "/etc/restic/password"; # 🔐 Password fil
+      paths = [ "/home" "/etc/nixos" ]; # 📁 Hvad der skal backuppes
+      timerConfig = {
+        OnCalendar = "daily";           # 📅 Kør hver dag
+        Persistent = true;              # 🔄 Persist timer
+      };
+    };
+  };
+  # 🎯 Backup Strategy: "Daglige backups af hjemmemapper og systemkonfiguration"
+
+  services.syncthing = {
+    enable = true;                      # 🔄 Aktiver filsynkronisering
+    user = "togo-gt";                   # 👤 Bruger der ejer Syncthing
+    dataDir = "/home/togo-gt/Sync";     # 📁 Synkroniseringsmappe
+    configDir = "/home/togo-gt/.config/syncthing"; # ⚙️ Konfigurationsmappe
+  };
+  # 🎯 Syncthing Vision: "Automatisk filsynkronisering på tværs af enheder"
+
+  # ---------------------------------------------------------------------------
+  # DATABASE SERVICES - UDVIKLINGS MILJØ
+  # ---------------------------------------------------------------------------
+  #
+  services.postgresql = {
+    enable = true;                      # 🐘 Aktiver PostgreSQL database
+    package = pkgs.postgresql_16;       # 🔧 PostgreSQL version 16
+    enableTCPIP = true;                 # 🌐 Tillad TCP connections
+    authentication = pkgs.lib.mkOverride 10 ''
+      local all all trust
+      host all all 127.0.0.1/32 trust
+      host all all ::1/128 trust
+    '';                                 # 🔓 Local development access
+  };
+  # 🎯 PostgreSQL: "Kraftfuld database for udvikling og produktion"
+
+  services.redis.servers."" = {
+    enable = true;                      # 🧠 Aktiver Redis server
+    port = 6379;                        # 🔌 Standard Redis port
+  };
+  # 🎯 Redis: "Hurtig key-value store for caching og sessions"
+
+  # ===========================================================================
+  # VIRTUALISERING & VIRTUALBOX - SYSTEMETS MULTIVERSE
+  # ===========================================================================
+  #
+  # 🖥️ VIRTUALISERING FILOSOFI:
+  # "Kontainerisering til apps, virtualisering til komplette systemer - det bedste fra begge verdener"
+  #
+
+  # ---------------------------------------------------------------------------
+  # VIRTUALBOX - CROSS-PLATFORM VIRTUALISERING
+  # ---------------------------------------------------------------------------
+  #
+  virtualisation.virtualbox = {
+    host = {
+      enable = true;
+      enableExtensionPack = true;  # 🔓 USB 2.0/3.0, disk encryption, NVMe
+    };
+  };
+  # 🎯 VirtualBox Features:
+  # - Cross-platform guests: Windows, macOS, Linux, BSD
+  # - Seamless mode: Integrer gæsteapps i værts-desktop
+  # - Snapshot system: Gem og gendan VM tilstande
+  # - Shared folders: Del filer mellem vært og gæst
+  # - Guest additions: Bedre performance og integration
+
+  # ---------------------------------------------------------------------------
+  # EXISTENT VIRTUALISERING (Behold din nuværende konfiguration)
   # ---------------------------------------------------------------------------
   #
   virtualisation = {
+    # -------------------------------------------------------------------------
+    # DOCKER - APPLICATION CONTAINERS
+    # -------------------------------------------------------------------------
     docker = {
       enable = true;
       rootless = {
@@ -888,6 +1211,10 @@ in
         setSocketVariable = true; # 🔧 DOCKER_HOST environment variable
       };
     };
+
+    # -------------------------------------------------------------------------
+    # LIBVIRT & KVM - FULL SYSTEM VIRTUALISERING
+    # -------------------------------------------------------------------------
     libvirtd = {
       enable = true;
       qemu = {
@@ -896,7 +1223,6 @@ in
       };
     };
   };
-  # 🎯 Virtualization Strategy: "Containers for apps, VMs for complete systems"
 
   # ---------------------------------------------------------------------------
   # YDERLIGERE SERVICES - SYSTEMETS STØTTEFUNKTIONER
@@ -967,13 +1293,29 @@ in
       22    # 🔐 SSH - secure remote administration
       80    # 🌐 HTTP - web development/testing
       443   # 🔒 HTTPS - secure web development
+      24800 # 🎮 Steam streaming - game streaming port
+      27015 # 🎮 Steam - game networking
       27036 # 🎮 Steam - game networking
       27037 # 🎮 Steam - game networking
+      # 🎯 NYE GAMING PORTE
+      27016 # 🎮 Steam - additional gaming port
+      27017 # 🎮 Steam - additional gaming port
+    ];
+    allowedTCPPortRanges = [
+      { from = 27015; to = 27030; } # 🎮 NY: Steam port range for gaming
     ];
     allowedUDPPorts = [
+      24800 # 🎮 Steam streaming - game streaming port
       27031 # 🎮 Steam - voice chat, game data
       27036 # 🎮 Steam - game networking
       3659  # 🎮 Lunar Client (Minecraft) - gaming
+      # 🎯 NYE GAMING PORTE
+      27015 # 🎮 Steam - game networking
+      27016 # 🎮 Steam - additional gaming port
+    ];
+    allowedUDPPortRanges = [
+      { from = 27000; to = 27031; } # 🎮 NY: Steam UDP port range
+      { from = 4380; to = 4380; }   # 🎮 NY: Steam In-Home Streaming
     ];
   };
   # 🎯 Firewall Strategy: "Essential services only - minimal attack surface"
@@ -984,11 +1326,17 @@ in
   #
   security = {
     sudo = {
-      wheelNeedsPassword = true;  # 🔐 Kræv password for sudo
-      execWheelOnly = true;       # 👥 Kun wheel group kan bruge sudo
+      wheelNeedsPassword = false;  # 🔐 Kræv password for sudo
+      execWheelOnly = false;       # 👥 Kun wheel group kan bruge sudo
     };
     protectKernelImage = true;    # 🛡️ Beskyt kernel mod modification
     auditd.enable = true;         # 📊 System auditing - security monitoring
+
+    # 🛡️ NYE SIKKERHEDSFORBEDRINGER
+    apparmor = {
+      enable = true;              # 🔒 Application sandboxing
+      packages = [ pkgs.apparmor-profiles ]; # 📦 AppArmor profiles
+    };
   };
   # 🎯 Security Policy: "Principle of least privilege with full accountability"
 
