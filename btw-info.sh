@@ -1,3 +1,4 @@
+
 #!/usr/bin/env bash
 # NIXOS-BTW SIMPLE EDITION
 DATE=$(date +"%Y-%m-%d")
