@@ -99,7 +99,9 @@
           # 🎨 BRUGERDEFINERET KONFIGURATION:
           # "Deklarativ beskrivelse af ønsket systemadfærd og brugererfaring"
           #
+         # ./zsh-fix.nix
           ./configuration.nix
+          ./packages.nix
           # 📝 Indholdsoverblik:
           # - Boot konfiguration: systemd-boot med UEFI
           # - GPU setup: NVIDIA PRIME med Intel hybrid graphics
@@ -136,11 +138,26 @@
           # - Wayland support: GBM backend for moderne display server
           # - Power management: Dynamic GPU state management
         ];
+
         # 🎯 Module Integration Strategy:
         # "Hierarkisk konfiguration hvor senere moduler overskriver tidligere"
         # 1. Hardware-configuration: Definerer fysiske enheder
         # 2. Configuration.nix: Tilføjer brugerpræferencer og software
         # 3. NVIDIA module: Specialiseret GPU optimering
+      };
+
+      # -----------------------------------------------------------------------
+      # NIXOS-LIVE ISO SYSTEM - SEPARAT KONFIGURATION
+      # -----------------------------------------------------------------------
+      #
+      # 🎯 ISO SYSTEM PROFIL:
+      # "Et live ISO system til installation og recovery med fuld hardware support"
+      "nixos-live" = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ./iso-configuration.nix
+        ];
       };
     };
   };
@@ -157,7 +174,7 @@
 #   ├── Input resolution: Downloader nixpkgs og nixos-hardware
 #   ├── System evaluation: Evaluérer alle moduler til en enkelt konfiguration
 #   ├── Package building: Kompilerer eller downloader alle nødvendige pakker
-#   └── Activation: Anvender konfiguration atomisk med rollback mulighed
+#   └── Activation: Anvender konfiguration atomisk with rollback mulighed
 #
 # GARBAGE COLLECTION:
 # $ sudo nix-collect-garbage -d
@@ -166,6 +183,10 @@
 # UPDATE PROCESS:
 # $ nix flake update
 #   └── Opdaterer inputs til nyeste commits fra GitHub
+#
+# ISO BUILD PROCESS:
+# $ nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage
+#   └── Bygger et live ISO med KDE Plasma 6 og NVIDIA support
 #
 # =============================================================================
 # SYSTEMETS ARKITEKTURPRINCIPPER
@@ -176,5 +197,6 @@
 # 3. ✅ COMPOSABILITY: Moduler kan kombineres og genbruges
 # 4. ✅ ROLLBACK SAFETY: Enhver tilstand kan gendannes øjeblikkeligt
 # 5. ✅ COMMUNITY DRIVEN: Bygger på årtiers NixOS community erfaring
+# 6. ✅ ISO BUILDER: sudo nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage
 #
 # =============================================================================

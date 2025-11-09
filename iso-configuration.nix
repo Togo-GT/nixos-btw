@@ -2,52 +2,64 @@
 { config, pkgs, lib, ... }:
 
 {
-  imports = [
-    <nixpkgs/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix>
-  ];
+  # ===========================================================================
+  # ALLOW UNFREE PACKAGES (NVIDIA DRIVERS)
+  # ===========================================================================
+  nixpkgs.config.allowUnfree = true;
 
   # ===========================================================================
   # BASIC ISO CONFIGURATION
   # ===========================================================================
 
   # ISO settings - use new option name
-  image.fileName = "my-nixos-live.iso";
+  image.fileName = "my-nixos-live.iso";  # FIXED: isoImage.isoName -> image.fileName
   isoImage.volumeID = "NIXOSLIVE";
 
   # Boot configuration
   boot.loader.grub.device = "nodev";
   boot.loader.timeout = 10;
 
+  # Kernel parameters for live environment
+  boot.kernelParams = [
+    "quiet"
+    "splash"
+    "nomodeset"
+  ];
+
   # ===========================================================================
-  # DESKTOP ENVIRONMENT (UPDATED OPTION NAMES)
+  # DESKTOP ENVIRONMENT
   # ===========================================================================
 
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Use updated option names
+  # Display manager with auto-login
   services.displayManager.sddm.enable = true;
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "nixos";
+  };
+
+  # Desktop environment
   services.desktopManager.plasma6.enable = true;
 
-  # Your keyboard layout
+  # Keyboard layout
   services.xserver.xkb.layout = "dk";
   services.xserver.xkb.variant = "nodeadkeys";
 
   # ===========================================================================
-  # HARDWARE CONFIGURATION (UPDATED OPTION NAMES)
+  # HARDWARE CONFIGURATION
   # ===========================================================================
 
-  # Use new graphics option name
   hardware.graphics.enable = true;
 
-  # NVIDIA support
+  # Basic NVIDIA support for live environment
   hardware.nvidia = {
     modesetting.enable = true;
-    powerManagement.enable = true;
-    prime = {
-      sync.enable = true;
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
+    powerManagement.enable = false;
+    nvidiaSettings = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    open = false;
   };
 
   # ===========================================================================
@@ -56,24 +68,19 @@
 
   networking.networkmanager.enable = true;
   networking.hostName = "nixos-live";
-  networking.firewall.enable = false; # Disable firewall for live environment
+  networking.firewall.enable = false;
+  networking.wireless.enable = false;
 
   # ===========================================================================
-  # USER CONFIGURATION (FIXED PASSWORD CONFLICT)
+  # USER CONFIGURATION
   # ===========================================================================
 
-  # Auto-login for convenience - use new option name
-  services.displayManager.autoLogin = {
-    enable = true;
-    user = "nixos";
-  };
-
-  # Live user - FIXED: Only use ONE password method
+  # Live user - FIXED: Only use one password method
   users.users.nixos = {
     isNormalUser = true;
     description = "Live ISO User";
     extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
-    password = ""; # Empty password - use ONLY this one
+    password = "";  # Use ONLY this one - remove initialHashedPassword
     uid = 1000;
   };
 
@@ -81,66 +88,34 @@
   security.sudo.wheelNeedsPassword = false;
 
   # ===========================================================================
-  # ESSENTIAL PACKAGES (FIXED PACKAGE NAMES)
+  # PACKAGES - IMPORT FROM packages.nix
   # ===========================================================================
 
-  environment.systemPackages = with pkgs; [
-    # System tools
-    vim htop wget curl git
-    pciutils usbutils lm_sensors
-    file tree ripgrep fd
-
-    # Disk utilities (FIXED package names)
-    gparted gnome-disk-utility    # FIXED: Use top-level gnome-disk-utility
-    gptfdisk f2fs-tools btrfs-progs   # FIXED: gptfdisk instead of gdisk
-    ntfs3g dosfstools e2fsprogs
-
-    # Network tools (FIXED package names)
-    networkmanagerapplet wpa_supplicant
-    iw bind                           # FIXED: bind instead of bind.dnsutils
-
-    # Hardware tools
-    lshw dmidecode
-
-    # KDE applications
-    kdePackages.dolphin
-    kdePackages.konsole
-    kdePackages.kate
-
-    # Browsers
-    firefox
-
-    # Development
-    gcc gnumake python3 nodejs
-
-    # Nix tools
-    nixos-install-tools
-
-    # Audio
-    pulsemixer pavucontrol alsa-utils
-
-    # NVIDIA tools
-    glxinfo vulkan-tools mesa-demos
-  ];
+  # Import all packages from packages.nix
+  imports = [ ./packages.nix ];
 
   # ===========================================================================
-  # SERVICES
+  # SERVICES FOR LIVE ENVIRONMENT
   # ===========================================================================
 
-  # Enable SSH
+  # Enable SSH for remote access
   services.openssh = {
     enable = true;
     settings.PermitRootLogin = "yes";
     settings.PasswordAuthentication = true;
   };
 
-  # Audio
+  # Audio services
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     pulse.enable = true;
   };
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   # ===========================================================================
   # LOCALE AND TIME
@@ -151,27 +126,94 @@
   console.keyMap = "dk";
 
   # ===========================================================================
-  # ISO OPTIMIZATIONS
+  # ISO-SPECIFIC OPTIMIZATIONS
   # ===========================================================================
 
-  # Include a README
+  # Enable flakes in the live environment
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Include a README in the ISO
   isoImage.contents = [
     {
       source = pkgs.writeText "README" ''
-        NixOS Live ISO with KDE Plasma 6
+        NIXOS LIVE ISO WITH KDE PLASMA 6
 
         Features:
-        - KDE Plasma 6 desktop
-        - NVIDIA PRIME support
-        - NetworkManager for WiFi
-        - Essential installation tools
+        - KDE Plasma 6 desktop environment
+        - NVIDIA graphics support
+        - NetworkManager for WiFi and networking
+        - Complete package set from your main configuration
+        - Development tools and utilities
+        - Firefox web browser
 
-        User: nixos (no password)
-        Root: no password set
+        User: nixos (no password required)
+        Root: no password set (use sudo)
 
-        To install: run 'nixos-install'
+        INSTALLATION:
+        1. Open terminal (Konsole)
+        2. Run: sudo nixos-install
+        3. Follow the prompts to configure your system
+
+        NETWORKING:
+        - Use NetworkManager applet in system tray for WiFi
+        - Ethernet should work automatically
+
+        HARDWARE SUPPORT:
+        - NVIDIA graphics with proprietary drivers
+        - Intel/AMD CPU support
+        - Most common hardware should work
+
+        PACKAGES INCLUDED:
+        All packages from your main system configuration are available
+        in this live environment for testing and installation.
+
+        TROUBLESHOOTING:
+        - If display issues occur, try: nomodeset kernel parameter
+        - Check /var/log/ for system logs
+        - Use journalctl for service logs
+
+        Enjoy NixOS!
       '';
       target = "/README.txt";
     }
   ];
+
+  # ===========================================================================
+  # SYSTEM OPTIMIZATIONS FOR LIVE ENVIRONMENT
+  # ===========================================================================
+
+  # Disable services that aren't needed in live environment
+  services.flatpak.enable = false;
+  services.postgresql.enable = false;
+  # FIXED: Use new Redis option name
+  services.redis.servers."".enable = false;  # services.redis.enable -> services.redis.servers."".enable
+  services.syncthing.enable = false;
+  virtualisation.docker.enable = false;
+  virtualisation.libvirtd.enable = false;
+  virtualisation.virtualbox.host.enable = false;
+
+  # Enable essential services only
+  services.avahi.enable = true;
+  services.fwupd.enable = true;
+
+  # Power management
+  services.tlp.enable = false;
+  services.power-profiles-daemon.enable = true;
+
+  # ===========================================================================
+  # FONT CONFIGURATION
+  # ===========================================================================
+
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    nerd-fonts.fira-code
+  ];
+
+  # ===========================================================================
+  # SYSTEM STATE VERSION
+  # ===========================================================================
+
+  system.stateVersion = "25.05";
 }
