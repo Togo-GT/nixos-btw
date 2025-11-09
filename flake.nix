@@ -99,7 +99,7 @@
           # 🎨 BRUGERDEFINERET KONFIGURATION:
           # "Deklarativ beskrivelse af ønsket systemadfærd og brugererfaring"
           #
-         # ./zsh-fix.nix
+          ./zsh-fix.nix
           ./configuration.nix
           ./packages.nix
           # 📝 Indholdsoverblik:
