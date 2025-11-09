@@ -4,398 +4,420 @@
 {
   environment.systemPackages = with pkgs; [
     # ========================
-    # SYSTEM ESSENTIALS & TOOLS
+    # CORE SYSTEM TOOLS
     # ========================
-    vim
-    neovim
-    micro
-    wget
-    curl
-    curlie
-    git
-    gitFull
-    file
-    pciutils
-    usbutils
-    lm_sensors
-    inxi
-    home-manager
-    efibootmgr
-    dmidecode
-    lshw
-    lsof
-    psmisc
-    p7zip
-    unzip
-    zip
-    openssl
-    libnotify
+    vim                   # Classic terminal text editor
+    neovim                # Modern Vim fork with better defaults and Lua support
+    micro                 # Simple and intuitive terminal text editor
+    wget                  # Command-line utility for downloading files from the web
+    curl                  # Tool for transferring data with URL syntax
+    curlie                # Frontend to curl that adds ease of use and display
+    file                  # Utility to determine file types
+    pciutils              # Utilities for inspecting and manipulating PCI devices
+    usbutils              # Utilities for inspecting USB devices
+    lm_sensors            # Tools for monitoring hardware sensors
+    inxi                  # Full featured system information script
+    efibootmgr            # Tool to manage UEFI boot entries
+    dmidecode             # Tool for dumping DMI/SMBIOS contents
+    lshw                  # Tool to provide detailed information on hardware configuration
+    lsof                  # Utility to list open files and processes using them
+    psmisc                # Utilities that use the proc filesystem (killall, pstree, etc.)
+    p7zip                 # 7-zip file archiver with high compression ratio
+    unzip                 # Utility for extracting ZIP archives
+    zip                   # Compression and file packaging utility
+    openssl               # Cryptography and SSL/TLS toolkit
+    libnotify             # Library for sending desktop notifications
 
     # ========================
-    # MODERN CLI REPLACEMENTS
+    # PACKAGE MANAGEMENT (NIX)
     # ========================
-    eza
-    bat
-    bat-extras.batdiff
-    bat-extras.batman
-    bat-extras.batpipe
-    fd
-    ripgrep
-    ripgrep-all
-    fzf
-    bottom
-    dust
-    procs
-    sd
-    choose
-    fselect
+    home-manager          # Manage user environments using Nix
+    nix-index             # Fast filesystem index for nix-locate
+    nix-search            # Search for packages in NixOS
+    nixd                  # Nix language server
+    nix-tree              # Visualize nix package dependencies
+    nix-diff              # Explain why two Nix derivations differ
+    nix-output-monitor    # Monitor nix build progress with enhanced output
+    nix-du                # Visualize nix store usage
+    nixos-option          # Inspect NixOS configuration options
+    comma                 # Run programs without installing them
+    nixpkgs-fmt           # Formatter for Nix code
+    nixfmt-classic        # Alternative formatter for Nix code
+    statix                # Lints and suggestions for Nix code
+    alejandra             # Fast formatter for Nix code
+    manix                 # Search NixOS manual pages
+    cachix                # Binary cache management for Nix
+    direnv                # Environment switcher for the shell
+    nixos-generators      # Generate NixOS installation media
+    nh                    # Nix helper for convenient package management
+    nil                   # Nix language server
+    rnix-lsp              # Alternative Nix language server
 
     # ========================
-    # QT6 PACKAGES FOR PLASMA 6 + KDE APPS
+    # SHELL & TERMINAL
     # ========================
-    qt6.qtbase
-    qt6.qtdeclarative
-    qt6.qttools
-    qt6.qtwayland
-    qt6.qtmultimedia
-    qt6.qtsvg
-    qt6.qtwebengine
+    zoxide                # Faster way to navigate directories
+    starship              # Cross-shell prompt with customization
+    oh-my-posh            # Prompt theme engine
+    fish                  # User-friendly command line shell
+    zsh                   # Powerful shell with extensive customization
+    tmux                  # Terminal multiplexer for managing multiple sessions
+    tmuxp                 # Tmux session manager
 
     # ========================
-    # LOGITECH / GAMING MOUSE SUPPORT
+    # HARDWARE INFORMATION
     # ========================
-    libratbag
-    piper
+    pciutils              # PCI device inspection utilities (lspci)
+    usbutils              # USB device inspection utilities (lsusb)
+    lm_sensors            # Hardware monitoring sensors
+    inxi                  # Comprehensive system information tool
+    dmidecode             # DMI table decoder for hardware info
+    lshw                  # Detailed hardware lister
 
     # ========================
     # POWER MANAGEMENT
     # ========================
-    powertop
-    acpi
-    cpupower-gui
-    powerstat
-    smartmontools
-    s-tui
-    stress-ng
+    powertop              # Power consumption monitoring and optimization
+    acpi                  # Shows battery status and thermal information
+    cpupower-gui          # GUI for CPU frequency scaling
+    powerstat             # Measure power consumption of a laptop
+    smartmontools         # SMART disk monitoring and health checking
+    s-tui                 # Terminal UI for stress testing and monitoring
+    stress-ng             # Stress test utility for Linux systems
 
     # ========================
-    # DISK & STORAGE
+    # STORAGE & FILESYSTEMS
     # ========================
-    gnome-disk-utility
-    gparted
-    ncdu
-    duf
-    agedu
-    rsync
-    btrfs-progs
-    xfsprogs
-    e2fsprogs
-    mdadm
-    lvm2
-    cryptsetup
-    nvme-cli
-    util-linux
-    testdisk
-    gsmartcontrol
-    ntfs3g
-    borgbackup
-    rsnapshot
+    gnome-disk-utility    # Disk management and benchmarking tool
+    gparted               # Partition editor for graphical disk management
+    ncdu                  # Disk usage analyzer with NCurses interface
+    duf                   # Disk usage/free utility with better output
+    agedu                 # Track down wasted disk space
+    rsync                 # Fast and versatile file copying tool
+    btrfs-progs           # Btrfs filesystem utilities
+    xfsprogs              # XFS filesystem utilities
+    e2fsprogs             # Ext2/3/4 filesystem utilities
+    mdadm                 # RAID management utilities
+    lvm2                  # Logical Volume Manager tools
+    cryptsetup            # Disk encryption setup tool
+    nvme-cli              # NVM-Express user space tooling
+    util-linux            # Collection of basic system utilities
+    testdisk              # Data recovery tool for lost partitions
+    gsmartcontrol         # GUI for SMART monitoring tools
+    ntfs3g                # NTFS filesystem driver with read/write support
+    borgbackup            # Deduplicating backup program
+    rsnapshot             # Filesystem snapshot utility for backups
 
     # ========================
-    # NVIDIA & GRAPHICS
+    # GRAPHICS & GPU
     # ========================
-    nvidia-vaapi-driver
-    nvitop
-    vulkan-tools
-    vulkan-loader
-    mesa-demos
-    libva-utils
-    vdpauinfo
-    clinfo
-    glmark2
-    gpu-viewer
-    intel-gpu-tools
-    dxvk
-    vkd3d-proton
-    vkbasalt
+    nvidia-vaapi-driver   # VA-API implementation for NVIDIA hardware
+    nvitop                # NVIDIA GPU status and process monitoring
+    vulkan-tools          # Vulkan utilities and demos
+    vulkan-loader         # Vulkan loader and validation layers
+    mesa-demos            # Mesa 3D graphics demo applications
+    libva-utils           # VA-API utilities for hardware acceleration
+    vdpauinfo             # Tool to query VDPAU capabilities
+    clinfo                # OpenCL platform and device information
+    glmark2               # OpenGL ES and GL benchmark
+    gpu-viewer            # GUI for viewing GPU information and usage
+    intel-gpu-tools       # Tools for debugging Intel GPUs
+    dxvk                  # Vulkan-based translation layer for Direct3D
+    vkd3d-proton          # Direct3D 12 to Vulkan translation layer
+    vkbasalt              # Vulkan post processing layer for Linux
 
     # ========================
     # AUDIO
     # ========================
-    pulsemixer
-    pavucontrol
-    alsa-utils
-    easyeffects
-    carla
-    helvum
-    qjackctl
-    jack2
+    pulsemixer            # CLI and curses mixer for PulseAudio
+    pavucontrol           # PulseAudio volume control GUI
+    alsa-utils            # ALSA sound system utilities
+    easyeffects           # Audio effects for PipeWire applications
+    carla                 # Audio plugin host and patchbay
+    helvum                # PipeWire patchbay in Rust
+    qjackctl              # JACK Audio Connection Kit Qt GUI interface
+    jack2                 # Audio server for professional audio
 
     # ========================
     # DEVELOPMENT TOOLS
     # ========================
-    gcc
-    gnumake
-    python3
-    jq
-    yq
-    hexyl
-    hyperfine
-    tokei
-    pkg-config
-    cmake
-    gdb
-    strace
-    ltrace
-    valgrind
-    shellcheck
-    hadolint
+    gcc                   # GNU Compiler Collection
+    gnumake               # GNU make build tool
+    pkg-config            # Helper tool for compiling with libraries
+    cmake                 # Cross-platform build system
+    gdb                   # GNU debugger
+    strace                # System call tracer
+    ltrace                # Library call tracer
+    valgrind              # Memory debugging and profiling tool
+    shellcheck            # Shell script static analysis tool
+    hadolint              # Dockerfile linter
 
     # ========================
-    # NIX ECOSYSTEM
+    # PROGRAMMING LANGUAGES
     # ========================
-    nix-index
-    nix-search
-    nixd
-    nix-tree
-    nix-diff
-    nix-output-monitor
-    nix-du
-    nixos-option
-    comma
-    nixpkgs-fmt
-    nixfmt-classic
-    statix
-    alejandra
-    manix
-    cachix
-    direnv
-    nixos-generators
-    nh
-    nil             # Nix language server
-    rnix-lsp        # Alternative Nix LSP
+    python3               # Python programming language
+    python3Packages.pip   # Python package installer
+    pipx                  # Install and run Python applications in isolated environments
+    go                    # Go programming language
+    nodejs                # JavaScript runtime built on Chrome's V8
+    perl                  # Perl programming language
+    rustup                # Rust toolchain installer
 
     # ========================
-    # VIRTUALIZATION
+    # DEVELOPMENT UTILITIES
     # ========================
-    virt-manager
-    virt-viewer
-    qemu
-    qemu_kvm
-    qemu-utils
-    quickemu
-    libvirt
-    spice
-    spice-gtk
-    spice-protocol
-    spice-vdagent
-    vde2
-    bridge-utils
-    dnsmasq
-    OVMF
-    virtualbox
-    vagrant
-    libguestfs
-    guestfs-tools
-    openvswitch
-    virt-top
+    jq                    # Command-line JSON processor
+    yq                    # Command-line YAML processor
+    hexyl                 # Command-line hex viewer
+    hyperfine             # Command-line benchmarking tool
+    tokei                 # Count lines of code quickly
+    binutils              # GNU binary utilities
 
     # ========================
-    # NETWORK & SECURITY
+    # LANGUAGE SERVERS
     # ========================
-    networkmanagerapplet
-    wireshark
-    nmap
-    masscan
-    iperf3
-    age
-    sops
-    traceroute
-    mtr
-    ipcalc
-    iftop
-    bmon
-    netcat-openbsd
-    socat
-    tcpdump
-    tcpflow
-    httpie
-    sshpass
-    sshfs
-    whois
-    macchanger
-    openvpn
-    tailscale
-    wireguard-tools
-    aircrack-ng
-    ettercap
-    inetutils       # Basic network utilities
-    bind            # DNS utilities
-    openssh         # SSH client/server
+    nodePackages.bash-language-server      # Bash language server
+    nodePackages.typescript-language-server # TypeScript language server
+    nodePackages.vscode-langservers-extracted # HTML/CSS/JSON language servers
+    rust-analyzer                          # Rust language server
+    python3Packages.python-lsp-server      # Python language server
+    lua-language-server                    # Lua language server
+    marksman                               # Markdown language server
+    clang-tools                            # Clang tools including clangd
 
     # ========================
-    # PRODUCTIVITY & INFO
+    # CONTAINERS & VIRTUALIZATION
     # ========================
-    tree
-    broot
-    neofetch
-    onefetch
-    fastfetch
-    tldr
-    cheat
-    cbonsai
-    cmatrix
-    figlet
-    speedtest-cli
-    fast-cli
-    gotop
-    btop
-    htop
-    taskwarrior3
-    tmux
-    tmuxp
-    watch
+    docker                # Platform for building and running containerized applications
+    docker-compose        # Tool for defining and running multi-container Docker applications
+    podman                # Daemonless container engine
+    distrobox             # Use any Linux distribution inside your terminal
+    virt-manager          # Desktop user interface for managing virtual machines
+    virt-viewer           # Viewer for remote virtual machines
+    qemu                  # Generic machine emulator and virtualizer
+    qemu_kvm              # QEMU with KVM support
+    qemu-utils            # QEMU utilities
+    quickemu              # Quickly create and run optimised Windows/macOS VMs
+    libvirt               # Toolkit to manage virtualization platforms
+    spice                 # SPICE remote computing protocol
+    spice-gtk             # GTK+ SPICE client
+    spice-protocol        # SPICE protocol headers
+    spice-vdagent         # SPICE guest agent
+    vde2                  # Virtual Distributed Ethernet
+    bridge-utils          # Utilities for configuring Ethernet bridges
+    dnsmasq               # Lightweight DNS/DHCP server
+    OVMF                  # UEFI firmware for virtual machines
+    virtualbox            # General-purpose virtualizer
+    vagrant               # Tool for building and managing virtual machine environments
+    libguestfs            # Tools for accessing and modifying VM disk images
+    guestfs-tools         # Command line tools for libguestfs
+    openvswitch           # Production quality multilayer virtual switch
+    virt-top              # Top-like utility for virtual machines
+
+    # ========================
+    # INFRASTRUCTURE & DEVOPS
+    # ========================
+    ansible               # Configuration management and deployment tool
+    packer                # Tool for creating machine images
+    terraform             # Infrastructure as code tool
+
+    # ========================
+    # NETWORK TOOLS
+    # ========================
+    networkmanagerapplet  # System tray applet for NetworkManager
+    wireshark             # Network protocol analyzer
+    nmap                  # Network exploration and security auditing tool
+    masscan               # Mass IP port scanner
+    iperf3                # Network bandwidth measurement tool
+    traceroute            # Print the route packets take to network host
+    mtr                   # Network diagnostic tool combining traceroute and ping
+    ipcalc                # Calculate IP network settings
+    iftop                 # Display bandwidth usage on an interface
+    bmon                  # Bandwidth monitor and rate estimator
+    netcat-openbsd        # Networking utility for reading/writing network connections
+    socat                 # Multipurpose relay tool
+    tcpdump               # Command-line packet analyzer
+    tcpflow               # Capture and analyze TCP traffic
+    httpie                # Modern command-line HTTP client
+    sshpass               # Non-interactive SSH password authentication
+    sshfs                 # Filesystem client for SSH
+    whois                 # WHOIS client for domain information
+    macchanger            # Utility for manipulating MAC addresses
+    openvpn               # VPN solution using SSL/TLS
+    tailscale             # Zero config VPN for secure networks
+    wireguard-tools       # Tools for WireGuard VPN setup
+    inetutils             # Basic network utilities (telnet, ftp, etc.)
+    bind                  # DNS server utilities (dig, nslookup)
+    openssh               # SSH client and server
+
+    # ========================
+    # SECURITY
+    # ========================
+    age                   # Simple, modern and secure file encryption
+    sops                  # Secrets management tool
+    aircrack-ng           # WiFi security auditing tools
+    ettercap              # Comprehensive suite for man-in-the-middle attacks
+
+    # ========================
+    # CLI PRODUCTIVITY
+    # ========================
+    eza                   # Modern replacement for ls
+    bat                   # Cat clone with syntax highlighting
+    bat-extras.batdiff    # Diff with syntax highlighting
+    bat-extras.batman     # Manual pages with syntax highlighting
+    bat-extras.batpipe    # Prettify pipe output
+    fd                    # Simple and fast alternative to find
+    ripgrep               # Line-oriented search tool
+    ripgrep-all           # Ripgrep with additional file support
+    fzf                   # Command-line fuzzy finder
+    bottom                # Graphical process/system monitor for terminal
+    dust                  | More intuitive version of du
+    procs                 | Modern replacement for ps
+    sd                    | Intuitive find and replace CLI
+    choose                | Human-friendly and fast alternative to cut
+    fselect               | Find files with SQL-like queries
+    tree                  | Display directory structure as tree
+    broot                 | Quick way to navigate directory trees
+    watch                 | Execute program periodically and show output
 
     # ========================
     # GIT TOOLS
     # ========================
-    git-extras
-    delta
-    lazygit
-    github-cli
-    git-crypt
-    git-open
-    git-revise
-    gitui
-    gitflow
-    tig
-
-    # ========================
-    # LANGUAGE SERVERS & DEVELOPMENT
-    # ========================
-    nodePackages.bash-language-server
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
-    rust-analyzer
-    python3Packages.python-lsp-server
-    lua-language-server
-    marksman
-    clang-tools
-
-    # ========================
-    # GAMING & MULTIMEDIA
-    # ========================
-    mangohud
-    goverlay
-    gamemode
-    obs-studio
-    ffmpeg
-    mpv
-    imagemagick
-    steam
-    lutris
-    wine
-    wineWowPackages.stable
-    winetricks
-    protontricks
-
-    # ========================
-    # SYSTEM MONITORING
-    # ========================
-    iotop
-    nethogs
-    bandwhich
-    zenith
-    dool
-    mission-center
-    glances
-    netdata
-
-    # ========================
-    # TERMINAL & SHELL
-    # ========================
-    zoxide
-    starship
-    oh-my-posh
-    fish
-    zsh
+    git                   | Distributed version control system
+    gitFull               | Git with all optional features
+    git-extras            | Git extension scripts
+    delta                 | Syntax-highlighting pager for git
+    lazygit               | Terminal UI for git commands
+    github-cli            | Official GitHub CLI tool
+    git-crypt             | Transparent file encryption in git
+    git-open              | Open repository website from terminal
+    git-revise            | Efficiently update, split, and rearrange commits
+    gitui                 | Terminal UI for git
+    gitflow               | Git extensions for workflow
+    tig                   | Text-mode interface for git
 
     # ========================
     # FILE MANAGEMENT
     # ========================
-    ranger
-    nnn
-    fff
-    mc
-    lf
+    ranger                | Terminal file manager with VI key bindings
+    nnn                   | Tiny and fast terminal file manager
+    fff                   | Simple and fast file manager
+    mc                    | Midnight Commander file manager
+    lf                    | Terminal file manager with inspiration from ranger
 
     # ========================
-    # FUN & UTILITY
+    # MULTIMEDIA
     # ========================
-    cowsay
-    fortune
-    sl
-    asciiquarium
-    termscp
-    cava
-    pipes-rs
-    lolcat
+    ffmpeg                | Complete solution to record, convert and stream audio/video
+    mpv                   | Free, open source media player
+    imagemagick           | Create, edit, compose, or convert bitmap images
+    audacity              | Cross-platform audio editor
+    handbrake             | Video transcoder tool
+    vlc                   | Cross-platform multimedia player
+    gimp                  | GNU Image Manipulation Program
+    inkscape              | Vector graphics editor
+    krita                 | Professional free and open source painting program
+    obs-studio            | Software for video recording and live streaming
 
     # ========================
-    # DEVELOPMENT & PROGRAMMING
+    # GAMING
     # ========================
-    go
-    nodejs
-    perl
-    python3Packages.pip
-    pipx
-    rustup
-    binutils
-    ansible
-    packer
-    terraform
-    docker
-    docker-compose
-    podman
+    steam                 | Digital distribution platform for games
+    lutris                | Gaming platform for Linux
+    wine                  | Compatibility layer for running Windows applications
+    wineWowPackages.stable | Wine for both 32 and 64 bit applications
+    winetricks            | Package manager for Wine
+    protontricks          | Winetricks wrapper for Proton and Steam
+    mangohud              | Vulkan and OpenGL overlay for monitoring FPS and system info
+    goverlay              | Graphical interface for MangoHud and other overlays
+    gamemode              | Optimise Linux system performance for games
 
     # ========================
     # GUI APPLICATIONS
     # ========================
-    chromium
-    firefox
-    signal-desktop
-    telegram-desktop
-    thunderbird
-    audacity
-    handbrake
-    spotify
-    vlc
-    gimp
-    inkscape
-    krita
-    kdePackages.okular
-    zathura
-    distrobox
-    kdePackages.dolphin
-    evince
-    feh
-    kdePackages.konsole
-    paprefs
-    protonup-qt
-    transmission_4-qt
+    chromium              | Open-source web browser
+    firefox               | Free and open-source web browser
+    signal-desktop        | Private messaging application
+    telegram-desktop      | Messaging app with focus on speed and security
+    thunderbird           | Email, RSS, and newsgroup client
+    spotify               | Music streaming service
+    kdePackages.okular    | Universal document viewer
+    zathura               | Minimalistic document viewer with vim-like controls
+    kdePackages.dolphin   | File manager for KDE
+    evince                | Document viewer for multiple formats
+    feh                   | Lightweight image viewer
+    kdePackages.konsole   | Terminal emulator for KDE
+    paprefs               | PulseAudio preferences GUI
+    protonup-qt           | Install and manage Proton-GE and other compatibility tools
+    transmission_4-qt     | Fast and easy BitTorrent client (Qt version)
+    vscode                | Code editor redefined and optimized for building/debugging
+    keepassxc             | Cross-platform password manager
 
     # ========================
-    # THEMES & ICONS
+    # SYSTEM MONITORING
     # ========================
-    catppuccin-kde
-    catppuccin-gtk
-    tela-circle-icon-theme
-    papirus-icon-theme
+    neofetch              | System information tool with ASCII art
+    onefetch              | Git repository summary in command line
+    fastfetch             | Fast system information tool
+    gotop                 | Terminal based graphical activity monitor
+    btop                  | Modern and resource monitor for terminal
+    htop                  | Interactive process viewer and system monitor
+    iotop                 | Monitor disk I/O usage
+    nethogs               | Monitor network usage per process
+    bandwhich             | Terminal bandwidth utilization tool
+    zenith                | Terminal system monitor with charts
+    dool                  | Performance monitoring tool (formerly dstat)
+    mission-center        | System monitoring center for GNOME
+    glances               | Cross-platform system monitoring tool
+    netdata               | Real-time performance monitoring
 
     # ========================
-    # ADDITIONAL TOOLS
+    # INFORMATION & DOCUMENTATION
     # ========================
-    vscode
-    keepassxc
+    tldr                  | Simplified and community-driven man pages
+    cheat                 | Create and view interactive cheatsheets
+    taskwarrior3          | Command-line task management tool
+
+    # ========================
+    # QT6 PACKAGES FOR PLASMA 6 + KDE APPS
+    # ========================
+    qt6.qtbase            | Qt6 base modules
+    qt6.qtdeclarative     | Qt6 QML and Quick modules
+    qt6.qttools           | Qt6 tools and utilities
+    qt6.qtwayland         | Qt6 Wayland support
+    qt6.qtmultimedia      | Qt6 multimedia support
+    qt6.qtsvg             | Qt6 SVG support
+    qt6.qtwebengine       | Qt6 WebEngine components
+
+    # ========================
+    # LOGITECH / GAMING MOUSE SUPPORT
+    # ========================
+    libratbag             | DBus daemon to configure gaming mice
+    piper                 | GTK application to configure gaming mice
+
+    # ========================
+    # THEMES & APPEARANCE
+    # ========================
+    catppuccin-kde        | Catppuccin theme for KDE Plasma
+    catppuccin-gtk        | Catppuccin theme for GTK applications
+    tela-circle-icon-theme | Tela circle icon theme
+    papirus-icon-theme    | Papirus icon theme
+
+    # ========================
+    # FUN & ENTERTAINMENT
+    # ========================
+    cowsay                | Configurable talking cow
+    fortune               | Display a random fortune
+    sl                    | Steam locomotive animation for mistyped 'ls'
+    asciiquarium          | Animated ASCII aquarium
+    cbonsai               | Grow random bonsai trees in your terminal
+    cmatrix               | Show a scrolling Matrix-like screen
+    figlet                | Create large letters from ordinary text
+    speedtest-cli         | Command line interface for testing internet bandwidth
+    fast-cli              | Test your download speed using fast.com
+    termscp               | Feature rich terminal file transfer
+    cava                  | Console-based audio visualizer
+    pipes-rs              | Rust implementation of pipes.sh
+    lolcat                | Rainbow coloring for text output
   ];
 }
