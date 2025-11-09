@@ -99,8 +99,8 @@
           # 🎨 BRUGERDEFINERET KONFIGURATION:
           # "Deklarativ beskrivelse af ønsket systemadfærd og brugererfaring"
           #
-          ./zsh-fix.nix
           ./configuration.nix
+          ./zsh-fix.nix
           ./packages.nix
           # 📝 Indholdsoverblik:
           # - Boot konfiguration: systemd-boot med UEFI
@@ -197,6 +197,6 @@
 # 3. ✅ COMPOSABILITY: Moduler kan kombineres og genbruges
 # 4. ✅ ROLLBACK SAFETY: Enhver tilstand kan gendannes øjeblikkeligt
 # 5. ✅ COMMUNITY DRIVEN: Bygger på årtiers NixOS community erfaring
-# 6. ✅ ISO BUILDER: sudo nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage
+# 6. ✅ ISO BUILDER: sudo nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage --out-link /home/togo-gt/Iso/nixos-live.iso
 #
 # =============================================================================

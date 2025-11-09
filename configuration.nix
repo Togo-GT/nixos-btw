@@ -40,7 +40,7 @@
     ];
   };
 
-  fileSystems."/mnt/home" = {
+  fileSystems."/home" = {
     device = "/dev/disk/by-uuid/e439ce99-1952-496e-9e1d-63ca5992cf98";
     fsType = "ext4";
     options = ["defaults" "noatime" "nodiratime"];

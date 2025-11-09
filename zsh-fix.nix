@@ -1,5 +1,5 @@
 # zsh-fix.nix - Komplet ZSH konfiguration der erstatter .zshrc/.bashrc
-# Brug: Tilføj denne fil til din configuration.nix imports
+# Brug: Tilføj denne fil til din flake.nix imports
 { config, pkgs, ... }:
 
 {
@@ -313,32 +313,4 @@
   # ===========================================================================
   users.defaultUserShell = pkgs.zsh;
   environment.shells = with pkgs; [ zsh ];
-
-  # ===========================================================================
-  # ADD REQUIRED PACKAGES FOR THE CONFIGURATION
-  # ===========================================================================
-  environment.systemPackages = with pkgs; [
-    # Modern command replacements
-    eza          # 📁 ls replacement
-    bat          # 🦇 cat replacement
-    fd           # 🔍 find replacement
-    ripgrep      # 🚀 grep replacement
-    dust         # 💨 du replacement
-    duf          # 📊 df replacement
-    procs        # 📈 ps replacement
-    btop         # 🖥️ top replacement
-
-    # Utilities
-    curl         # 🌐 HTTP requests
-    prettyping   # 🎨 ping replacement
-    neovim       # 🖊️ Editor
-
-    # System info
-    inxi         # 📊 System information
-
-    # Fun stuff
-    cowsay       # 🐮 Fortune cookies
-    fortune      # 💫 Random quotes
-    cmatrix      # 🌃 Matrix animation
-  ];
 }

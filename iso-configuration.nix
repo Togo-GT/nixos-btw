@@ -217,3 +217,4 @@
 
   system.stateVersion = "25.05";
 }
+# sudo nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage --out-link /home/togo-gt/Iso/nixos-live.iso

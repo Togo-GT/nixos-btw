@@ -1,4 +1,4 @@
-# /etc/nixos/packages.nix
+# /etc/nixos/nixos/system/packages.nix
 { config, pkgs, ... }:
 
 {
