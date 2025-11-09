@@ -45,11 +45,9 @@
     fzf
     bottom
     dust
-    duf
     procs
     sd
     choose
-    zoxide
     fselect
 
     # ========================
@@ -311,11 +309,9 @@
     # ========================
     # TERMINAL & SHELL
     # ========================
-    tmux
     zoxide
     starship
     oh-my-posh
-    direnv
     fish
     zsh
 
