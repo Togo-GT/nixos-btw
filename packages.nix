@@ -271,153 +271,153 @@
     ripgrep-all           # Ripgrep with additional file support
     fzf                   # Command-line fuzzy finder
     bottom                # Graphical process/system monitor for terminal
-    dust                  | More intuitive version of du
-    procs                 | Modern replacement for ps
-    sd                    | Intuitive find and replace CLI
-    choose                | Human-friendly and fast alternative to cut
-    fselect               | Find files with SQL-like queries
-    tree                  | Display directory structure as tree
-    broot                 | Quick way to navigate directory trees
-    watch                 | Execute program periodically and show output
+    dust                  # More intuitive version of du
+    procs                 # Modern replacement for ps
+    sd                    # Intuitive find and replace CLI
+    choose                # Human-friendly and fast alternative to cut
+    fselect               # Find files with SQL-like queries
+    tree                  # Display directory structure as tree
+    broot                 # Quick way to navigate directory trees
+    watch                 # Execute program periodically and show output
 
     # ========================
     # GIT TOOLS
     # ========================
-    git                   | Distributed version control system
-    gitFull               | Git with all optional features
-    git-extras            | Git extension scripts
-    delta                 | Syntax-highlighting pager for git
-    lazygit               | Terminal UI for git commands
-    github-cli            | Official GitHub CLI tool
-    git-crypt             | Transparent file encryption in git
-    git-open              | Open repository website from terminal
-    git-revise            | Efficiently update, split, and rearrange commits
-    gitui                 | Terminal UI for git
-    gitflow               | Git extensions for workflow
-    tig                   | Text-mode interface for git
+    git                   # Distributed version control system
+    gitFull               # Git with all optional features
+    git-extras            # Git extension scripts
+    delta                 # Syntax-highlighting pager for git
+    lazygit               # Terminal UI for git commands
+    github-cli            # Official GitHub CLI tool
+    git-crypt             # Transparent file encryption in git
+    git-open              # Open repository website from terminal
+    git-revise            # Efficiently update, split, and rearrange commits
+    gitui                 # Terminal UI for git
+    gitflow               # Git extensions for workflow
+    tig                   # Text-mode interface for git
 
     # ========================
     # FILE MANAGEMENT
     # ========================
-    ranger                | Terminal file manager with VI key bindings
-    nnn                   | Tiny and fast terminal file manager
-    fff                   | Simple and fast file manager
-    mc                    | Midnight Commander file manager
-    lf                    | Terminal file manager with inspiration from ranger
+    ranger                # Terminal file manager with VI key bindings
+    nnn                   # Tiny and fast terminal file manager
+    fff                   # Simple and fast file manager
+    mc                    # Midnight Commander file manager
+    lf                    # Terminal file manager with inspiration from ranger
 
     # ========================
     # MULTIMEDIA
     # ========================
-    ffmpeg                | Complete solution to record, convert and stream audio/video
-    mpv                   | Free, open source media player
-    imagemagick           | Create, edit, compose, or convert bitmap images
-    audacity              | Cross-platform audio editor
-    handbrake             | Video transcoder tool
-    vlc                   | Cross-platform multimedia player
-    gimp                  | GNU Image Manipulation Program
-    inkscape              | Vector graphics editor
-    krita                 | Professional free and open source painting program
-    obs-studio            | Software for video recording and live streaming
+    ffmpeg                # Complete solution to record, convert and stream audio/video
+    mpv                   # Free, open source media player
+    imagemagick           # Create, edit, compose, or convert bitmap images
+    audacity              # Cross-platform audio editor
+    handbrake             # Video transcoder tool
+    vlc                   # Cross-platform multimedia player
+    gimp                  # GNU Image Manipulation Program
+    inkscape              # Vector graphics editor
+    krita                 # Professional free and open source painting program
+    obs-studio            # Software for video recording and live streaming
 
     # ========================
     # GAMING
     # ========================
-    steam                 | Digital distribution platform for games
-    lutris                | Gaming platform for Linux
-    wine                  | Compatibility layer for running Windows applications
-    wineWowPackages.stable | Wine for both 32 and 64 bit applications
-    winetricks            | Package manager for Wine
-    protontricks          | Winetricks wrapper for Proton and Steam
-    mangohud              | Vulkan and OpenGL overlay for monitoring FPS and system info
-    goverlay              | Graphical interface for MangoHud and other overlays
-    gamemode              | Optimise Linux system performance for games
+    steam                 # Digital distribution platform for games
+    lutris                # Gaming platform for Linux
+    wine                  # Compatibility layer for running Windows applications
+    wineWowPackages.stable # Wine for both 32 and 64 bit applications
+    winetricks            # Package manager for Wine
+    protontricks          # Winetricks wrapper for Proton and Steam
+    mangohud              # Vulkan and OpenGL overlay for monitoring FPS and system info
+    goverlay              # Graphical interface for MangoHud and other overlays
+    gamemode              # Optimise Linux system performance for games
 
     # ========================
     # GUI APPLICATIONS
     # ========================
-    chromium              | Open-source web browser
-    firefox               | Free and open-source web browser
-    signal-desktop        | Private messaging application
-    telegram-desktop      | Messaging app with focus on speed and security
-    thunderbird           | Email, RSS, and newsgroup client
-    spotify               | Music streaming service
-    kdePackages.okular    | Universal document viewer
-    zathura               | Minimalistic document viewer with vim-like controls
-    kdePackages.dolphin   | File manager for KDE
-    evince                | Document viewer for multiple formats
-    feh                   | Lightweight image viewer
-    kdePackages.konsole   | Terminal emulator for KDE
-    paprefs               | PulseAudio preferences GUI
-    protonup-qt           | Install and manage Proton-GE and other compatibility tools
-    transmission_4-qt     | Fast and easy BitTorrent client (Qt version)
-    vscode                | Code editor redefined and optimized for building/debugging
-    keepassxc             | Cross-platform password manager
+    chromium              # Open-source web browser
+    firefox               # Free and open-source web browser
+    signal-desktop        # Private messaging application
+    telegram-desktop      # Messaging app with focus on speed and security
+    thunderbird           # Email, RSS, and newsgroup client
+    spotify               # Music streaming service
+    kdePackages.okular    # Universal document viewer
+    zathura               # Minimalistic document viewer with vim-like controls
+    kdePackages.dolphin   # File manager for KDE
+    evince                # Document viewer for multiple formats
+    feh                   # Lightweight image viewer
+    kdePackages.konsole   # Terminal emulator for KDE
+    paprefs               # PulseAudio preferences GUI
+    protonup-qt           # Install and manage Proton-GE and other compatibility tools
+    transmission_4-qt     # Fast and easy BitTorrent client (Qt version)
+    vscode                # Code editor redefined and optimized for building/debugging
+    keepassxc             # Cross-platform password manager
 
     # ========================
     # SYSTEM MONITORING
     # ========================
-    neofetch              | System information tool with ASCII art
-    onefetch              | Git repository summary in command line
-    fastfetch             | Fast system information tool
-    gotop                 | Terminal based graphical activity monitor
-    btop                  | Modern and resource monitor for terminal
-    htop                  | Interactive process viewer and system monitor
-    iotop                 | Monitor disk I/O usage
-    nethogs               | Monitor network usage per process
-    bandwhich             | Terminal bandwidth utilization tool
-    zenith                | Terminal system monitor with charts
-    dool                  | Performance monitoring tool (formerly dstat)
-    mission-center        | System monitoring center for GNOME
-    glances               | Cross-platform system monitoring tool
-    netdata               | Real-time performance monitoring
+    neofetch              # System information tool with ASCII art
+    onefetch              # Git repository summary in command line
+    fastfetch             # Fast system information tool
+    gotop                 # Terminal based graphical activity monitor
+    btop                  # Modern and resource monitor for terminal
+    htop                  # Interactive process viewer and system monitor
+    iotop                 # Monitor disk I/O usage
+    nethogs               # Monitor network usage per process
+    bandwhich             # Terminal bandwidth utilization tool
+    zenith                # Terminal system monitor with charts
+    dool                  # Performance monitoring tool (formerly dstat)
+    mission-center        # System monitoring center for GNOME
+    glances               # Cross-platform system monitoring tool
+    netdata               # Real-time performance monitoring
 
     # ========================
     # INFORMATION & DOCUMENTATION
     # ========================
-    tldr                  | Simplified and community-driven man pages
-    cheat                 | Create and view interactive cheatsheets
-    taskwarrior3          | Command-line task management tool
+    tldr                  # Simplified and community-driven man pages
+    cheat                 # Create and view interactive cheatsheets
+    taskwarrior3          # Command-line task management tool
 
     # ========================
     # QT6 PACKAGES FOR PLASMA 6 + KDE APPS
     # ========================
-    qt6.qtbase            | Qt6 base modules
-    qt6.qtdeclarative     | Qt6 QML and Quick modules
-    qt6.qttools           | Qt6 tools and utilities
-    qt6.qtwayland         | Qt6 Wayland support
-    qt6.qtmultimedia      | Qt6 multimedia support
-    qt6.qtsvg             | Qt6 SVG support
-    qt6.qtwebengine       | Qt6 WebEngine components
+    qt6.qtbase            # Qt6 base modules
+    qt6.qtdeclarative     # Qt6 QML and Quick modules
+    qt6.qttools           # Qt6 tools and utilities
+    qt6.qtwayland         # Qt6 Wayland support
+    qt6.qtmultimedia      # Qt6 multimedia support
+    qt6.qtsvg             # Qt6 SVG support
+    qt6.qtwebengine       # Qt6 WebEngine components
 
     # ========================
     # LOGITECH / GAMING MOUSE SUPPORT
     # ========================
-    libratbag             | DBus daemon to configure gaming mice
-    piper                 | GTK application to configure gaming mice
+    libratbag             # DBus daemon to configure gaming mice
+    piper                 # GTK application to configure gaming mice
 
     # ========================
     # THEMES & APPEARANCE
     # ========================
-    catppuccin-kde        | Catppuccin theme for KDE Plasma
-    catppuccin-gtk        | Catppuccin theme for GTK applications
-    tela-circle-icon-theme | Tela circle icon theme
-    papirus-icon-theme    | Papirus icon theme
+    catppuccin-kde        # Catppuccin theme for KDE Plasma
+    catppuccin-gtk        # Catppuccin theme for GTK applications
+    tela-circle-icon-theme # Tela circle icon theme
+    papirus-icon-theme    # Papirus icon theme
 
     # ========================
     # FUN & ENTERTAINMENT
     # ========================
-    cowsay                | Configurable talking cow
-    fortune               | Display a random fortune
-    sl                    | Steam locomotive animation for mistyped 'ls'
-    asciiquarium          | Animated ASCII aquarium
-    cbonsai               | Grow random bonsai trees in your terminal
-    cmatrix               | Show a scrolling Matrix-like screen
-    figlet                | Create large letters from ordinary text
-    speedtest-cli         | Command line interface for testing internet bandwidth
-    fast-cli              | Test your download speed using fast.com
-    termscp               | Feature rich terminal file transfer
-    cava                  | Console-based audio visualizer
-    pipes-rs              | Rust implementation of pipes.sh
-    lolcat                | Rainbow coloring for text output
+    cowsay                # Configurable talking cow
+    fortune               # Display a random fortune
+    sl                    # Steam locomotive animation for mistyped 'ls'
+    asciiquarium          # Animated ASCII aquarium
+    cbonsai               # Grow random bonsai trees in your terminal
+    cmatrix               # Show a scrolling Matrix-like screen
+    figlet                # Create large letters from ordinary text
+    speedtest-cli         # Command line interface for testing internet bandwidth
+    fast-cli              # Test your download speed using fast.com
+    termscp               # Feature rich terminal file transfer
+    cava                  # Console-based audio visualizer
+    pipes-rs              # Rust implementation of pipes.sh
+    lolcat                # Rainbow coloring for text output
   ];
 }
