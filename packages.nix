@@ -172,6 +172,8 @@
     direnv
     nixos-generators
     nh
+    nil             # Nix language server
+    rnix-lsp        # Alternative Nix LSP
 
     # ========================
     # VIRTUALIZATION
@@ -227,6 +229,9 @@
     wireguard-tools
     aircrack-ng
     ettercap
+    inetutils       # Basic network utilities
+    bind            # DNS utilities
+    openssh         # SSH client/server
 
     # ========================
     # PRODUCTIVITY & INFO
