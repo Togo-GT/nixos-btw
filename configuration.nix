@@ -26,16 +26,19 @@
   # ===========================================================================
   # HARDWARE IMPORT - SYSTEMETS FYSISKE FUNDAMENT
   # ===========================================================================
-  #
-  # 🔌 HARDWARE INTEGRATION:
-  # "Oversæt hardware-scanning til forståelige system-enheder"
-  #
-  imports = [ ./hardware-configuration.nix ];
-  # 🛠️ Genereret via: nixos-generate-config --show-hardware-config
-  # 📊 Indholder:
-  # - Filystem mapping: Mount points og partitioner
-  # - Kernel modules: Hardware-specifikke drivere
-  # - Device detection: Automatisk enhedsgenkendelse
+      #     this is in flake.nix
+      #
+      # 🔌 HARDWARE INTEGRATION:
+      # "Oversæt hardware-scanning til forståelige system-enheder"
+      #
+      #imports = [
+      #./hardware-configuration.nix
+      #  ];
+      # 🛠️ Genereret via: nixos-generate-config --show-hardware-config
+      # 📊 Indholder:
+      # - Filystem mapping: Mount points og partitioner
+      # - Kernel modules: Hardware-specifikke drivere
+      # - Device detection: Automatisk enhedsgenkendelse
 
   # ===========================================================================
   # SEKTION 2: BOOT KONFIGURATION - SYSTEMETS FØDSEL
@@ -173,7 +176,8 @@
     #
     # 🚀 NYE NVIDIA OPTIMERINGER
     forceFullCompositionPipeline = true; # 🖼️ Tear-free gaming
-    powerManagement.finegrained = true;  # ⚡ Dynamisk power management
+    # ⚠️ DEAKTIVERET pga. konflikt med PRIME sync:
+    # powerManagement.finegrained = true;  # 🔄 Konflikt med PRIME sync
 
     # -------------------------------------------------------------------------
     # NVIDIA PRIME - DUAL GPU ORKESTER
@@ -736,6 +740,13 @@
     # - nix-command: Forbedret CLI experience
     # - flakes: Reproducerbare, versionerede systemer
 
+    # 🚀 DOWNLOAD OPTIMERING
+    download-buffer-size = "100000000";   # 100MB in bytes  # 📥 Hurtigere downloads af pakker
+    # 🚀 Yderligere download optimering
+    # max-free = 3221225472;  # 3GB - mere plads til garbage collection
+    # min-free = 536870912;   # 512MB - minimum fri plads
+
+
     auto-optimise-store = true;
     # 💾 Storage Optimization:
     # - Deduplication: Identiske filer deles mellem pakker
@@ -1033,14 +1044,15 @@
     papirus-icon-theme           # 🎨 Farverige Papirus ikoner
 
     # 📊 ADVANCED MONITORING
-    nvtop                        # 🎮 NVIDIA GPU monitoring
     nvitop                       # 🔥 Enhanced NVIDIA monitoring
     netdata                      # 📊 Real-time performance monitoring
 
     # 🛠️ SYSTEM VERKTØJER
-    ventoy                       # 💾 Multi-boot USB creator
-    gnome-disks                  # 💾 Disk utility med GUI
-    keepassxc                    # 🔑 Password manager
+    # 🔄 VENTOY ERSTATTET MED SIKRERE ALTERNATIVER
+    keepassxc           # 🔑 Password manager
+    # 💾 Disk management - partitionering, S.M.A.R.T. monitoring
+    gnome-disk-utility
+
   ];
 
   # ===========================================================================
@@ -1127,19 +1139,17 @@
   # NYE SERVICES - BACKUP & SYNKRONISERING
   # ---------------------------------------------------------------------------
   #
-  services.restic.backups = {
-    system = {
-      enable = true;                    # 🗄️ Aktiver automatisk backup
-      repository = "/var/backup";       # 💾 Backup destination
-      passwordFile = "/etc/restic/password"; # 🔐 Password fil
-      paths = [ "/home" "/etc/nixos" ]; # 📁 Hvad der skal backuppes
-      timerConfig = {
-        OnCalendar = "daily";           # 📅 Kør hver dag
-        Persistent = true;              # 🔄 Persist timer
-      };
+  # 🗄️ SIMPLIFICERET RESTIC KONFIGURATION
+  services.restic.backups.system = {
+    initialize = true;
+    repository = "/var/backup";
+    passwordFile = "/etc/restic/password";
+    paths = [ "/home" "/etc/nixos" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
     };
   };
-  # 🎯 Backup Strategy: "Daglige backups af hjemmemapper og systemkonfiguration"
 
   services.syncthing = {
     enable = true;                      # 🔄 Aktiver filsynkronisering
