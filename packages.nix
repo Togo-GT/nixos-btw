@@ -50,8 +50,8 @@
     direnv                # Environment switcher for the shell
     nixos-generators      # Generate NixOS installation media
     nh                    # Nix helper for convenient package management
-  #  nil                   # Nix language server
-    rnix-lsp              # Alternative Nix language server
+    nil                   # Nix language server
+  # rnix-lsp              # Alternative Nix language server
 
     # ========================
     # SHELL & TERMINAL
