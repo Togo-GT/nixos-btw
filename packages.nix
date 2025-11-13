@@ -47,7 +47,6 @@
     wpa_supplicant                    # WPA supplicant for wireless networks
     wpa_supplicant_gui                # GUI for wpa_supplicant
     iw                                # Wireless device configuration utility
-    wireless-tools                    # Wireless tools (iwconfig, iwlist)
     aircrack-ng                       # WiFi security auditing tools
     wireshark                         # Network protocol analyzer
     wireshark-cli                     # Command-line version of Wireshark (tshark)
