@@ -88,7 +88,7 @@
     ettercap                          # Comprehensive suite for man-in-the-middle attacks
     driftnet                          # Captures and displays images from network traffic
     sslscan                           # SSL/TLS scanner
-    testssl.sh                        # TLS/SSL encryption testing tool
+    testssL                           # TLS/SSL encryption testing tool
     smbclient                         # SMB/CIFS client utilities
     nfs-utils                         # NFS client and server utilities
     ftp                               # Classic file transfer protocol client
