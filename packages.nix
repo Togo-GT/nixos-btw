@@ -36,7 +36,6 @@
     networkmanager-openvpn            # OpenVPN plugin for NetworkManager
     networkmanager-openconnect        # OpenConnect plugin for NetworkManager
     networkmanager-vpnc               # VPNC plugin for NetworkManager
-    networkmanager-fortisslvpn        # FortiSSL VPN plugin for NetworkManager
     networkmanager-l2tp               # L2TP plugin for NetworkManager
     networkmanager-strongswan         # StrongSwan plugin for NetworkManager
     net-tools                         # Basic networking tools (ifconfig, netstat, route)
@@ -73,8 +72,6 @@
     openvpn                           # VPN solution using SSL/TLS
     wireguard-tools                   # Tools for WireGuard VPN setup
     tailscale                         # Zero config VPN for secure networks
-    softethervpn                      # Multi-protocol VPN software
-    pptp                              # Point-to-Point Tunneling Protocol
     dnsmasq                           # Lightweight DNS/DHCP server
     dnstop                            # DNS traffic monitoring
     dnstracer                         # Trace DNS queries through DNS servers
@@ -97,10 +94,7 @@
     ftp                               # Classic file transfer protocol client
     lftp                              # Sophisticated file transfer program
     sshfs                             # Filesystem client for SSH
-    curlftpfs                         # Filesystem for accessing FTP hosts
     networkmanager_dmenu              # dmenu script for NetworkManager
-    networkmanager-iodine             # Iodine DNS tunnel plugin for NetworkManager
-    networkmanager-ssh                # SSH plugin for NetworkManager
     lynx                              # Text-based web browser
     links2                            # Graphical and text web browser
     elinks                            # Advanced text-based web browser
