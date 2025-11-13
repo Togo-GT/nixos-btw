@@ -66,7 +66,6 @@
     darkstat                          # Network traffic analyzer with web interface
     traceroute                        # Print the route packets take to network host
     mtr                               # Network diagnostic tool combining traceroute and ping
-    ping                              # Basic network connectivity testing
     prettyping                        # Ping with visual feedback
     httpie                            # Modern command-line HTTP client
     socat                             # Multipurpose relay tool
