@@ -57,7 +57,6 @@
     fast-cli                          # Test download speed using fast.com
     netdiscover                       # Network address discovery tool
     arp-scan                          # ARP scanning and fingerprinting tool
-    angry-ip-scanner                  # Fast network scanner with GUI
     zenmap                            # GUI for nmap
     iftop                             # Display bandwidth usage on an interface
     bmon                              # Bandwidth monitor and rate estimator
