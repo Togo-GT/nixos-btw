@@ -73,7 +73,6 @@
     openvpn                           # VPN solution using SSL/TLS
     wireguard-tools                   # Tools for WireGuard VPN setup
     tailscale                         # Zero config VPN for secure networks
-    softethervpn                      # Multi-protocol VPN software
     pptp                              # Point-to-Point Tunneling Protocol
     dnsmasq                           # Lightweight DNS/DHCP server
     dnstop                            # DNS traffic monitoring
