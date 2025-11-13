@@ -1,3 +1,4 @@
+#/home/togo-gt/nixos-config/flake.nix
 {
   # ===========================================================================
   # FLAKE DOKUMENTATION - SYSTEMETS BLÅPRINT
