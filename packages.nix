@@ -88,10 +88,7 @@
     ettercap                          # Comprehensive suite for man-in-the-middle attacks
     driftnet                          # Captures and displays images from network traffic
     sslscan                           # SSL/TLS scanner
-    testssL                           # TLS/SSL encryption testing tool
-    smbclient                         # SMB/CIFS client utilities
     nfs-utils                         # NFS client and server utilities
-    ftp                               # Classic file transfer protocol client
     lftp                              # Sophisticated file transfer program
     sshfs                             # Filesystem client for SSH
     networkmanager_dmenu              # dmenu script for NetworkManager
