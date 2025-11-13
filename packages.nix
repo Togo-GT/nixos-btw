@@ -96,15 +96,11 @@
     links2                            # Graphical and text web browser
     elinks                            # Advanced text-based web browser
 
-    usb_modeswitch                    # Mode switching tool for USB devices
-    smbclient                         # SMB/CIFS client utilities
-    testssl.sh                        # TLS/SSL encryption testing tool
-    angry-ip-scanner                  # Fast network scanner with GUI
-
-    # Valgfri - kun hvis specifikt brug for:
-    # networkmanager-fortisslvpn        # FortiSSL VPN plugin for NetworkManager
-     networkmanager-ssh                # SSH plugin for NetworkManager
-    # softethervpn                      # Multi-protocol VPN software
+    usb-modeswitch                    # Mode switching tool for USB devices
+    usb-modeswitch-data               # Device database for USB mode switching
+    angryipscanner                    # Fast network scanner with GUI
+    samba                             # SMB/CIFS client utilities
+    testssl                           # TLS/SSL encryption testing tool
 
     # ========================
     # PACKAGE MANAGEMENT (NIX)
