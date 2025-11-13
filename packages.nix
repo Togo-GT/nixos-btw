@@ -73,6 +73,7 @@
     openvpn                           # VPN solution using SSL/TLS
     wireguard-tools                   # Tools for WireGuard VPN setup
     tailscale                         # Zero config VPN for secure networks
+    softethervpn                      # Multi-protocol VPN software
     pptp                              # Point-to-Point Tunneling Protocol
     dnsmasq                           # Lightweight DNS/DHCP server
     dnstop                            # DNS traffic monitoring
@@ -87,7 +88,6 @@
     vde2                              # Virtual Distributed Ethernet
     openvswitch                       # Production quality multilayer virtual switch
     modemmanager                      # Mobile broadband modem management service
-    usb_modeswitch                    # Mode switching tool for USB devices
     ettercap                          # Comprehensive suite for man-in-the-middle attacks
     driftnet                          # Captures and displays images from network traffic
     sslscan                           # SSL/TLS scanner
