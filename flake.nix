@@ -22,7 +22,7 @@
   #
   inputs = {
     # -------------------------------------------------------------------------
-    # NIXOS UNSTABLE - GRUNDSTENEN AF SYSTEMET
+    # NIXOS UNSTABLE - GRUNDSTONEN AF SYSTEMET
     # -------------------------------------------------------------------------
     #
     # 🚀 NIXPKGS UNSTABLE MISSION:
@@ -100,8 +100,8 @@
           # "Deklarativ beskrivelse af ønsket systemadfærd og brugererfaring"
           #
           ./configuration.nix
-          ./zsh-fix.nix
-          ./packages.nix
+          ./zsh-fix.nix          # ✅ KEPT - Your ZSH configuration
+          ./packages.nix         # ✅ KEPT - Your package list
           # 📝 Indholdsoverblik:
           # - Boot konfiguration: systemd-boot med UEFI
           # - GPU setup: NVIDIA PRIME med Intel hybrid graphics
@@ -143,7 +143,9 @@
         # "Hierarkisk konfiguration hvor senere moduler overskriver tidligere"
         # 1. Hardware-configuration: Definerer fysiske enheder
         # 2. Configuration.nix: Tilføjer brugerpræferencer og software
-        # 3. NVIDIA module: Specialiseret GPU optimering
+        # 3. ZSH-fix.nix: Avanceret shell konfiguration
+        # 4. Packages.nix: Komplet pakke økosystem
+        # 5. NVIDIA module: Specialiseret GPU optimering
       };
 
       # -----------------------------------------------------------------------

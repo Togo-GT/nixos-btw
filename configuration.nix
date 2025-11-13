@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-imports = [ ./packages.nix ];
+
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -38,6 +38,8 @@ imports = [ ./packages.nix ];
       "vboxnetadp"
       "vboxnetflt"
       "vboxpci"
+      "kvm"           # ✅ ADDED - KVM virtualization
+      "kvm-intel"     # ✅ ADDED - Intel KVM support
     ];
   };
 
@@ -184,6 +186,7 @@ imports = [ ./packages.nix ];
       "libvirtd"
       "vboxusers"
       "syncthing"
+      "kvm"           # ✅ ADDED - KVM access
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzs4vJf1MW9Go0FzrBlUuqwwYDyDG7kP5KQYkxSplxF michael.kaare.nielsen@gmail.com"

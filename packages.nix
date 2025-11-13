@@ -194,9 +194,9 @@
     distrobox             # Use any Linux distribution inside your terminal
     virt-manager          # Desktop user interface for managing virtual machines
     virt-viewer           # Viewer for remote virtual machines
-    qemu                  # Generic machine emulator and virtualizer
-    qemu_kvm              # QEMU with KVM support
+    qemu                  # Generic machine emulator and virtualizer (includes KVM)
     qemu-utils            # QEMU utilities
+    qemu_full             # QEMU with all optional features
     quickemu              # Quickly create and run optimised Windows/macOS VMs
     libvirt               # Toolkit to manage virtualization platforms
     spice                 # SPICE remote computing protocol
