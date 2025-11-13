@@ -96,6 +96,19 @@
     links2                            # Graphical and text web browser
     elinks                            # Advanced text-based web browser
 
+    networkmanager-fortisslvpn        # FortiSSL VPN plugin for NetworkManager - MANGLER
+    wireless-tools                    # Wireless tools (iwconfig, iwlist) - MANGLER
+    angry-ip-scanner                  # Fast network scanner with GUI - MANGLER
+    softethervpn                      # Multi-protocol VPN software - MANGLER
+    pptp                              # Point-to-Point Tunneling Protocol - MANGLER
+    testssl.sh                        # TLS/SSL encryption testing tool - MANGLER
+    usb_modeswitch                    # Mode switching tool for USB devices - MANGLER
+    smbclient                         # SMB/CIFS client utilities - MANGLER
+    ftp                               # Classic file transfer protocol client - MANGLER
+    curlftpfs                         # Filesystem for accessing FTP hosts - MANGLER
+    networkmanager-iodine             # Iodine DNS tunnel plugin for NetworkManager - MANGLER
+    networkmanager-ssh                # SSH plugin for NetworkManager - MANGLER
+
     # ========================
     # PACKAGE MANAGEMENT (NIX)
     # ========================
