@@ -1,501 +1,550 @@
-# configuration.nix - Main system configuration
+# /etc/nixos/configuration.nix
 { config, pkgs, ... }:
 
 {
-  # =============================================
-  # BOOT CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # BOOT CONFIGURATION - SYSTEMETS OPLYSNINGSVEJE
+  # ===========================================================================
   boot = {
-    # Use systemd-boot as the bootloader
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
+    # -------------------------------------------------------------------------
+    # BOOTLOADER CONFIGURATION - SYSTEMETS STARTMOTOR
+    # -------------------------------------------------------------------------
+    loader.systemd-boot.enable = true;        # 🚀 Modern bootloader with simplicity
+    loader.efi.canTouchEfiVariables = true;   # 🔧 Allow EFI variable modification
+    kernelPackages = pkgs.linuxPackages_latest; # 📦 Latest kernel for new hardware
 
-    # Use latest kernel for better hardware support
-    kernelPackages = pkgs.linuxPackages_latest;
-
-    # Kernel parameters for performance and compatibility
+    # -------------------------------------------------------------------------
+    # KERNEL PARAMETERS - SYSTEMETS TUNING PARAMETRE
+    # -------------------------------------------------------------------------
     kernelParams = [
-      "quiet"
-      "splash"
-      "nvidia-drm.modeset=1"  # Enable NVIDIA DRM mode setting
-      "nowatchdog"            # Disable watchdog timers
-      "tsc=reliable"          # Force reliable TSC
-      "nohibernate"           # Disable hibernation
-      "nvreg_EnableMSI=1"     # Enable MSI for NVIDIA
-      "mitigations=off"       # Disable CPU vulnerability mitigations for performance
-      "preempt=full"          # Full kernel preemption
-      "transparent_hugepage=always"  # Always use transparent huge pages
+      "quiet"                   # 🤫 Reduce boot noise
+      "splash"                  # 🎨 Show splash screen
+      "nvidia-drm.modeset=1"    # 🖥️ Enable NVIDIA DRM mode setting
+      "nowatchdog"              # ⏰ Disable hardware watchdog
+      "tsc=reliable"            # ⚡ Force TSC as reliable clock source
+      "nohibernate"             # 💤 Disable hibernation
+      "nvreg_EnableMSI=1"       # 🔧 Enable Message Signaled Interrupts for NVIDIA
+      "mitigations=off"         # 🛡️ Disable CPU vulnerability mitigations for performance
+      "preempt=full"            # ⚡ Full preemption for desktop responsiveness
+      "transparent_hugepage=always" # 🚀 Always use transparent hugepages
     ];
 
-    # Kernel modules to load in initrd
+    # -------------------------------------------------------------------------
+    # INITRD KERNEL MODULES - SYSTEMETS TIDLIGSTE DRIVERE
+    # -------------------------------------------------------------------------
     initrd.availableKernelModules = [
-      "nvme"          # NVMe storage
-      "xhci_pci"      # USB 3.0 controller
-      "ahci"          # SATA controller
-      "usbhid"        # USB HID devices
-      "usb_storage"   # USB storage
-      "sd_mod"        # SCSI disk support
+      "nvme"          # 💾 NVMe SSD support
+      "xhci_pci"      # 🔌 USB 3.0 support
+      "ahci"          # 💿 SATA AHCI controller support
+      "usbhid"        # ⌨️ USB human interface devices
+      "usb_storage"   # 💽 USB storage devices
+      "sd_mod"        # 📀 SCSI disk support
     ];
 
-    # Kernel modules to load
+    # -------------------------------------------------------------------------
+    # KERNEL MODULES - SYSTEMETS DRIVER ØKOSYSTEM
+    # -------------------------------------------------------------------------
     kernelModules = [
-      "fuse"          # Filesystem in Userspace
-      "v4l2loopback"  # Virtual video devices
-      "snd-aloop"     # ALSA loopback sound
-      "nvidia"        # NVIDIA graphics
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-      "vboxdrv"       # VirtualBox
-      "vboxnetadp"
-      "vboxnetflt"
-      "vboxpci"
-      "kvm"           # Kernel Virtual Machine
-      "kvm-intel"     # Intel KVM support
+      "fuse"              # 📁 Filesystem in Userspace
+      "v4l2loopback"      # 📹 Virtual video devices
+      "snd-aloop"         # 🔊 Loopback audio device
+      "nvidia"            # 🎮 NVIDIA graphics driver
+      "nvidia_modeset"    # 🖥️ NVIDIA display mode setting
+      "nvidia_uvm"        # 🧮 NVIDIA Unified Memory
+      "nvidia_drm"        # 🎨 NVIDIA DRM driver
+      "vboxdrv"           # 🖥️ VirtualBox host driver
+      "vboxnetadp"        # 🌐 VirtualBox network adapter
+      "vboxnetflt"        # 🔧 VirtualBox network filter
+      "vboxpci"           # 🔌 VirtualBox PCI pass-through
+      "kvm"               # ✅ ADDED - KVM virtualization
+      "kvm-intel"         # ✅ ADDED - Intel KVM support
     ];
   };
 
-  # =============================================
-  # FILESYSTEM CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # FILESYSTEM CONFIGURATION - SYSTEMETS LAGERHIERARKI
+  # ===========================================================================
   fileSystems."/home" = {
     device = "/dev/disk/by-uuid/e439ce99-1952-496e-9e1d-63ca5992cf98";
     fsType = "ext4";
-    options = ["defaults" "noatime" "nodiratime"];  # Performance options
+    options = ["defaults" "noatime" "nodiratime"]; # 🚀 Performance optimizations
   };
 
-  # =============================================
-  # NVIDIA GRAPHICS CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # NVIDIA HARDWARE CONFIGURATION - GRAFISK ACCELERATION
+  # ===========================================================================
   hardware.nvidia = {
-    modesetting.enable = true;     # Required for Wayland
-    open = false;                  # Use proprietary drivers
-    nvidiaSettings = true;         # Enable nvidia-settings tool
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    forceFullCompositionPipeline = true;  # Fix screen tearing
+    modesetting.enable = true;     # 🖥️ Enable kernel mode setting
+    open = false;                  # 🔒 Use proprietary drivers
+    nvidiaSettings = true;         # ⚙️ Enable NVIDIA control panel
+    package = config.boot.kernelPackages.nvidiaPackages.stable; # 📦 Stable driver package
+    forceFullCompositionPipeline = true; # 🎨 Force full composition pipeline for tearing prevention
 
-    # Prime configuration for hybrid graphics (Intel + NVIDIA)
+    # -------------------------------------------------------------------------
+    # PRIME CONFIGURATION - HYBRID GRAPHICS MANAGEMENT
+    # -------------------------------------------------------------------------
     prime = {
-      sync.enable = true;          # Use PRIME sync
-      offload.enable = false;      # Disable offload mode
-      intelBusId = "PCI:0:2:0";    # Intel GPU bus ID
-      nvidiaBusId = "PCI:1:0:0";   # NVIDIA GPU bus ID
+      sync.enable = true;          # 🔄 Enable PRIME sync
+      offload.enable = false;      # ❌ Disable offload (using sync instead)
+      intelBusId = "PCI:0:2:0";    # 🔌 Intel integrated GPU bus ID
+      nvidiaBusId = "PCI:1:0:0";   # 🎮 NVIDIA discrete GPU bus ID
     };
   };
 
-  # =============================================
-  # HARDWARE CONFIGURATION
-  # =============================================
-  hardware.cpu.intel.updateMicrocode = true;  # Intel CPU microcode updates
+  # ===========================================================================
+  # CPU & MICROCODE CONFIGURATION - PROCESSOR OPTIMIZERING
+  # ===========================================================================
+  hardware.cpu.intel.updateMicrocode = true; # 🔧 Update Intel CPU microcode
 
-  # Graphics and video acceleration
+  # ===========================================================================
+  # GRAPHICS STACK CONFIGURATION - VISUEL PERFORMANCE
+  # ===========================================================================
   hardware.graphics = {
-    enable = true;
-    enable32Bit = true;  # Enable 32-bit support for compatibility
+    enable = true;          # 🎨 Enable graphics stack
+    enable32Bit = true;     # 🔧 32-bit graphics support for compatibility
 
-    # Video acceleration packages
+    # -------------------------------------------------------------------------
+    # EXTRA GRAPHICS PACKAGES - ACCELERATIONSBIBLIOTEKER
+    # -------------------------------------------------------------------------
     extraPackages = with pkgs; [
-      libva-vdpau-driver
-      libvdpau-va-gl
-      mesa
-      nvidia-vaapi-driver
+      libva-vdpau-driver    # 📺 VA-API to VDPAU bridge
+      libvdpau-va-gl        # 🔄 VDPAU to VA-API bridge
+      mesa                  # 🎨 OpenGL implementation
+      nvidia-vaapi-driver   # 📹 VA-API implementation for NVIDIA
     ];
 
-    # 32-bit video acceleration packages
+    # -------------------------------------------------------------------------
+    # 32-BIT GRAPHICS PACKAGES - KOMPATIBILITETSBIBLIOTEKER
+    # -------------------------------------------------------------------------
     extraPackages32 = with pkgs.pkgsi686Linux; [
-      libva
-      mesa
-      nvidia-vaapi-driver
+      libva                # 🎨 Video Acceleration API (32-bit)
+      mesa                 # 🎨 OpenGL implementation (32-bit)
+      nvidia-vaapi-driver  # 📹 VA-API for NVIDIA (32-bit)
     ];
   };
 
-  # =============================================
-  # PRINTING SERVICES
-  # =============================================
-  services.printing.enable = true;
+  # ===========================================================================
+  # PRINTING SERVICES - UDTRYKKERSTØTTE
+  # ===========================================================================
+  services.printing.enable = true; # 🖨️ Enable CUPS printing service
 
-  # =============================================
-  # AUDIO CONFIGURATION
-  # =============================================
-  security.rtkit.enable = true;  # Realtime kit for audio
+  # ===========================================================================
+  # REALTIME KIT - AUDIO PERFORMANCE
+  # ===========================================================================
+  security.rtkit.enable = true;    # 🔊 Realtime kit for audio processing
 
-  # PipeWire for modern audio handling
+  # ===========================================================================
+  # PIPEWIRE CONFIGURATION - MODERNE LYD SYSTEM
+  # ===========================================================================
   services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;  # 32-bit audio support
-    pulse.enable = true;       # PulseAudio compatibility
-    jack.enable = true;        # JACK audio support
+    enable = true;           # 🎵 Enable PipeWire sound server
+    alsa.enable = true;      # 🔌 ALSA support
+    alsa.support32Bit = true; # 🔧 32-bit ALSA application support
+    pulse.enable = true;     # ❤️ PulseAudio compatibility layer
+    jack.enable = true;      # 🎛️ JACK audio server support
   };
 
-  # =============================================
-  # BLUETOOTH CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # BLUETOOTH CONFIGURATION - TRÅDLØS FORBINDELSE
+  # ===========================================================================
   hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = true;  # Enable Bluetooth on boot
+    enable = true;           # 🔵 Enable Bluetooth support
+    powerOnBoot = true;      # 🔌 Power on Bluetooth on boot
   };
-  services.blueman.enable = true;  # Bluetooth manager GUI
+  services.blueman.enable = true; # 🎛️ Bluetooth manager GUI
 
-  # =============================================
-  # NETWORKING CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # NETWORKING CONFIGURATION - NETVÆRKSFORBINDELSER
+  # ===========================================================================
   networking = {
-    hostName = "nixos-btw";  # System hostname
-    networkmanager.enable = true;  # Use NetworkManager
-    nameservers = [ "1.1.1.1" "1.0.0.1" ];  # Cloudflare DNS
+    hostName = "nixos-btw";  # 🖥️ System hostname
+    networkmanager.enable = true; # 🌐 NetworkManager for network management
+    nameservers = [ "1.1.1.1" "1.0.0.1" ]; # 🌍 Cloudflare DNS servers
   };
 
-  # =============================================
-  # TIME AND LOCALE CONFIGURATION
-  # =============================================
-  time.timeZone = "Europe/Copenhagen";  # Copenhagen timezone
+  # ===========================================================================
+  # TIME & TIMEZONE CONFIGURATION - TIDSREGIONER
+  # ===========================================================================
+  time.timeZone = "Europe/Copenhagen"; # 🇩🇰 Copenhagen timezone
 
-  # Time synchronization
-  services.timesyncd.enable = true;
+  # ===========================================================================
+  # TIME SYNCHRONIZATION - PRÆCIS TIDSSYNKRONISERING
+  # ===========================================================================
+  services.timesyncd.enable = true; # ⏰ Systemd time synchronization
   services.timesyncd.servers = [
-    "0.dk.pool.ntp.org"
-    "1.dk.pool.ntp.org"
-    "2.dk.pool.ntp.org"
-    "3.dk.pool.ntp.org"
+    "0.dk.pool.ntp.org"    # 🇩🇰 Danish NTP server 0
+    "1.dk.pool.ntp.org"    # 🇩🇰 Danish NTP server 1
+    "2.dk.pool.ntp.org"    # 🇩🇰 Danish NTP server 2
+    "3.dk.pool.ntp.org"    # 🇩🇰 Danish NTP server 3
   ];
 
-  # Internationalization and locale settings
+  # ===========================================================================
+  # INTERNATIONALIZATION - SPROG OG REGIONALE INDSTILLINGER
+  # ===========================================================================
   i18n = {
-    defaultLocale = "en_DK.UTF-8";  # English with Danish formatting
+    defaultLocale = "en_DK.UTF-8"; # 🏴‍☠️ Default locale: English in Denmark
     supportedLocales = [
-      "en_DK.UTF-8/UTF-8"
-      "da_DK.UTF-8/UTF-8"
+      "en_DK.UTF-8/UTF-8"  # 🇬🇧 English in Denmark
+      "da_DK.UTF-8/UTF-8"  # 🇩🇰 Danish in Denmark
     ];
-    # Fine-grained locale settings
     extraLocaleSettings = {
-      LANG = "en_DK.UTF-8";
-      LC_CTYPE = "en_DK.UTF-8";
-      LC_NUMERIC = "da_DK.UTF-8";     # Danish number formatting
-      LC_TIME = "da_DK.UTF-8";        # Danish time formatting
-      LC_MONETARY = "da_DK.UTF-8";    # Danish currency formatting
-      LC_ADDRESS = "da_DK.UTF-8";     # Danish address formatting
-      LC_IDENTIFICATION = "da_DK.UTF-8";
-      LC_MEASUREMENT = "da_DK.UTF-8"; # Danish measurement units
-      LC_PAPER = "da_DK.UTF-8";
-      LC_TELEPHONE = "da_DK.UTF-8";   # Danish phone number format
-      LC_NAME = "da_DK.UTF-8";        # Danish name formatting
+      LANG = "en_DK.UTF-8";                # 🏴‍☠️ System language
+      LC_CTYPE = "en_DK.UTF-8";            # 🔤 Character classification
+      LC_NUMERIC = "da_DK.UTF-8";          # 🔢 Numbers (Danish format)
+      LC_TIME = "da_DK.UTF-8";             # 📅 Time and date (Danish format)
+      LC_MONETARY = "da_DK.UTF-8";         # 💰 Currency (Danish format)
+      LC_ADDRESS = "da_DK.UTF-8";          # 🏠 Addresses (Danish format)
+      LC_IDENTIFICATION = "da_DK.UTF-8";   # 🆔 Identification (Danish format)
+      LC_MEASUREMENT = "da_DK.UTF-8";      # 📏 Measurement (Danish metric system)
+      LC_PAPER = "da_DK.UTF-8";            # 📄 Paper sizes (Danish format)
+      LC_TELEPHONE = "da_DK.UTF-8";        # 📞 Telephone numbers (Danish format)
+      LC_NAME = "da_DK.UTF-8";             # 👤 Names (Danish format)
     };
   };
 
-  # Keyboard layout
+  # ===========================================================================
+  # KEYBOARD LAYOUT - TASTATUROPLÆG
+  # ===========================================================================
   services.xserver.xkb = {
-    layout = "dk";   # Danish keyboard layout
-    variant = "";
+    layout = "dk";          # 🇩🇰 Danish keyboard layout
+    variant = "";           # 🔤 No variant (standard Danish)
   };
-  console.keyMap = "dk-latin1";  # Console keymap
+  console.keyMap = "dk-latin1"; # 💻 Console keymap (Danish Latin-1)
 
-  # =============================================
-  # DISPLAY CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # XSERVER CONFIGURATION - GRAFISK SYSTEM
+  # ===========================================================================
   services.xserver = {
-    enable = true;
-    videoDrivers = [ "nvidia" ];  # Use NVIDIA drivers
+    enable = true;                  # 🖥️ Enable X11 server
+    videoDrivers = [ "nvidia" ];    # 🎮 NVIDIA graphics drivers
   };
 
-  # Modern desktop portal for Wayland applications
-  xdg.mime.enable = true;
+  # ===========================================================================
+  # XDG MIME - FILTYPE ASSOCIATIONER
+  # ===========================================================================
+  xdg.mime.enable = true;           # 📁 Enable XDG MIME type database
 
-  # SDDM display manager with Wayland support
+  # ===========================================================================
+  # DISPLAY MANAGER - LOGIN SKÆRM
+  # ===========================================================================
   services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
+    enable = true;          # 🎨 Enable SDDM display manager
+    wayland.enable = true;  # 🚀 Enable Wayland support in SDDM
   };
 
-  # KDE Plasma 6 desktop environment
-  services.desktopManager.plasma6.enable = true;
+  # ===========================================================================
+  # DESKTOP ENVIRONMENT - SKRIVEBORDSMILJØ
+  # ===========================================================================
+  services.desktopManager.plasma6.enable = true; # 🎨 KDE Plasma 6 desktop
 
-  # Desktop portals for file dialogs and more
+  # ===========================================================================
+  # XDG DESKTOP PORTALS - SKRIVEBORDSINTEGRATION
+  # ===========================================================================
   xdg.portal = {
-    enable = true;
+    enable = true;          # 🚪 Enable XDG desktop portals
     extraPortals = with pkgs; [
-      kdePackages.xdg-desktop-portal-kde  # KDE portal
-      xdg-desktop-portal-gtk              # GTK portal
+      kdePackages.xdg-desktop-portal-kde  # 🎨 KDE desktop portal
+      xdg-desktop-portal-gtk              # 🪟 GTK desktop portal
     ];
   };
 
-  # DConf for GNOME/GTK application settings
-  programs.dconf.enable = true;
+  # ===========================================================================
+  # DCONF CONFIGURATION - GNOME/KONFIGURATIONSLAGER
+  # ===========================================================================
+  programs.dconf.enable = true;     # ⚙️ Enable dconf configuration system
 
-  # =============================================
-  # GIT CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # GIT CONFIGURATION - VERSIONSCONTROL
+  # ===========================================================================
   programs.git = {
-    enable = true;
+    enable = true;                  # 🔧 Enable Git
     config = {
-      user.name = "Togo-GT";
-      user.email = "michael.kaare.nielsen@gmail.com";
-      init.defaultBranch = "main";
+      user.name = "Togo-GT";                           # 👤 Git username
+      user.email = "michael.kaare.nielsen@gmail.com"; # 📧 Git email
+      init.defaultBranch = "main";                     # 🌿 Default branch name
     };
   };
 
-  # =============================================
-  # USER CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # USER CONFIGURATION - BRUGERDEFINITION
+  # ===========================================================================
   users.users.togo-gt = {
-    isNormalUser = true;
-    description = "Togo-GT";
+    isNormalUser = true;            # 👤 Regular user (not system account)
+    description = "Togo-GT";        # 📝 User description
     extraGroups = [
-      "networkmanager"  # Network management
-      "wheel"           # Sudo access
-      "input"           # Input device access
-      "docker"          # Docker access
-      "libvirtd"        # Virtualization access
-      "vboxusers"       # VirtualBox access
-      "syncthing"       # Syncthing access
-      "kvm"             # KVM virtualization access
+      "networkmanager"  # 🌐 Network management privileges
+      "wheel"           # ⚙️ Sudo privileges
+      "input"           # ⌨️ Input device access
+      "docker"          # 🐳 Docker container access
+      "libvirtd"        # 🔮 Virtualization access
+      "vboxusers"       # 🖥️ VirtualBox user group
+      "syncthing"       # 🔄 Syncthing file synchronization
+      "kvm"             # ✅ ADDED - KVM access
     ];
-    # SSH authorized keys for passwordless login
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzs4vJf1MW9Go0FzrBlUuqwwYDyDG7kP5KQYkxSplxF michael.kaare.nielsen@gmail.com"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzs4vJf1MW9Go0FzrBlUuqwwYDyDG7kP5KQYkxSplxF michael.kaare.nielsen@gmail.com" # 🔑 SSH public key
     ];
     packages = with pkgs; [
-      kdePackages.kate  # KDE advanced text editor
+      kdePackages.kate  # 📝 KDE Advanced Text Editor
     ];
   };
 
-  # SSH agent for key management
-  programs.ssh.startAgent = true;
+  # ===========================================================================
+  # SSH AGENT - SIKKER AUTHENTICATION
+  # ===========================================================================
+  programs.ssh.startAgent = true;   # 🔐 Start SSH agent automatically
 
-  # =============================================
-  # NIX PACKAGE MANAGER CONFIGURATION
-  # =============================================
-  nixpkgs.config.allowUnfree = true;  # Allow proprietary packages
+  # ===========================================================================
+  # NIXPKGS CONFIGURATION - PAKKEHÅNDTERING
+  # ===========================================================================
+  nixpkgs.config.allowUnfree = true; # 🔓 Allow proprietary packages
 
-  # Nix settings and optimizations
+  # ===========================================================================
+  # NIX SETTINGS - NIX KONFIGURATION
+  # ===========================================================================
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];  # Modern Nix features
-    download-buffer-size = "100000000";  # Larger download buffer
-    auto-optimise-store = true;          # Automatically optimize store
-
-    # Binary caches for faster downloads
+    experimental-features = [ "nix-command" "flakes" ]; # 🚀 Enable experimental features
+    download-buffer-size = "100000000";                 # 📦 Larger download buffer
+    auto-optimise-store = true;                         # 🔧 Auto-optimize Nix store
     substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
+      "https://cache.nixos.org"               # 🏢 Official NixOS cache
+      "https://nix-community.cachix.org"      # 👥 Community cache
+      "https://hyprland.cachix.org"           # 🎨 Hyprland cache
     ];
     trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="      # 🔑 Official NixOS key
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=" # 🔑 Community key
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="  # 🔑 Hyprland key
     ];
-    cores = 0;        # Use all available cores
-    max-jobs = "auto"; # Automatic job parallelism
+    cores = 0;              # 🔢 Use all available CPU cores
+    max-jobs = "auto";      # ⚙️ Automatic job parallelism
   };
 
-  # Automatic garbage collection
+  # ===========================================================================
+  # GARBAGE COLLECTION - SYSTEMOPRYDNING
+  # ===========================================================================
   nix.gc = {
-    automatic = true;    # Run GC automatically
-    dates = "weekly";    # Run once per week
-    options = "--delete-older-than 7d";  # Keep only last 7 days
+    automatic = true;               # 🤖 Automatic garbage collection
+    dates = "weekly";               # 📅 Run once per week
+    options = "--delete-older-than 7d"; # 🗑️ Delete generations older than 7 days
   };
 
-  # =============================================
-  # SYSTEM SERVICES AND OPTIMIZATIONS
-  # =============================================
-  services.fstrim.enable = true;    # SSD trim support
-  services.earlyoom.enable = true;  # Early OOM killer
-  services.flatpak.enable = true;   # Flatpak support
+  # ===========================================================================
+  # FSTRIM SERVICE - SSD OPTIMERING
+  # ===========================================================================
+  services.fstrim.enable = true;    # 💾 Enable SSD TRIM support
 
-  # Power management - TLP for better battery life
-  services.power-profiles-daemon.enable = false;  # Disable conflicting service
+  # ===========================================================================
+  # EARLY OOM - MEMORY MANAGEMENT
+  # ===========================================================================
+  services.earlyoom.enable = true;  # 🚨 Early out-of-memory killer
+
+  # ===========================================================================
+  # FLATPAK SUPPORT - UNIVERSAL PAKKEHÅNDTERING
+  # ===========================================================================
+  services.flatpak.enable = true;   # 📦 Enable Flatpak application support
+
+  # ===========================================================================
+  # POWER MANAGEMENT - STRØMHÅNDTERING
+  # ===========================================================================
+  services.power-profiles-daemon.enable = false; # ❌ Disable GNOME power profiles
   services.tlp = {
-    enable = true;
+    enable = true;                  # 🔋 Enable TLP power management
     settings = {
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";   # Performance on AC power
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";    # Power save on battery
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";   # ⚡ Performance on AC power
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";    # 🔋 Power save on battery
     };
   };
 
-  # =============================================
-  # GAMING CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # GAMING CONFIGURATION - SPILOPTIMERING
+  # ===========================================================================
   programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;      # Allow Steam Remote Play
-    dedicatedServer.openFirewall = true; # Allow dedicated servers
+    enable = true;                          # 🎮 Enable Steam gaming platform
+    remotePlay.openFirewall = true;         # 🌐 Open firewall for Remote Play
+    dedicatedServer.openFirewall = true;    # 🖥️ Open firewall for dedicated servers
     extraCompatPackages = with pkgs; [
-      proton-ge-bin  # Proton-GE for better game compatibility
+      proton-ge-bin          # 🍷 Proton-GE for Windows game compatibility
     ];
   };
-  programs.gamescope.enable = true;  # SteamOS gamescope compositor
-  programs.gamemode.enable = true;   # Feral Interactive's GameMode
+  programs.gamescope.enable = true;         # 🎯 Gamescope compositor for gaming
+  programs.gamemode.enable = true;          # 🚀 Gamemode for gaming optimizations
 
-  # =============================================
-  # HARDWARE SERVICES
-  # =============================================
-  services.hardware.bolt.enable = true;  # Thunderbolt support
+  # ===========================================================================
+  # HARDWARE SUPPORT - THUNDERBOLT ENHEDSR
+  # ===========================================================================
+  services.hardware.bolt.enable = true;     # ⚡ Thunderbolt device support
 
-  # =============================================
-  # BACKUP CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING
+  # ===========================================================================
   services.restic.backups.system = {
-    initialize = true;
-    repository = "/var/backup";
-    passwordFile = "/etc/restic/password";
-    paths = [ "/home" "/etc/nixos" ];  # Backup home and config
+    initialize = true;                      # 🔧 Initialize repository if missing
+    repository = "/var/backup";             # 📁 Backup repository location
+    passwordFile = "/etc/restic/password";  # 🔐 Password file for encryption
+    paths = [ "/home" "/etc/nixos" ];       # 📂 Paths to backup
     timerConfig = {
-      OnCalendar = "daily";  # Daily backups
-      Persistent = true;
+      OnCalendar = "daily";                 # 📅 Run backup daily
+      Persistent = true;                    # 🔄 Run missed backups on next boot
     };
   };
 
-  # =============================================
-  # FILE SYNCHRONIZATION
-  # =============================================
+  # ===========================================================================
+  # SYNCTHING CONFIGURATION - FILSYNKRONISERING
+  # ===========================================================================
   services.syncthing = {
-    enable = true;
-    user = "togo-gt";
-    dataDir = "/home/togo-gt/Sync";
-    configDir = "/home/togo-gt/.config/syncthing";
+    enable = true;                          # 🔄 Enable Syncthing
+    user = "togo-gt";                       # 👤 Syncthing user
+    dataDir = "/home/togo-gt/Sync";         # 📁 Synchronization directory
+    configDir = "/home/togo-gt/.config/syncthing"; # ⚙️ Configuration directory
   };
 
-  # =============================================
-  # DATABASE SERVICES
-  # =============================================
+  # ===========================================================================
+  # DATABASE SERVICES - UDVIKLINGSDATABASER
+  # ===========================================================================
   services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_16;
-    enableTCPIP = true;
-    # Trust authentication for local connections
+    enable = true;                          # 🐘 Enable PostgreSQL database
+    package = pkgs.postgresql_16;           # 📦 PostgreSQL 16 package
+    enableTCPIP = true;                     # 🌐 Enable TCP/IP connections
     authentication = pkgs.lib.mkOverride 10 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
-      host all all ::1/128 trust
+      local all all trust                   # 🔓 Trust local connections
+      host all all 127.0.0.1/32 trust       # 🔓 Trust localhost IPv4
+      host all all ::1/128 trust            # 🔓 Trust localhost IPv6
     '';
   };
 
-  # Redis in-memory data store
+  # ===========================================================================
+  # REDIS SERVICE - NØGLEDATABASER
+  # ===========================================================================
   services.redis.servers."" = {
-    enable = true;
-    port = 6379;
+    enable = true;                          # 🗃️ Enable Redis server
+    port = 6379;                            # 🔌 Redis port number
   };
 
-  # =============================================
-  # VIRTUALIZATION AND CONTAINERS
-  # =============================================
+  # ===========================================================================
+  # VIRTUALIZATION - VIRTUALBOX SUPPORT
+  # ===========================================================================
   virtualisation.virtualbox = {
     host = {
-      enable = true;
-      enableExtensionPack = true;  # VirtualBox extension pack
+      enable = true;                        # 🖥️ Enable VirtualBox host
+      enableExtensionPack = true;           # 📦 Enable VirtualBox extension pack
     };
   };
 
+  # ===========================================================================
+  # CONTAINERIZATION - DOCKER & LIBVIRT
+  # ===========================================================================
   virtualisation = {
-    # Docker container platform
     docker = {
-      enable = true;
+      enable = true;                        # 🐳 Enable Docker
       rootless = {
-        enable = true;
-        setSocketVariable = true;
+        enable = true;                      # 🔒 Rootless Docker mode
+        setSocketVariable = true;           # 🔌 Set DOCKER_HOST variable
       };
     };
-    # Libvirt virtualization
     libvirtd = {
-      enable = true;
+      enable = true;                        # 🔮 Enable libvirt virtualization
       qemu = {
-        runAsRoot = true;
-        swtpm.enable = true;  # Software TPM emulator
+        runAsRoot = true;                   # 👑 Run QEMU as root
+        swtpm.enable = true;                # 🔒 Software TPM support
       };
     };
   };
 
-  # =============================================
-  # SYSTEM SERVICES
-  # =============================================
+  # ===========================================================================
+  # SYSTEM SERVICES - YDERLIGERE SYSTEMTJENESTER
+  # ===========================================================================
   services = {
     avahi = {
-      enable = true;      # Zero-config networking
-      nssmdns4 = true;    # mDNS name resolution
+      enable = true;                        # 🌐 Zero-configuration networking
+      nssmdns4 = true;                      # 🔍 mDNS name resolution
     };
-    fwupd.enable = true;   # Firmware updates
-    thermald.enable = true; # Thermal management
+    fwupd.enable = true;                    # 🔄 Firmware update service
+    thermald.enable = true;                 # 🌡️ Thermal monitoring daemon
   };
 
-  # =============================================
-  # FONT CONFIGURATION
-  # =============================================
+  # ===========================================================================
+  # FONT CONFIGURATION - TYPOGRAFI OG SKRIFTTYPER
+  # ===========================================================================
   fonts = {
-    enableDefaultPackages = true;
+    enableDefaultPackages = true;           # 📚 Enable default font packages
     packages = with pkgs; [
-      noto-fonts              # Google Noto fonts
-      noto-fonts-cjk-sans     # Chinese/Japanese/Korean sans
-      noto-fonts-color-emoji  # Color emoji support
-      nerd-fonts.fira-code    # Fira Code with programming ligatures
-      nerd-fonts.jetbrains-mono # JetBrains Mono font
+      noto-fonts               # 🌍 Universal font coverage
+      noto-fonts-cjk-sans      # 🇯🇵🇰🇷🇨🇳 Chinese, Japanese, Korean sans-serif
+      noto-fonts-color-emoji   # 😀 Color emoji font
+      nerd-fonts.fira-code     # 🔤 Fira Code with programming ligatures
+      nerd-fonts.jetbrains-mono # 💻 JetBrains Mono developer font
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
-        sansSerif = [ "Noto Sans" ];
-        serif = [ "Noto Serif" ];
+        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];  # 💻 Terminal fonts
+        sansSerif = [ "Noto Sans" ];               # 📝 Sans-serif fonts
+        serif = [ "Noto Serif" ];                  # 📚 Serif fonts
       };
     };
   };
 
-  # =============================================
-  # SECURITY AND FIREWALL
-  # =============================================
+  # ===========================================================================
+  # SSH CONFIGURATION - SIKKER FJERNFORBINDELSE
+  # ===========================================================================
   services.openssh = {
-    enable = true;
+    enable = true;                          # 🔐 Enable SSH server
     settings = {
-      PasswordAuthentication = false;  # Key-based auth only
-      PermitRootLogin = "no";          # No root SSH login
+      PasswordAuthentication = false;       # ❌ Disable password authentication
+      PermitRootLogin = "no";               # ❌ Disable root SSH login
     };
   };
 
-  # Firewall configuration
+  # ===========================================================================
+  # FIREWALL CONFIGURATION - NETVÆRKSSIKKERHED
+  # ===========================================================================
   networking.firewall = {
-    # Open ports for various services
     allowedTCPPorts = [
-      22      # SSH
-      80      # HTTP
-      443     # HTTPS
-      24800   # Syncthing
-      27015   # Steam
-      27036   # Steam
-      27037   # Steam
-      27016   # Steam
-      27017   # MongoDB (if used)
+      22        # 🔐 SSH
+      80        # 🌐 HTTP
+      443       # 🔒 HTTPS
+      24800     # 🔄 Syncthing
+      27015     # 🎮 Steam
+      27036     # 🎮 Steam
+      27037     # 🎮 Steam
+      27016     # 🎮 Steam
+      27017     # 🎮 Steam
     ];
     allowedTCPPortRanges = [
-      { from = 27015; to = 27030; }  # Steam port range
+      { from = 27015; to = 27030; } # 🎮 Steam port range
     ];
     allowedUDPPorts = [
-      24800   # Syncthing
-      27031   # Steam
-      27036   # Steam
-      3659    # Battle.net
-      27015   # Steam
-      27016   # Steam
+      24800     # 🔄 Syncthing
+      27031     # 🎮 Steam
+      27036     # 🎮 Steam
+      3659      # 🎮 Steam
+      27015     # 🎮 Steam
+      27016     # 🎮 Steam
     ];
     allowedUDPPortRanges = [
-      { from = 27000; to = 27031; }  # Steam UDP range
-      { from = 4380; to = 4380; }    # Steam In-Home Streaming
+      { from = 27000; to = 27031; } # 🎮 Steam UDP range
+      { from = 4380; to = 4380; }   # 🎮 Steam In-Home Streaming
     ];
   };
 
-  # Security settings
+  # ===========================================================================
+  # SECURITY CONFIGURATION - SYSTEMSIKKERHED
+  # ===========================================================================
   security = {
     sudo = {
-      wheelNeedsPassword = false;  # No password for sudo for wheel group
-      execWheelOnly = false;
+      wheelNeedsPassword = false;           # 🔓 Sudo without password for wheel group
+      execWheelOnly = false;                # 🔧 Allow sudo from other groups
     };
-    protectKernelImage = true;     # Protect kernel from modification
-    auditd.enable = true;          # Audit daemon for security monitoring
+    protectKernelImage = true;              # 🛡️ Protect kernel from modification
+    auditd.enable = true;                   # 📊 System auditing daemon
     apparmor = {
-      enable = true;               # Application confinement
-      packages = [ pkgs.apparmor-profiles ];  # AppArmor profiles
+      enable = true;                        # 🛡️ Enable AppArmor MAC system
+      packages = [ pkgs.apparmor-profiles ]; # 📦 AppArmor profiles
     };
   };
 
-  # =============================================
-  # SYSTEM STATE VERSION
-  # =============================================
-  system.stateVersion = "25.05";  # Don't change this
+  # ===========================================================================
+  # SYSTEM STATE VERSION - KONFIGURATIONSVERSION
+  # ===========================================================================
+  system.stateVersion = "25.05";            # 🏷️ NixOS version this config is for
 }

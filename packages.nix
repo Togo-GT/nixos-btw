@@ -29,80 +29,6 @@
     libnotify             # Library for sending desktop notifications
 
     # ========================
-    # NETWORKMANAGER & NETWORKING TOOLS
-    # ========================
-    networkmanager                    # Network connection manager and user applications
-    networkmanagerapplet              # System tray applet for NetworkManager
-    networkmanager-openvpn            # OpenVPN plugin for NetworkManager
-    networkmanager-openconnect        # OpenConnect plugin for NetworkManager
-    networkmanager-vpnc               # VPNC plugin for NetworkManager
-    networkmanager-l2tp               # L2TP plugin for NetworkManager
-    networkmanager-strongswan         # StrongSwan plugin for NetworkManager
-    net-tools                         # Basic networking tools (ifconfig, netstat, route)
-    iproute2                          # Advanced networking tools (ip, ss, tc)
-    bind.dnsutils                     # DNS utilities (dig, nslookup, host)
-    inetutils                         # Basic network utilities (telnet, ftp, rsh)
-    openssh                           # SSH client and server
-    wpa_supplicant                    # WPA supplicant for wireless networks
-    wpa_supplicant_gui                # GUI for wpa_supplicant
-    iw                                # Wireless device configuration utility
-    aircrack-ng                       # WiFi security auditing tools
-    wireshark                         # Network protocol analyzer
-    wireshark-cli                     # Command-line version of Wireshark (tshark)
-    nmap                              # Network exploration and security auditing tool
-    masscan                           # Mass IP port scanner
-    iperf3                            # Network bandwidth measurement tool
-    speedtest-cli                     # Command line internet speed test
-    fast-cli                          # Test download speed using fast.com
-    netdiscover                       # Network address discovery tool
-    arp-scan                          # ARP scanning and fingerprinting tool
-    zenmap                            # GUI for nmap
-    iftop                             # Display bandwidth usage on an interface
-    bmon                              # Bandwidth monitor and rate estimator
-    nethogs                           # Monitor network usage per process
-    bandwhich                         # Terminal bandwidth utilization tool
-    vnstat                            # Network traffic monitor with statistics
-    darkstat                          # Network traffic analyzer with web interface
-    traceroute                        # Print the route packets take to network host
-    mtr                               # Network diagnostic tool combining traceroute and ping
-    prettyping                        # Ping with visual feedback
-    httpie                            # Modern command-line HTTP client
-    socat                             # Multipurpose relay tool
-    netcat-openbsd                    # Networking utility for reading/writing network connections
-    openvpn                           # VPN solution using SSL/TLS
-    wireguard-tools                   # Tools for WireGuard VPN setup
-    tailscale                         # Zero config VPN for secure networks
-    dnsmasq                           # Lightweight DNS/DHCP server
-    dnstop                            # DNS traffic monitoring
-    dnstracer                         # Trace DNS queries through DNS servers
-    proxychains                       # Proxy server support for applications
-    privoxy                           # Web proxy with advanced filtering
-    tcpdump                           # Command-line packet analyzer
-    tcpflow                           # Capture and analyze TCP traffic
-    ngrep                             # Network grep - search for patterns in network traffic
-    netsniff-ng                       # Swiss army knife for network sniffing
-    bridge-utils                      # Utilities for configuring Ethernet bridges
-    vde2                              # Virtual Distributed Ethernet
-    openvswitch                       # Production quality multilayer virtual switch
-    modemmanager                      # Mobile broadband modem management service
-    ettercap                          # Comprehensive suite for man-in-the-middle attacks
-    driftnet                          # Captures and displays images from network traffic
-    sslscan                           # SSL/TLS scanner
-    nfs-utils                         # NFS client and server utilities
-    lftp                              # Sophisticated file transfer program
-    sshfs                             # Filesystem client for SSH
-    networkmanager_dmenu              # dmenu script for NetworkManager
-    lynx                              # Text-based web browser
-    links2                            # Graphical and text web browser
-    elinks                            # Advanced text-based web browser
-
-    usb-modeswitch                    # Mode switching tool for USB devices
-    usb-modeswitch-data               # Device database for USB mode switching
-    angryipscanner                    # Fast network scanner with GUI
-    samba                             # SMB/CIFS client utilities
-    testssl                           # TLS/SSL encryption testing tool
-
-    # ========================
     # PACKAGE MANAGEMENT (NIX)
     # ========================
     home-manager          # Manage user environments using Nix
@@ -296,11 +222,41 @@
     terraform             # Infrastructure as code tool
 
     # ========================
+    # NETWORK TOOLS
+    # ========================
+    networkmanagerapplet  # System tray applet for NetworkManager
+    wireshark             # Network protocol analyzer
+    nmap                  # Network exploration and security auditing tool
+    masscan               # Mass IP port scanner
+    iperf3                # Network bandwidth measurement tool
+    traceroute            # Print the route packets take to network host
+    mtr                   # Network diagnostic tool combining traceroute and ping
+    ipcalc                # Calculate IP network settings
+    iftop                 # Display bandwidth usage on an interface
+    bmon                  # Bandwidth monitor and rate estimator
+    netcat-openbsd        # Networking utility for reading/writing network connections
+    socat                 # Multipurpose relay tool
+    tcpdump               # Command-line packet analyzer
+    tcpflow               # Capture and analyze TCP traffic
+    httpie                # Modern command-line HTTP client
+    sshpass               # Non-interactive SSH password authentication
+    sshfs                 # Filesystem client for SSH
+    whois                 # WHOIS client for domain information
+    macchanger            # Utility for manipulating MAC addresses
+    openvpn               # VPN solution using SSL/TLS
+    tailscale             # Zero config VPN for secure networks
+    wireguard-tools       # Tools for WireGuard VPN setup
+    inetutils             # Basic network utilities (telnet, ftp, etc.)
+    bind                  # DNS server utilities (dig, nslookup)
+    openssh               # SSH client and server
+
+    # ========================
     # SECURITY
     # ========================
     age                   # Simple, modern and secure file encryption
     sops                  # Secrets management tool
-    # (aircrack-ng, ettercap already included above)
+    aircrack-ng           # WiFi security auditing tools
+    ettercap              # Comprehensive suite for man-in-the-middle attacks
 
     # ========================
     # CLI PRODUCTIVITY
@@ -457,8 +413,8 @@
     cbonsai               # Grow random bonsai trees in your terminal
     cmatrix               # Show a scrolling Matrix-like screen
     figlet                # Create large letters from ordinary text
-    # (speedtest-cli already included above)
-    # (fast-cli already included above)
+    speedtest-cli         # Command line interface for testing internet bandwidth
+    fast-cli              # Test your download speed using fast.com
     termscp               # Feature rich terminal file transfer
     cava                  # Console-based audio visualizer
     pipes-rs              # Rust implementation of pipes.sh
