@@ -10,6 +10,22 @@
   home.stateVersion = "25.05";
 
   # ===========================================================================
+  # PACKAGES - BRUGERSPECIFIKKE PAKKER
+  # ===========================================================================
+  # home.packages = with pkgs; [
+    # User-specific packages that don't need system-wide installation
+
+    # Development tools
+
+    # Utilities
+
+    # Media
+
+    # Fun
+
+  #];
+
+  # ===========================================================================
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
   # ===========================================================================
   programs = {
