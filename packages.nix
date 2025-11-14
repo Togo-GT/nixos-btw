@@ -470,7 +470,7 @@
     # ========================
     baobab                     # 📊 Disk usage analyzer
     filezilla                  # 📁 FTP client
-    etcher                     # 💾 USB image writer
+   # etcher                     # 💾 USB image writer
     remmina                    # 🖥️ Remote desktop client
     gnome-system-monitor       # 📈 System monitor
     hardinfo                   # 💻 Hardware information
