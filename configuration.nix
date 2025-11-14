@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED RESTIC BACKUP SECTION
+# /etc/nixos/configuration.nix - FIXED DUPLICATE SSH CONFIG
 { config, pkgs, ... }:
 
 {
@@ -56,19 +56,21 @@
       "vboxnetadp"        # 🌐 VirtualBox network adapter
       "vboxnetflt"        # 🔧 VirtualBox network filter
       "vboxpci"           # 🔌 VirtualBox PCI pass-through
-      "kvm"               # ✅ ADDED - KVM virtualization
-      "kvm-intel"         # ✅ ADDED - Intel KVM support
+      "kvm"               # ✅ KVM virtualization
+      "kvm-intel"         # ✅ Intel KVM support
     ];
+
+    # -------------------------------------------------------------------------
+    # INITRD SETTINGS - EARLY BOOT ENVIRONMENT
+    # -------------------------------------------------------------------------
+    initrd.systemd.enable = true; # 🚀 Use systemd in initrd for faster boot
   };
 
   # ===========================================================================
-  # FILESYSTEM CONFIGURATION - SYSTEMETS LAGERHIERARKI
+  # HARDWARE CONFIGURATION - MASKINSPECIFIK INDSTILLINGER
   # ===========================================================================
-  fileSystems."/home" = {
-    device = "/dev/disk/by-uuid/e439ce99-1952-496e-9e1d-63ca5992cf98";
-    fsType = "ext4";
-    options = ["defaults" "noatime" "nodiratime"]; # 🚀 Performance optimizations
-  };
+
+  # ✅ REMOVED: FileSystems and swapDevices are now handled by hardware-configuration.nix
 
   # ===========================================================================
   # NVIDIA HARDWARE CONFIGURATION - GRAFISK ACCELERATION
@@ -124,6 +126,14 @@
   };
 
   # ===========================================================================
+  # BLUETOOTH CONFIGURATION - TRÅDLØS FORBINDELSE
+  # ===========================================================================
+  hardware.bluetooth = {
+    enable = true;           # 🔵 Enable Bluetooth support
+    powerOnBoot = true;      # 🔌 Power on Bluetooth on boot
+  };
+
+  # ===========================================================================
   # PRINTING SERVICES - UDTRYKKERSTØTTE
   # ===========================================================================
   services.printing.enable = true; # 🖨️ Enable CUPS printing service
@@ -145,21 +155,21 @@
   };
 
   # ===========================================================================
-  # BLUETOOTH CONFIGURATION - TRÅDLØS FORBINDELSE
-  # ===========================================================================
-  hardware.bluetooth = {
-    enable = true;           # 🔵 Enable Bluetooth support
-    powerOnBoot = true;      # 🔌 Power on Bluetooth on boot
-  };
-  services.blueman.enable = true; # 🎛️ Bluetooth manager GUI
-
-  # ===========================================================================
   # NETWORKING CONFIGURATION - NETVÆRKSFORBINDELSER
   # ===========================================================================
   networking = {
     hostName = "nixos-btw";  # 🖥️ System hostname
     networkmanager.enable = true; # 🌐 NetworkManager for network management
     nameservers = [ "1.1.1.1" "1.0.0.1" ]; # 🌍 Cloudflare DNS servers
+
+    # -------------------------------------------------------------------------
+    # EXPLICIT INTERFACE CONFIGURATION
+    # -------------------------------------------------------------------------
+    useDHCP = false; # ❌ Disable global DHCP
+    interfaces = {
+      enp9s0.useDHCP = true; # 🔌 Wired interface
+      wlp8s0.useDHCP = true; # 📶 Wireless interface
+    };
   };
 
   # ===========================================================================
@@ -217,6 +227,7 @@
   services.xserver = {
     enable = true;                  # 🖥️ Enable X11 server
     videoDrivers = [ "nvidia" ];    # 🎮 NVIDIA graphics drivers
+    layout = "dk";                  # 🇩🇰 Set layout here as well for consistency
   };
 
   # ===========================================================================
@@ -254,18 +265,6 @@
   programs.dconf.enable = true;     # ⚙️ Enable dconf configuration system
 
   # ===========================================================================
-  # GIT CONFIGURATION - VERSIONSCONTROL
-  # ===========================================================================
-  #programs.git = {
-  #  enable = true;                  # 🔧 Enable Git
-  #  config = {
-  #    user.name = "Togo-GT";                           # 👤 Git username
-  #    user.email = "michael.kaare.nielsen@gmail.com"; # 📧 Git email
-  #    init.defaultBranch = "main";                     # 🌿 Default branch name
-  #  };
- # };
-
-  # ===========================================================================
   # USER CONFIGURATION - BRUGERDEFINITION
   # ===========================================================================
   users.users.togo-gt = {
@@ -279,7 +278,10 @@
       "libvirtd"        # 🔮 Virtualization access
       "vboxusers"       # 🖥️ VirtualBox user group
       "syncthing"       # 🔄 Syncthing file synchronization
-      "kvm"             # ✅ ADDED - KVM access
+      "kvm"             # ✅ KVM access
+      "audio"           # 🔊 Audio device access
+      "video"           # 🎥 Video device access
+      "plugdev"         # 🔌 Plugable device access
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzs4vJf1MW9Go0FzrBlUuqwwYDyDG7kP5KQYkxSplxF michael.kaare.nielsen@gmail.com" # 🔑 SSH public key
@@ -376,7 +378,7 @@
   services.hardware.bolt.enable = true;     # ⚡ Thunderbolt device support
 
   # ===========================================================================
-  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING (SIMPLIFIED FIX)
+  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING
   # ===========================================================================
   services.restic.backups.system = {
     initialize = true;                      # 🔧 Initialize repository if missing
@@ -475,9 +477,10 @@
   # ===========================================================================
   # REDIS SERVICE - NØGLEDATABASER
   # ===========================================================================
-  services.redis.servers."" = {
+  services.redis.servers.default = {
     enable = true;                          # 🗃️ Enable Redis server
     port = 6379;                            # 🔌 Redis port number
+    bind = "127.0.0.1";                     # 🔒 Only listen on localhost
   };
 
   # ===========================================================================
@@ -518,8 +521,23 @@
       enable = true;                        # 🌐 Zero-configuration networking
       nssmdns4 = true;                      # 🔍 mDNS name resolution
     };
+    blueman.enable = true;                  # 🎛️ Bluetooth manager GUI
     fwupd.enable = true;                    # 🔄 Firmware update service
     thermald.enable = true;                 # 🌡️ Thermal monitoring daemon
+    dbus.enable = true;                     # 🔌 D-Bus message bus system
+
+    # ✅ FIXED: Removed duplicate openssh.enable - only define once below
+  };
+
+  # ===========================================================================
+  # SSH CONFIGURATION - SIKKER FJERNFORBINDELSE (SINGLE DEFINITION)
+  # ===========================================================================
+  services.openssh = {
+    enable = true;                          # 🔐 Enable SSH server
+    settings = {
+      PasswordAuthentication = false;       # ❌ Disable password authentication
+      PermitRootLogin = "no";               # ❌ Disable root SSH login
+    };
   };
 
   # ===========================================================================
@@ -544,20 +562,10 @@
   };
 
   # ===========================================================================
-  # SSH CONFIGURATION - SIKKER FJERNFORBINDELSE
-  # ===========================================================================
-  services.openssh = {
-    enable = true;                          # 🔐 Enable SSH server
-    settings = {
-      PasswordAuthentication = false;       # ❌ Disable password authentication
-      PermitRootLogin = "no";               # ❌ Disable root SSH login
-    };
-  };
-
-  # ===========================================================================
   # FIREWALL CONFIGURATION - NETVÆRKSSIKKERHED
   # ===========================================================================
   networking.firewall = {
+    enable = true;
     allowedTCPPorts = [
       22        # 🔐 SSH
       80        # 🌐 HTTP
@@ -568,6 +576,7 @@
       27037     # 🎮 Steam
       27016     # 🎮 Steam
       27017     # 🎮 Steam
+      5432      # 🐘 PostgreSQL
     ];
     allowedTCPPortRanges = [
       { from = 27015; to = 27030; } # 🎮 Steam port range
@@ -600,6 +609,32 @@
       enable = true;                        # 🛡️ Enable AppArmor MAC system
       packages = [ pkgs.apparmor-profiles ]; # 📦 AppArmor profiles
     };
+    polkit.enable = true;                   # 🔐 PolicyKit for privilege escalation
+  };
+
+  # ===========================================================================
+  # SYSTEM OPTIMIZATIONS - YDELSESFORBEDRINGER
+  # ===========================================================================
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+  '';
+
+  # Memory management optimizations
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+    "vm.dirty_ratio" = 15;
+    "vm.dirty_background_ratio" = 5;
+    "vm.vfs_cache_pressure" = 50;
+  };
+
+  # ===========================================================================
+  # USER DIRECTORY SETUP - BRUGERMAPPESTRUCTUR
+  # ===========================================================================
+  system.userActivationScripts.setup-dirs = {
+    text = ''
+      mkdir -p /home/togo-gt/{Downloads,Documents,Music,Pictures,Videos,Sync,.config}
+      chown -R togo-gt:users /home/togo-gt/
+    '';
   };
 
   # ===========================================================================
