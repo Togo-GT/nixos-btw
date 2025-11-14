@@ -20,7 +20,7 @@
     vscode-langservers-extracted
 
     # Utilities
-    taskwarrior
+    taskwarrior2
     transmission
     nix-diff
     nix-search
