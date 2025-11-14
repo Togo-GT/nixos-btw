@@ -447,7 +447,7 @@
     # ========================
     # 🆕 NYE GUI PAKKER - MULTIMEDIA
     # ========================
-    kdenlive                    # 🎬 Video editor
+    kdePackages.kdenlive                    # 🎬 Video editor
     blender                     # 🎨 3D modeling & animation
     ardour                      # 🎵 Digital audio workstation
     reaper                      # 🎹 Audio production
