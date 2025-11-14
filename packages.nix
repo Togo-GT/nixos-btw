@@ -473,7 +473,7 @@
    # etcher                     # 💾 USB image writer
     remmina                    # 🖥️ Remote desktop client
     gnome-system-monitor       # 📈 System monitor
-    hardinfo                   # 💻 Hardware information
+    lshw                       # 💻 Hardware information
 
     # ========================
     # 🆕 NYE GUI PAKKER - SECURITY
