@@ -46,8 +46,8 @@
     # =========================================================================
     # SHELL INIT - ERSTATTER ALT FRA .zshrc/.bashrc
     # =========================================================================
-    # 🚨 FIXED: Use initContent instead of shellInit
-    initContent = ''
+    # 🚨 FIXED: Use shellInit for NixOS system configuration
+    shellInit = ''
       # =======================================================================
       # ENVIRONMENT VARIABLES - SYSTEM WIDE SETTINGS
       # =======================================================================
