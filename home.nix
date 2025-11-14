@@ -29,10 +29,9 @@
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
   # ===========================================================================
   programs = {
-    # Git configuration - UPDATED to new syntax
+    # Git configuration
     git = {
       enable = true;
-      # 🚨 FIXED: Use new settings structure
       userName = "Togo-GT";
       userEmail = "michael.kaare.nielsen@gmail.com";
       extraConfig = {
@@ -62,11 +61,11 @@
       vimAlias = true;
     };
 
-    # ZSH configuration (complements zsh-fix.nix) - UPDATED to correct syntax
+    # ZSH configuration (complements zsh-fix.nix)
     zsh = {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;  # 🚨 FIXED: Keep original name for Home Manager
+      enableAutosuggestions = true;  # ✅ Home Manager uses flat structure
       syntaxHighlighting.enable = true;
 
       shellAliases = {
@@ -78,8 +77,7 @@
         update = "sudo nixos-rebuild switch --flake .#togo-gt && home-manager switch";
       };
 
-      # 🚨 FIXED: Use initExtra for Home Manager
-      initExtra = ''
+      initExtra = ''  # ✅ Home Manager uses initExtra
         # User-specific ZSH extras that don't belong in system configuration
         export PATH="$HOME/.local/bin:$PATH"
 
@@ -135,7 +133,7 @@
   # DOTFILES - BRUGERSPECIFIKKE KONFIGURATIONSFILER
   # ===========================================================================
   home.file = {
-    # Create basic directory structure - REMOVED conflicting git ignore file
+    # Create basic directory structure
     ".config/zsh/user-functions.zsh".text = ''
       # User-specific ZSH functions
 
@@ -210,9 +208,4 @@
   # HOME MANAGER SELF-MANAGEMENT
   # ===========================================================================
   programs.home-manager.enable = true;
-
-  # ===========================================================================
-  # STATE VERSION COMPATIBILITY
-  # ===========================================================================
-  # home.stateVersion = "25.05";
 }
