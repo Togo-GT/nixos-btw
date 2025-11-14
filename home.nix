@@ -17,7 +17,7 @@
 
     # Utilities
     taskwarrior2  # 🔧 FIXED: taskwarrior → taskwarrior2
-    transmission-gtk
+    transmission_4-gtk
     libnotify
     p7zip
     pciutils
