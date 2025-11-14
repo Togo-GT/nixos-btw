@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - UPDATED VERSION WITH GUI SUPPORT
+# /etc/nixos/configuration.nix - FIXED VERSION WITH PROPER KDE CONNECT
 { config, pkgs, inputs, ... }:
 
 {
@@ -158,6 +158,12 @@
     desktopManager.plasma6.excludePackages = with pkgs.kdePackages; [
       elisa  # Only exclude music player if you prefer another
     ];
+
+    # KDE Connect service for better integration
+    kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
 
     # Security services
     openssh = {
@@ -401,10 +407,7 @@
 
     # 🔧 NEW: Better support for GUI applications
     partition-manager.enable = true;  # For KDE Partition Manager
-    kdeconnect = {
-      enable = true;
-      indicator = true;
-    };
+    kdeconnect.enable = true;  # Keep enabled in programs for CLI tools
 
     # File manager integration
     file-roller.enable = true;  # Archive manager
