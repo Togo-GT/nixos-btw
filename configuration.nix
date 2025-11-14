@@ -471,29 +471,25 @@
     ];
   };
 
-  # Fonts
+  # Fonts - SIMPLE WORKING VERSION
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      # FIX: Updated nerd-fonts syntax - use individual packages instead
+      # Simple nerd fonts approach
       nerdfonts
-      # Or use specific nerd fonts:
-      # nerdfonts-fira-code
-      # nerdfonts-jetbrains-mono
-      # 🔧 NEW: Additional fonts for better GUI app compatibility
       dejavu_fonts
       freefont_ttf
-      corefonts  # Microsoft core fonts
+      corefonts
       liberation_ttf
     ];
     fontconfig = {
       defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono" ];
-        sansSerif = [ "Noto Sans" "DejaVu Sans" ];
-        serif = [ "Noto Serif" "DejaVu Serif" ];
+        monospace = [ "DejaVu Sans Mono" "Noto Sans Mono" ];
+        sansSerif = [ "DejaVu Sans" "Noto Sans" ];
+        serif = [ "DejaVu Serif" "Noto Serif" ];
       };
     };
   };
