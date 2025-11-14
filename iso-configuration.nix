@@ -1,138 +1,129 @@
-# /etc/nixos/iso-configuration.nix
+# iso-configuration.nix - FIXED VERSION
 { config, pkgs, lib, ... }:
 
 {
-  # ===========================================================================
-  # ALLOW UNFREE PACKAGES (NVIDIA DRIVERS)
-  # ===========================================================================
   nixpkgs.config.allowUnfree = true;
 
-  # ===========================================================================
-  # BASIC ISO CONFIGURATION
-  # ===========================================================================
-
-  # ISO settings - use new option name
-  isoImage.isoName = "my-nixos-live.iso";  # ✅ CORRECT: isoImage.isoName for NixOS 23.11+
+  # ISO Configuration
+  isoImage.isoName = "nixos-live.iso";
   isoImage.volumeID = "NIXOSLIVE";
 
-  # Boot configuration
-  boot.loader.grub.device = "nodev";
-  boot.loader.timeout = 10;
+  # Boot Configuration
+  boot = {
+    loader.grub.device = "nodev";
+    loader.timeout = 10;
+    kernelParams = [
+      "quiet"
+      "splash"
+      "nomodeset"
+    ];
+    supportedFilesystems = [ "ntfs" "btrfs" "ext4" "vfat" ];
+  };
 
-  # Kernel parameters for live environment
-  boot.kernelParams = [
-    "quiet"
-    "splash"
-    "nomodeset"
-  ];
-
-  # ===========================================================================
-  # DESKTOP ENVIRONMENT
-  # ===========================================================================
-
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-
-  # Display manager with auto-login
-  services.displayManager.sddm.enable = true;
-  services.displayManager.autoLogin = {
+  # Desktop Environment
+  services.xserver = {
     enable = true;
-    user = "nixos";
+    videoDrivers = [ "nvidia" ];
+    displayManager = {
+      sddm = {
+        enable = true;
+        wayland.enable = true;
+      };
+      autoLogin = {
+        enable = true;
+        user = "nixos";
+      };
+      defaultSession = "plasma";
+    };
+    desktopManager.plasma6.enable = true;
+    layout = "dk";
+    xkbVariant = "";
   };
 
-  # Desktop environment
-  services.desktopManager.plasma6.enable = true;
-
-  # Keyboard layout
-  services.xserver.xkb.layout = "dk";
-  services.xserver.xkb.variant = "nodeadkeys";
-
-  # ===========================================================================
-  # HARDWARE CONFIGURATION
-  # ===========================================================================
-
-  hardware.graphics.enable = true;
-
-  # Basic NVIDIA support for live environment
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    nvidiaSettings = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    open = false;
+  # Hardware
+  hardware = {
+    graphics.enable = true;
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.enable = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+      open = false;
+    };
+    bluetooth.enable = true;
   };
 
-  # ===========================================================================
-  # NETWORKING
-  # ===========================================================================
+  # Networking
+  networking = {
+    networkmanager.enable = true;
+    hostName = "nixos-live";
+    firewall.enable = false;
+    wireless.enable = false;
+  };
 
-  networking.networkmanager.enable = true;
-  networking.hostName = "nixos-live";
-  networking.firewall.enable = false;
-  networking.wireless.enable = false;
-
-  # ===========================================================================
-  # USER CONFIGURATION
-  # ===========================================================================
-
-  # Live user - FIXED: Only use one password method
+  # Users
   users.users.nixos = {
     isNormalUser = true;
     description = "Live ISO User";
     extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
-    password = "";  # ✅ CORRECT: Empty password for live ISO
+    password = ""; # Empty password for live environment
     uid = 1000;
   };
 
-  # Enable sudo without password for live environment
   security.sudo.wheelNeedsPassword = false;
 
-  # ===========================================================================
-  # PACKAGES - IMPORT FROM packages.nix
-  # ===========================================================================
-
-  # Import all packages from packages.nix
+  # Import packages
   imports = [ ./packages.nix ];
 
-  # ===========================================================================
-  # SERVICES FOR LIVE ENVIRONMENT
-  # ===========================================================================
+  # Services
+  services = {
+    openssh = {
+      enable = true;
+      settings = {
+        PermitRootLogin = "yes";
+        PasswordAuthentication = true;
+      };
+    };
 
-  # Enable SSH for remote access
-  services.openssh = {
-    enable = true;
-    settings.PermitRootLogin = "yes";
-    settings.PasswordAuthentication = true;
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      pulse.enable = true;
+    };
+
+    blueman.enable = true;
+    avahi.enable = true;
+    fwupd.enable = true;
+    power-profiles-daemon.enable = true;
   };
 
-  # Audio services
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    pulse.enable = true;
-  };
+  # Disable unnecessary services for live environment
+  services.flatpak.enable = false;
+  services.postgresql.enable = false;
+  services.redis.servers.default.enable = false;
+  services.syncthing.enable = false;
+  virtualisation.docker.enable = false;
+  virtualisation.libvirtd.enable = false;
+  virtualisation.virtualbox.host.enable = false;
+  services.tlp.enable = false;
 
-  # Bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-
-  # ===========================================================================
-  # LOCALE AND TIME
-  # ===========================================================================
-
+  # Locale and Time
   time.timeZone = "Europe/Copenhagen";
-  i18n.defaultLocale = "da_DK.UTF-8";
+  i18n.defaultLocale = "en_DK.UTF-8";
   console.keyMap = "dk";
 
-  # ===========================================================================
-  # ISO-SPECIFIC OPTIMIZATIONS
-  # ===========================================================================
-
-  # Enable flakes in the live environment
+  # Nix Configuration
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Include a README in the ISO
+  # Fonts
+  fonts.packages = with pkgs; [
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-color-emoji
+    (nerd-fonts.override { fonts = [ "FiraCode" ]; })
+  ];
+
+  # ISO Contents
   isoImage.contents = [
     {
       source = pkgs.writeText "README" ''
@@ -142,7 +133,7 @@
         - KDE Plasma 6 desktop environment
         - NVIDIA graphics support
         - NetworkManager for WiFi and networking
-        - Complete package set from your main configuration
+        - Complete package set from main configuration
         - Development tools and utilities
         - Firefox web browser
 
@@ -152,25 +143,11 @@
         INSTALLATION:
         1. Open terminal (Konsole)
         2. Run: sudo nixos-install
-        3. Follow the prompts to configure your system
+        3. Follow the prompts
 
         NETWORKING:
-        - Use NetworkManager applet in system tray for WiFi
-        - Ethernet should work automatically
-
-        HARDWARE SUPPORT:
-        - NVIDIA graphics with proprietary drivers
-        - Intel/AMD CPU support
-        - Most common hardware should work
-
-        PACKAGES INCLUDED:
-        All packages from your main system configuration are available
-        in this live environment for testing and installation.
-
-        TROUBLESHOOTING:
-        - If display issues occur, try: nomodeset kernel parameter
-        - Check /var/log/ for system logs
-        - Use journalctl for service logs
+        - Use NetworkManager applet for WiFi
+        - Ethernet works automatically
 
         Enjoy NixOS!
       '';
@@ -178,43 +155,5 @@
     }
   ];
 
-  # ===========================================================================
-  # SYSTEM OPTIMIZATIONS FOR LIVE ENVIRONMENT
-  # ===========================================================================
-
-  # Disable services that aren't needed in live environment
-  services.flatpak.enable = false;
-  services.postgresql.enable = false;
-  services.redis.enable = false;  # ✅ CORRECT: Simple Redis disable
-  services.syncthing.enable = false;
-  virtualisation.docker.enable = false;
-  virtualisation.libvirtd.enable = false;
-  virtualisation.virtualbox.host.enable = false;
-
-  # Enable essential services only
-  services.avahi.enable = true;
-  services.fwupd.enable = true;
-
-  # Power management
-  services.tlp.enable = false;
-  services.power-profiles-daemon.enable = true;
-
-  # ===========================================================================
-  # FONT CONFIGURATION
-  # ===========================================================================
-
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    nerd-fonts.fira-code
-  ];
-
-  # ===========================================================================
-  # SYSTEM STATE VERSION
-  # ===========================================================================
-
   system.stateVersion = "25.05";
 }
-# Build command:
-# sudo nix build .#nixosConfigurations.nixos-live.config.system.build.isoImage --out-link /home/togo-gt/Iso/nixos-live.iso

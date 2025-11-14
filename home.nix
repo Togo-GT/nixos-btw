@@ -2,64 +2,44 @@
 { config, pkgs, inputs, ... }:
 
 {
-  # ===========================================================================
-  # HOME MANAGER CONFIGURATION - BRUGERSPECIFIKT MILJØ
-  # ===========================================================================
   home.username = "togo-gt";
   home.homeDirectory = "/home/togo-gt";
   home.stateVersion = "25.05";
 
-  # ===========================================================================
-  # PACKAGES - BRUGERSPECIFIKKE PAKKER
-  # ===========================================================================
   home.packages = with pkgs; [
-    # Development tools
+    # Development
     gh
     git
     vscode-langservers-extracted
-
-    # Utilities
-    taskwarrior2
-    transmission_4
     nix-diff
     nix-search
     nixos-generators
 
-    # Gaming
-    dxvk
-
-    # And packages you need
+    # Utilities
+    taskwarrior
+    transmission-gtk
     libnotify
     p7zip
     pciutils
     usbutils
     lm_sensors
+
+    # Gaming
+    dxvk
+    mangohud
+    goverlay
   ];
 
-  # ===========================================================================
-  # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
-  # ===========================================================================
   programs = {
-    # Git configuration - UPDATED TO NEW SYNTAX
     git = {
       enable = true;
-      settings = {
-        user = {
-          name = "Togo-GT";
-          email = "michael.kaare.nielsen@gmail.com";
-        };
-        init = {
-          defaultBranch = "main";
-        };
-        pull = {
-          rebase = false;
-        };
-        core = {
-          editor = "nvim";
-        };
-        merge = {
-          conflictstyle = "diff3";
-        };
+      userName = "Togo-GT";
+      userEmail = "michael.kaare.nielsen@gmail.com";
+      extraConfig = {
+        init.defaultBranch = "main";
+        pull.rebase = false;
+        core.editor = "nvim";
+        merge.conflictstyle = "diff3";
       };
       ignores = [
         ".DS_Store"
@@ -74,7 +54,6 @@
       ];
     };
 
-    # Neovim configuration
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -82,31 +61,32 @@
       vimAlias = true;
     };
 
-    # 🚨 FIXED: Disable ZSH in Home Manager since it's managed by system configuration
+    # Disable ZSH in Home Manager (managed by system)
     zsh.enable = false;
 
-    # FZF configuration
     fzf = {
       enable = true;
-      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
-      enableZshIntegration = false;
+      enableZshIntegration = false; # Managed by system
     };
 
-    # Zoxide configuration (fast directory jumping)
     zoxide = {
       enable = true;
-      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
-      enableZshIntegration = false;
+      enableZshIntegration = false; # Managed by system
     };
 
-    # Starship prompt
     starship = {
       enable = true;
-      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
-      enableZshIntegration = false;
+      enableZshIntegration = false; # Managed by system
+      settings = {
+        add_newline = true;
+        format = "$all";
+        character = {
+          success_symbol = "[➜](bold green)";
+          error_symbol = "[➜](bold red)";
+        };
+      };
     };
 
-    # Bat configuration (better cat)
     bat = {
       enable = true;
       config = {
@@ -116,84 +96,67 @@
     };
   };
 
-  # ===========================================================================
-  # SERVICES - BRUGERSPECIFIKKE TJENESTER
-  # ===========================================================================
   services = {
-    # Syncthing can be managed per-user with Home Manager
-    syncthing = {
-      enable = false; # Keep system service, disable user service to avoid conflicts
+    syncthing.enable = false; # Use system service instead
+  };
+
+  home.file = {
+    ".config/zsh/user-functions.zsh" = {
+      text = ''
+        # User-specific ZSH functions
+
+        nix-edit() {
+          nvim /home/togo-gt/nixos-config/configuration.nix
+        }
+
+        hm-edit() {
+          nvim /home/togo-gt/nixos-config/home.nix
+        }
+
+        nix-rebuild() {
+          sudo nixos-rebuild switch --flake /home/togo-gt/nixos-config#togo-gt
+        }
+
+        hm-rebuild() {
+          home-manager switch --flake /home/togo-gt/nixos-config#togo-gt
+        }
+
+        update-all() {
+          echo "🔄 Updating flake inputs..."
+          nix flake update /home/togo-gt/nixos-config
+
+          echo "🚀 Rebuilding NixOS..."
+          sudo nixos-rebuild switch --flake /home/togo-gt/nixos-config#togo-gt
+
+          echo "🏠 Rebuilding Home Manager..."
+          home-manager switch --flake /home/togo-gt/nixos-config#togo-gt
+
+          echo "✅ System update complete!"
+        }
+      '';
     };
   };
 
-  # ===========================================================================
-  # DOTFILES - BRUGERSPECIFIKKE KONFIGURATIONSFILER
-  # ===========================================================================
-  home.file = {
-    # Create basic directory structure
-    ".config/zsh/user-functions.zsh".text = ''
-      # User-specific ZSH functions
-
-      # Quick edit for configuration files
-      function nix-edit() {
-        nvim /home/togo-gt/nixos-config/configuration.nix
-      }
-
-      function hm-edit() {
-        nvim /home/togo-gt/nixos-config/home.nix
-      }
-
-      # Quick rebuild commands
-      function nix-rebuild() {
-        sudo nixos-rebuild switch --flake /home/togo-gt/nixos-config#togo-gt
-      }
-
-      function hm-rebuild() {
-        home-manager switch --flake /home/togo-gt/nixos-config#togo-gt
-      }
-
-      # Update everything
-      function update-all() {
-        echo "🔄 Updating flake inputs..."
-        nix flake update /home/togo-gt/nixos-config
-
-        echo "🚀 Rebuilding NixOS..."
-        sudo nixos-rebuild switch --flake /home/togo-gt/nixos-config#togo-gt
-
-        echo "🏠 Rebuilding Home Manager..."
-        home-manager switch --flake /home/togo-gt/nixos-config#togo-gt
-
-        echo "✅ System update complete!"
-      }
-    '';
-  };
-
-  # ===========================================================================
-  # SESSION VARIABLES - BRUGERMILJØ VARIABLER
-  # ===========================================================================
   home.sessionVariables = {
-    # User-specific environment variables
     EDITOR = "nvim";
     VISUAL = "nvim";
     BROWSER = "firefox";
     TERMINAL = "konsole";
 
-    # Development
     GOPATH = "$HOME/go";
     GOBIN = "$HOME/go/bin";
     CARGO_HOME = "$HOME/.cargo";
     RUSTUP_HOME = "$HOME/.rustup";
 
-    # XDG Base Directory
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_STATE_HOME = "$HOME/.local/state";
+
+    NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
+    NIXOS_FLAKE = "/home/togo-gt/nixos-config";
   };
 
-  # ===========================================================================
-  # SESSION PATH - BRUGERSPECIFIKKE STIER
-  # ===========================================================================
   home.sessionPath = [
     "$HOME/.local/bin"
     "$HOME/go/bin"
@@ -201,8 +164,5 @@
     "$HOME/.npm/bin"
   ];
 
-  # ===========================================================================
-  # HOME MANAGER SELF-MANAGEMENT
-  # ===========================================================================
   programs.home-manager.enable = true;
 }
