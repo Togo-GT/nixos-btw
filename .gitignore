@@ -6,6 +6,12 @@ result-*
 ./iso-image/
 *.iso
 
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
 # Local configuration overrides
 local.nix
 secrets.nix
