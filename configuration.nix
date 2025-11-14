@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED DUPLICATE SSH CONFIG
+# /etc/nixos/configuration.nix - FIXED SYSTEMD CONFIG
 { config, pkgs, ... }:
 
 {
@@ -525,8 +525,6 @@
     fwupd.enable = true;                    # 🔄 Firmware update service
     thermald.enable = true;                 # 🌡️ Thermal monitoring daemon
     dbus.enable = true;                     # 🔌 D-Bus message bus system
-
-    # ✅ FIXED: Removed duplicate openssh.enable - only define once below
   };
 
   # ===========================================================================
@@ -615,9 +613,18 @@
   # ===========================================================================
   # SYSTEM OPTIMIZATIONS - YDELSESFORBEDRINGER
   # ===========================================================================
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=10s
-  '';
+
+  # ✅ FIXED: Replaced deprecated systemd.extraConfig with new syntax
+  systemd.settings = {
+    # 🔧 Systemd Manager settings
+    Manager = {
+      DefaultTimeoutStopSec = "10s";
+    };
+    # 🔧 Journal settings
+    Journal = {
+      SystemMaxUse = "1G";
+    };
+  };
 
   # Memory management optimizations
   boot.kernel.sysctl = {
