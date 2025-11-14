@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED SYSTEMD CONFIG
+# /etc/nixos/configuration.nix - FIXED SYSTEMD SETTINGS
 { config, pkgs, ... }:
 
 {
@@ -614,17 +614,10 @@
   # SYSTEM OPTIMIZATIONS - YDELSESFORBEDRINGER
   # ===========================================================================
 
-  # ✅ FIXED: Replaced deprecated systemd.extraConfig with new syntax
-  systemd.settings = {
-    # 🔧 Systemd Manager settings
-    Manager = {
-      DefaultTimeoutStopSec = "10s";
-    };
-    # 🔧 Journal settings
-    Journal = {
-      SystemMaxUse = "1G";
-    };
-  };
+  # ✅ FIXED: Simplified systemd configuration
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+  '';
 
   # Memory management optimizations
   boot.kernel.sysctl = {
