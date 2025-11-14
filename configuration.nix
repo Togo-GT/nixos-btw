@@ -179,15 +179,6 @@
 
     power-profiles-daemon.enable = false;
 
-    # Virtualization
-    libvirtd = {
-      enable = true;
-      qemu = {
-        runAsRoot = true;
-        swtpm.enable = true;
-      };
-    };
-
     # Other services
     avahi = {
       enable = true;
