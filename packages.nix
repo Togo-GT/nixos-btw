@@ -426,7 +426,7 @@
     # ========================
     # 🆕 NYE GUI PAKKER - DEVELOPMENT
     # ========================
-    dbeaver                     # 🗄️ Universal database tool
+    dbeaver-bin                 # 🗄️ Universal database tool
     postman                     # 🌐 API development
     beekeeper-studio            # 🐝 Modern SQL editor
     sqlitebrowser               # 🔍 SQLite database browser
