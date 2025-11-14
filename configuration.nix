@@ -530,6 +530,10 @@
     "beekeeper-studio-5.3.4"
   ];
 
+    permittedInsecurePackages = [
+                "jitsi-meet-1.0.8792"
+              ];
+
 
   system.stateVersion = "25.05";
 }
