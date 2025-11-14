@@ -383,26 +383,33 @@
     repository = "/var/backup";             # 📁 Backup repository location
     passwordFile = "/etc/restic/password";  # 🔐 Password file for encryption
 
-    # 🚨 AUTO-CREATE PASSWORD FILE ON FIRST RUN - FIXES MISSING FILE ERROR
+    # 🚨 AUTO-CREATE PASSWORD FILE USING SYSTEMD SERVICE - FIXES MISSING FILE ERROR
     # This ensures the password file exists before restic tries to use it
-    preBackupCommands = ''
-      echo "🔐 Setting up Restic backup environment..."
-      mkdir -p /var/backup /etc/restic
+    # Using systemd service pre-start hook instead of preBackupCommands
+    serviceConfig = {
+      ExecStartPre = [
+        # Create directories and password file if missing
+        "+${pkgs.writeShellScript "restic-setup" ''
+          set -e
+          echo "🔐 Setting up Restic backup environment..."
+          mkdir -p /var/backup /etc/restic
 
-      # Only create password file if it doesn't exist
-      if [ ! -f /etc/restic/password ]; then
-        echo "📝 Generating secure Restic backup password..."
-        ${pkgs.openssl}/bin/openssl rand -base64 32 > /etc/restic/password
-        chmod 600 /etc/restic/password
-        echo "✅ Backup password generated and secured"
-      else
-        echo "🔑 Using existing backup password"
-      fi
+          # Only create password file if it doesn't exist
+          if [ ! -f /etc/restic/password ]; then
+            echo "📝 Generating secure Restic backup password..."
+            ${pkgs.openssl}/bin/openssl rand -base64 32 > /etc/restic/password
+            chmod 600 /etc/restic/password
+            echo "✅ Backup password generated and secured"
+          else
+            echo "🔑 Using existing backup password"
+          fi
 
-      # Set proper permissions on backup directory
-      chmod 700 /var/backup
-      echo "🚀 Restic backup environment ready"
-    '';
+          # Set proper permissions on backup directory
+          chmod 700 /var/backup
+          echo "🚀 Restic backup environment ready"
+        ''}"
+      ];
+    };
 
     paths = [ "/home" "/etc/nixos" ];       # 📂 Paths to backup
     timerConfig = {
