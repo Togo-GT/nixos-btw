@@ -256,14 +256,14 @@
   # ===========================================================================
   # GIT CONFIGURATION - VERSIONSCONTROL
   # ===========================================================================
-  programs.git = {
-    enable = true;                  # 🔧 Enable Git
-    config = {
-      user.name = "Togo-GT";                           # 👤 Git username
-      user.email = "michael.kaare.nielsen@gmail.com"; # 📧 Git email
-      init.defaultBranch = "main";                     # 🌿 Default branch name
-    };
-  };
+  #programs.git = {
+  #  enable = true;                  # 🔧 Enable Git
+  #  config = {
+  #    user.name = "Togo-GT";                           # 👤 Git username
+  #    user.email = "michael.kaare.nielsen@gmail.com"; # 📧 Git email
+  #    init.defaultBranch = "main";                     # 🌿 Default branch name
+  #  };
+ # };
 
   # ===========================================================================
   # USER CONFIGURATION - BRUGERDEFINITION
