@@ -58,11 +58,13 @@
       forceFullCompositionPipeline = true;
       powerManagement = {
         enable = true;
-        finegrained = true;
+        # FIX: Disable finegrained since it requires offload mode
+        finegrained = false;
       };
 
       prime = {
         sync.enable = true;
+        # FIX: Cannot use offload with sync mode
         offload.enable = false;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
@@ -94,8 +96,8 @@
 
     opengl = {
       enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
+      # FIX: Remove deprecated driSupport options
+      # driSupport and driSupport32Bit are now automatic
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
         vaapiVdpau
@@ -222,7 +224,9 @@
 
     # 🔧 NEW SERVICES FOR GUI APPLICATIONS
     gnome = {
-      gnome-keyring.enable = true;  # For password management in GUI apps
+      gnome-keyring.enable = true;
+      # FIX: Disable GNOME SSH agent to avoid conflict
+      gcr-ssh-agent.enable = false;
     };
 
     # File system and device support
@@ -362,7 +366,8 @@
 
   programs = {
     dconf.enable = true;
-    ssh.startAgent = true;
+    # FIX: Disable SSH agent to avoid conflict with GNOME keyring
+    ssh.startAgent = false;
 
     # Gaming
     steam = {
