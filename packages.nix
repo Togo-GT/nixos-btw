@@ -508,7 +508,7 @@
     onlyoffice-desktopeditors # 📑 Office suite
     joplin-desktop            # 📝 Note taking
     typora                     # ✍️ Markdown editor
-    remarkable                 # 📘 Markdown notes
+    marktext                 # 📘 Markdown notes
     figma-linux               # 🎨 Design tool
     penpot                    # 🎨 Open-source design tool
   ];
