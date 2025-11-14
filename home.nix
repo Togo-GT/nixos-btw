@@ -29,16 +29,26 @@
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
   # ===========================================================================
   programs = {
-    # Git configuration
+    # Git configuration - UPDATED TO NEW SYNTAX
     git = {
       enable = true;
-      userName = "Togo-GT";
-      userEmail = "michael.kaare.nielsen@gmail.com";
-      extraConfig = {
-        init.defaultBranch = "main";
-        pull.rebase = false;
-        core.editor = "nvim";
-        merge.conflictstyle = "diff3";
+      settings = {
+        user = {
+          name = "Togo-GT";
+          email = "michael.kaare.nielsen@gmail.com";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = false;
+        };
+        core = {
+          editor = "nvim";
+        };
+        merge = {
+          conflictstyle = "diff3";
+        };
       };
       ignores = [
         ".DS_Store"

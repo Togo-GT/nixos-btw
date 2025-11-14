@@ -29,7 +29,11 @@
   # ===========================================================================
   # OUTPUT DEFINITIONER - SYSTEMETS FÆRDIGE UNIVERS
   # ===========================================================================
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs:
+  let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
     # =========================================================================
     # NIXOS KONFIGURATIONER - SYSTEMETS MULTIVERSE
     # =========================================================================
@@ -38,7 +42,7 @@
       # TOGO-GT SYSTEMDEFINITION - PRIMARY PERSONLIGE ARBEJDSSTATION
       # -----------------------------------------------------------------------
       "togo-gt" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
 
         # =====================================================================
         # MODULER - SYSTEMETS ORGANSYSTEMER
@@ -76,11 +80,34 @@
       # NIXOS-LIVE ISO SYSTEM - SEPARAT KONFIGURATION
       # -----------------------------------------------------------------------
       "nixos-live" = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+        inherit system;
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
           ./iso-configuration.nix
         ];
+      };
+    };
+
+    # =========================================================================
+    # HOME MANAGER KONFIGURATIONER - TIL STANDALONE BRUG
+    # =========================================================================
+    homeConfigurations = {
+      "togo-gt" = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        # Specify the path to your home configuration here
+        modules = [
+          ./home.nix
+          {
+            home = {
+              username = "togo-gt";
+              homeDirectory = "/home/togo-gt";
+              stateVersion = "25.05";
+            };
+          }
+        ];
+
+        extraSpecialArgs = { inherit inputs; };
       };
     };
   };
