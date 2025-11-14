@@ -1,4 +1,4 @@
-# /home/togo-gt/nixos-config/home.nix - FIXED VERSION
+# /home/togo-gt/nixos-config/home.nix
 { config, pkgs, inputs, ... }:
 
 {
@@ -8,45 +8,6 @@
   home.username = "togo-gt";
   home.homeDirectory = "/home/togo-gt";
   home.stateVersion = "25.05";
-
-  # ===========================================================================
-  # PACKAGES - BRUGERSPECIFIKKE PAKKER
-  # ===========================================================================
-  home.packages = with pkgs; [
-    # User-specific packages that don't need system-wide installation
-    neofetch
-    htop
-    btop
-    fastfetch
-    nitch
-    onefetch
-
-    # Development tools
-    nodejs
-    python3
-    go
-    rustup
-
-    # Utilities
-    bat
-    eza
-    fd
-    ripgrep
-    fzf
-    zoxide
-    starship
-
-    # Media
-    feh
-    mpv
-    imv
-
-    # Fun
-    cowsay
-    fortune
-    cmatrix
-    cbonsai
-  ];
 
   # ===========================================================================
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
