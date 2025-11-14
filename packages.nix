@@ -91,7 +91,7 @@
     # ========================
     gnome-disk-utility    # Disk management and benchmarking tool
     gparted               # Partition editor for graphical disk management
-    gdisk                 # GPT partition table manipulator
+    # gdisk                 # GPT partition table manipulator
     parted                # Disk partition manipulation tool
     hdparm                # Disk utility for ATA/SATA device parameters
     ncdu                  # Disk usage analyzer with NCurses interface
@@ -107,7 +107,7 @@
     nvme-cli              # NVM-Express user space tooling
     util-linux            # Collection of basic system utilities
     testdisk              # Data recovery tool for lost partitions
-    photorec              # File recovery tool (part of testdisk)
+   # photorec              # File recovery tool (part of testdisk)
     gsmartcontrol         # GUI for SMART monitoring tools
     ntfs3g                # NTFS filesystem driver with read/write support
     borgbackup            # Deduplicating backup program
