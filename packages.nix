@@ -447,7 +447,7 @@
     # ========================
     # 🆕 NYE GUI PAKKER - MULTIMEDIA
     # ========================
-    kdePackages.kdenlive                    # 🎬 Video editor
+    kdePackages.kdenlive        # 🎬 Video editor
     blender                     # 🎨 3D modeling & animation
     ardour                      # 🎵 Digital audio workstation
     reaper                      # 🎹 Audio production
@@ -469,8 +469,8 @@
     # 🆕 NYE GUI PAKKER - SYSTEM TOOLS
     # ========================
     baobab                     # 📊 Disk usage analyzer
-    filezilla                   # 📁 FTP client
-    balena-etcher              # 💾 USB image writer
+    filezilla                  # 📁 FTP client
+    etcher                     # 💾 USB image writer
     remmina                    # 🖥️ Remote desktop client
     gnome-system-monitor       # 📈 System monitor
     hardinfo                   # 💻 Hardware information
