@@ -1,4 +1,4 @@
-# /home/togo-gt/nixos-config/home.nix - CORRECTED VERSION
+# /home/togo-gt/nixos-config/home.nix - FIXED VERSION
 { config, pkgs, inputs, ... }:
 
 {
@@ -61,52 +61,28 @@
       vimAlias = true;
     };
 
-    # ZSH configuration (complements zsh-fix.nix)
-    zsh = {
-      enable = true;
-      enableCompletion = true;
-      enableAutosuggestions = true;  # ✅ Home Manager uses flat structure
-      syntaxHighlighting.enable = true;
-
-      shellAliases = {
-        # Additional user-specific aliases
-        nixos-rebuild = "sudo nixos-rebuild";
-        hm-rebuild = "home-manager switch";
-        nix-gc = "sudo nix-collect-garbage -d";
-        nix-optimize = "sudo nix-store --optimize";
-        update = "sudo nixos-rebuild switch --flake .#togo-gt && home-manager switch";
-      };
-
-      initExtra = ''  # ✅ Home Manager uses initExtra
-        # User-specific ZSH extras that don't belong in system configuration
-        export PATH="$HOME/.local/bin:$PATH"
-
-        # Load user-specific functions
-        source $HOME/.config/zsh/user-functions.zsh 2>/dev/null || true
-
-        # Welcome message
-        if [ -z "$TMUX" ] && [ -n "$SSH_CONNECTION" ]; then
-          echo "🔧 Connected to $(hostname) via SSH - Home Manager active"
-        fi
-      '';
-    };
+    # 🚨 FIXED: Disable ZSH in Home Manager since it's managed by system configuration
+    zsh.enable = false;
 
     # FZF configuration
     fzf = {
       enable = true;
-      enableZshIntegration = true;
+      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
+      enableZshIntegration = false;
     };
 
     # Zoxide configuration (fast directory jumping)
     zoxide = {
       enable = true;
-      enableZshIntegration = true;
+      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
+      enableZshIntegration = false;
     };
 
     # Starship prompt
     starship = {
       enable = true;
-      enableZshIntegration = true;
+      # 🚨 FIXED: Disable ZSH integration since ZSH is managed by system
+      enableZshIntegration = false;
     };
 
     # Bat configuration (better cat)
