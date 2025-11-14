@@ -344,6 +344,7 @@
     transmission_4-gtk
     vscode
     keepassxc
+    brave                         # 🦁 Privacy-focused browser (supports Teams web)
 
     # ========================
     # SYSTEM MONITORING
@@ -463,7 +464,7 @@
     slack                       # 💼 Team communication
     brave                       # 🦁 Privacy-focused browser
     zoom                        # 📹 Video conferencing
-    teams                       # 👥 Microsoft Teams
+
 
     # ========================
     # 🆕 NYE GUI PAKKER - SYSTEM TOOLS

@@ -48,6 +48,8 @@
     '';
   };
 
+  nixpkgs.config.allowUnsupportedSystem = true;
+
   # Hardware Configuration
   hardware = {
     nvidia = {
