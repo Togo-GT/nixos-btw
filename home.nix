@@ -1,4 +1,4 @@
-# /home/togo-gt/nixos-config/home.nix - ENHANCED VERSION
+# /home/togo-gt/nixos-config/home.nix - FIXED VERSION
 { config, pkgs, inputs, ... }:
 
 {
@@ -156,7 +156,7 @@
   # DOTFILES - BRUGERSPECIFIKKE KONFIGURATIONSFILER
   # ===========================================================================
   home.file = {
-    # Create basic directory structure
+    # Create basic directory structure - REMOVED conflicting git ignore file
     ".config/zsh/user-functions.zsh".text = ''
       # User-specific ZSH functions
 
@@ -191,17 +191,6 @@
 
         echo "✅ System update complete!"
       }
-    '';
-
-    # Git configuration directory
-    ".config/git/ignore".text = ''
-      # Global gitignore patterns
-      *.swp
-      *.swo
-      .DS_Store
-      result
-      result-*
-      .direnv/
     '';
   };
 
