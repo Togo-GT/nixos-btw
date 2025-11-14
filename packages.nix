@@ -430,7 +430,6 @@
     postman                     # 🌐 API development
     beekeeper-studio            # 🐝 Modern SQL editor
     sqlitebrowser               # 🔍 SQLite database browser
-    redis-commander             # 🗃️ Redis GUI
     lens-desktop                # ☸️ Kubernetes IDE
     zed-editor                  # ⚡ High-performance code editor
 
