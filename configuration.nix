@@ -2,9 +2,9 @@
 { config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  #  imports = [
+  #  ./hardware-configuration.nix    ## ind flake.nix
+  #  ];
 
   # Boot Configuration
   boot = {
@@ -524,6 +524,12 @@
       chown -R togo-gt:users /home/togo-gt/
     '';
   };
+
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "beekeeper-studio-5.3.4"
+  ];
+
 
   system.stateVersion = "25.05";
 }
