@@ -478,7 +478,7 @@
     # ========================
     # 🆕 NYE GUI PAKKER - SECURITY
     # ========================
-    bitwarden                   # 🔐 Password manager
+    bitwarden-desktop                   # 🔐 Password manager
     authy                       # 🔑 2FA authenticator
     veracrypt                   # 🗂️ Disk encryption
     keepassxc                   # 🗝️ Password manager (already have, keeping for reference)
