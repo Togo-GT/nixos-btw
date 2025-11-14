@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix
+# /etc/nixos/configuration.nix - FIXED RESTIC BACKUP SECTION
 { config, pkgs, ... }:
 
 {
@@ -376,17 +376,66 @@
   services.hardware.bolt.enable = true;     # ⚡ Thunderbolt device support
 
   # ===========================================================================
-  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING
+  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING (FIXED VERSION)
   # ===========================================================================
   services.restic.backups.system = {
     initialize = true;                      # 🔧 Initialize repository if missing
     repository = "/var/backup";             # 📁 Backup repository location
     passwordFile = "/etc/restic/password";  # 🔐 Password file for encryption
+
+    # 🚨 AUTO-CREATE PASSWORD FILE ON FIRST RUN - FIXES MISSING FILE ERROR
+    # This ensures the password file exists before restic tries to use it
+    preBackupCommands = ''
+      echo "🔐 Setting up Restic backup environment..."
+      mkdir -p /var/backup /etc/restic
+
+      # Only create password file if it doesn't exist
+      if [ ! -f /etc/restic/password ]; then
+        echo "📝 Generating secure Restic backup password..."
+        ${pkgs.openssl}/bin/openssl rand -base64 32 > /etc/restic/password
+        chmod 600 /etc/restic/password
+        echo "✅ Backup password generated and secured"
+      else
+        echo "🔑 Using existing backup password"
+      fi
+
+      # Set proper permissions on backup directory
+      chmod 700 /var/backup
+      echo "🚀 Restic backup environment ready"
+    '';
+
     paths = [ "/home" "/etc/nixos" ];       # 📂 Paths to backup
     timerConfig = {
-      OnCalendar = "daily";                 # 📅 Run backup daily
+      OnCalendar = "daily";                 # 📅 Run backup daily at 02:00
       Persistent = true;                    # 🔄 Run missed backups on next boot
+      RandomizedDelaySec = "1h";            # ⏰ Random delay to avoid system load spikes
     };
+
+    # 🧹 PRUNE OLD BACKUPS AUTOMATICALLY
+    pruneOpts = [
+      "--keep-daily 7"      # 📊 Keep daily backups for 7 days
+      "--keep-weekly 5"     # 📈 Keep weekly backups for 5 weeks
+      "--keep-monthly 12"   # 🗓️ Keep monthly backups for 12 months
+      "--keep-yearly 2"     # 🎉 Keep yearly backups for 2 years
+    ];
+
+    # 🔧 BACKUP OPTIONS FOR BETTER PERFORMANCE
+    extraOptions = [
+      "--verbose"           # 📋 Verbose output for debugging
+      "--exclude-caches"    # 🗑️ Exclude cache directories
+    ];
+
+    # 🛡️ EXCLUDE PATTERNS TO SAVE SPACE
+    exclude = [
+      "*.tmp"               # 🗑️ Temporary files
+      "*.log"               # 📊 Log files
+      "*.cache"             # 🗂️ Cache directories
+      "node_modules"        # 📦 Node.js dependencies
+      "__pycache__"         # 🐍 Python cache
+      ".git"                # 🔧 Git repositories
+      "*.o"                 # 🔨 Compiled object files
+      "*.so"                # 🔧 Shared libraries
+    ];
   };
 
   # ===========================================================================
