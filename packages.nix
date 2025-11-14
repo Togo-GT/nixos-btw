@@ -368,7 +368,7 @@
     # ========================
     tldr
     cheat
-    taskwarrior
+    taskwarrior2
 
     # ========================
     # QT6 PACKAGES FOR PLASMA 6
