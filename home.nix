@@ -16,12 +16,11 @@
     # Development tools
     gh
     git
-    neovim
     vscode-langservers-extracted
 
     # Utilities
     taskwarrior2
-    transmission
+    transmission_4
     nix-diff
     nix-search
     nixos-generators
