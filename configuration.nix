@@ -277,11 +277,6 @@
         swtpm.enable = true;
       };
     };
-
-    # For running Windows applications
-    wine = {
-      enable = true;
-    };
   };
 
   # Networking
