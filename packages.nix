@@ -479,7 +479,7 @@
     # 🆕 NYE GUI PAKKER - SECURITY
     # ========================
     bitwarden-desktop                   # 🔐 Password manager
-    authy                       # 🔑 2FA authenticator
+    totp-cli                       # 🔑 2FA authenticator
     veracrypt                   # 🗂️ Disk encryption
     keepassxc                   # 🗝️ Password manager (already have, keeping for reference)
 
