@@ -470,7 +470,7 @@
     # ========================
     baobab                     # 📊 Disk usage analyzer
     filezilla                  # 📁 FTP client
-   # etcher                     # 💾 USB image writer
+   # etcher                    # 💾 USB image writer
     remmina                    # 🖥️ Remote desktop client
     gnome-system-monitor       # 📈 System monitor
     lshw                       # 💻 Hardware information
@@ -478,10 +478,10 @@
     # ========================
     # 🆕 NYE GUI PAKKER - SECURITY
     # ========================
-    bitwarden-desktop                   # 🔐 Password manager
+    bitwarden-desktop              # 🔐 Password manager
     totp-cli                       # 🔑 2FA authenticator
-    veracrypt                   # 🗂️ Disk encryption
-    keepassxc                   # 🗝️ Password manager (already have, keeping for reference)
+    veracrypt                      # 🗂️ Disk encryption
+    keepassxc                      # 🗝️ Password manager (already have, keeping for reference)
 
     # ========================
     # 🆕 NYE GUI PAKKER - SCIENTIFIC
@@ -489,7 +489,7 @@
     qgis                        # 🗺️ Geographic information system
     rstudio                     # 📊 R development environment
     anki                        # 🧠 Spaced repetition flashcards
-    geogebra                   # 📐 Mathematics software
+    geogebra                    # 📐 Mathematics software
 
     # ========================
     # 🆕 NYE GUI PAKKER - KDE SPECIFIC
@@ -505,7 +505,7 @@
     # ========================
     # 🆕 NYE GUI PAKKER - MISC
     # ========================
-    onlyoffice-bin             # 📑 Office suite
+    onlyoffice-desktopeditors # 📑 Office suite
     joplin-desktop            # 📝 Note taking
     typora                     # ✍️ Markdown editor
     remarkable                 # 📘 Markdown notes
