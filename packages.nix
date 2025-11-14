@@ -430,8 +430,8 @@
     postman                     # 🌐 API development
     beekeeper-studio            # 🐝 Modern SQL editor
     sqlitebrowser               # 🔍 SQLite database browser
-    redis-commander-bin             # 🗃️ Redis GUI
-    lens-desktop                # ☸️ Kubernetes IDE
+    redis-commander-bin         # 🗃️ Redis GUI
+    lens                        # ☸️ Kubernetes IDE
     zed-editor                  # ⚡ High-performance code editor
 
     # ========================
