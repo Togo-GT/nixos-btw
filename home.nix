@@ -12,18 +12,30 @@
   # ===========================================================================
   # PACKAGES - BRUGERSPECIFIKKE PAKKER
   # ===========================================================================
-  # home.packages = with pkgs; [
-    # User-specific packages that don't need system-wide installation
-
+  home.packages = with pkgs; [
     # Development tools
+    gh
+    git
+    neovim
+    vscode-langservers-extracted
 
     # Utilities
+    taskwarrior
+    transmission
+    nix-diff
+    nix-search
+    nixos-generators
 
-    # Media
+    # Gaming
+    dxvk
 
-    # Fun
-
-  #];
+    # And packages you need
+    libnotify
+    p7zip
+    pciutils
+    usbutils
+    lm_sensors
+  ];
 
   # ===========================================================================
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
