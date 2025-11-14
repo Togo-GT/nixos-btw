@@ -376,40 +376,12 @@
   services.hardware.bolt.enable = true;     # ⚡ Thunderbolt device support
 
   # ===========================================================================
-  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING (FIXED VERSION)
+  # BACKUP CONFIGURATION - SIKKERHEDSKOPIERING (SIMPLIFIED FIX)
   # ===========================================================================
   services.restic.backups.system = {
     initialize = true;                      # 🔧 Initialize repository if missing
     repository = "/var/backup";             # 📁 Backup repository location
     passwordFile = "/etc/restic/password";  # 🔐 Password file for encryption
-
-    # 🚨 AUTO-CREATE PASSWORD FILE USING SYSTEMD SERVICE - FIXES MISSING FILE ERROR
-    # This ensures the password file exists before restic tries to use it
-    # Using systemd service pre-start hook instead of preBackupCommands
-    serviceConfig = {
-      ExecStartPre = [
-        # Create directories and password file if missing
-        "+${pkgs.writeShellScript "restic-setup" ''
-          set -e
-          echo "🔐 Setting up Restic backup environment..."
-          mkdir -p /var/backup /etc/restic
-
-          # Only create password file if it doesn't exist
-          if [ ! -f /etc/restic/password ]; then
-            echo "📝 Generating secure Restic backup password..."
-            ${pkgs.openssl}/bin/openssl rand -base64 32 > /etc/restic/password
-            chmod 600 /etc/restic/password
-            echo "✅ Backup password generated and secured"
-          else
-            echo "🔑 Using existing backup password"
-          fi
-
-          # Set proper permissions on backup directory
-          chmod 700 /var/backup
-          echo "🚀 Restic backup environment ready"
-        ''}"
-      ];
-    };
 
     paths = [ "/home" "/etc/nixos" ];       # 📂 Paths to backup
     timerConfig = {
@@ -443,6 +415,37 @@
       "*.o"                 # 🔨 Compiled object files
       "*.so"                # 🔧 Shared libraries
     ];
+  };
+
+  # ===========================================================================
+  # SYSTEMD SERVICE OVERRIDE FOR RESTIC SETUP
+  # ===========================================================================
+  systemd.services."restic-backups-system" = {
+    serviceConfig = {
+      # 🚨 AUTO-CREATE PASSWORD FILE AND DIRECTORIES BEFORE BACKUP
+      ExecStartPre = [
+        # Create directories and password file if missing
+        "+${pkgs.writeShellScript "restic-setup" ''
+          set -e
+          echo "🔐 Setting up Restic backup environment..."
+          mkdir -p /var/backup /etc/restic
+
+          # Only create password file if it doesn't exist
+          if [ ! -f /etc/restic/password ]; then
+            echo "📝 Generating secure Restic backup password..."
+            ${pkgs.openssl}/bin/openssl rand -base64 32 > /etc/restic/password
+            chmod 600 /etc/restic/password
+            echo "✅ Backup password generated and secured"
+          else
+            echo "🔑 Using existing backup password"
+          fi
+
+          # Set proper permissions on backup directory
+          chmod 700 /var/backup
+          echo "🚀 Restic backup environment ready"
+        ''}"
+      ];
+    };
   };
 
   # ===========================================================================
