@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED VERSION WITH PROPER KDE CONNECT
+# /etc/nixos/configuration.nix - FIXED VERSION
 { config, pkgs, inputs, ... }:
 
 {
@@ -142,6 +142,7 @@
         defaultSession = "plasma";
       };
 
+      # KDE Plasma configuration
       desktopManager.plasma6.enable = true;
 
       # Enable touchpad support
@@ -153,11 +154,6 @@
         };
       };
     };
-
-    # Reduced exclude list to allow more KDE apps
-    desktopManager.plasma6.excludePackages = with pkgs.kdePackages; [
-      elisa  # Only exclude music player if you prefer another
-    ];
 
     # KDE Connect service for better integration
     kdeconnect = {
