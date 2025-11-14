@@ -468,7 +468,6 @@
     # ========================
     # 🆕 NYE GUI PAKKER - SYSTEM TOOLS
     # ========================
-    stacer                      # 🧹 System optimizer & monitor
     baobab                     # 📊 Disk usage analyzer
     filezilla                   # 📁 FTP client
     balena-etcher              # 💾 USB image writer
