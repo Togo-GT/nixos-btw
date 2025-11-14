@@ -510,7 +510,6 @@
     typora                     # ✍️ Markdown editor
     marktext                 # 📘 Markdown notes
     figma-linux               # 🎨 Design tool
-    penpot                    # 🎨 Open-source design tool
   ];
 
   # ========================
