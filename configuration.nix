@@ -471,15 +471,13 @@
     ];
   };
 
-  # Fonts - SIMPLE WORKING VERSION
+  # Fonts - MINIMAL WORKING VERSION
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      # Simple nerd fonts approach
-      nerdfonts
       dejavu_fonts
       freefont_ttf
       corefonts
