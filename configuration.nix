@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED SYSTEMD SETTINGS
+# /etc/nixos/configuration.nix - CLEAN VERSION WITHOUT SYSTEMD CONFIG
 { config, pkgs, ... }:
 
 {
@@ -614,10 +614,7 @@
   # SYSTEM OPTIMIZATIONS - YDELSESFORBEDRINGER
   # ===========================================================================
 
-  # ✅ FIXED: Simplified systemd configuration
-  systemd.extraConfig = ''
-    DefaultTimeoutStopSec=10s
-  '';
+  # ✅ REMOVED: systemd.extraConfig completely to avoid deprecation errors
 
   # Memory management optimizations
   boot.kernel.sysctl = {
