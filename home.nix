@@ -16,7 +16,7 @@
     nixos-generators
 
     # Utilities
-    taskwarrior
+    taskwarrior2  # 🔧 FIXED: taskwarrior → taskwarrior2
     transmission-gtk
     libnotify
     p7zip
@@ -33,13 +33,24 @@
   programs = {
     git = {
       enable = true;
-      userName = "Togo-GT";
-      userEmail = "michael.kaare.nielsen@gmail.com";
-      extraConfig = {
-        init.defaultBranch = "main";
-        pull.rebase = false;
-        core.editor = "nvim";
-        merge.conflictstyle = "diff3";
+      # 🔧 FIXED: Updated to new syntax
+      settings = {
+        user = {
+          name = "Togo-GT";
+          email = "michael.kaare.nielsen@gmail.com";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = false;
+        };
+        core = {
+          editor = "nvim";
+        };
+        merge = {
+          conflictstyle = "diff3";
+        };
       };
       ignores = [
         ".DS_Store"
