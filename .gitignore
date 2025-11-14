@@ -1,0 +1,24 @@
+# NixOS build results
+result
+result-*
+
+# ISO build results
+./iso-image/
+*.iso
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Local configuration overrides
+local.nix
+secrets.nix
+
+# Temporary files
+*.tmp
+*.temp
+
+# History files
+.history
