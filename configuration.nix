@@ -81,6 +81,7 @@
         libvdpau-va-gl
         mesa
         nvidia-vaapi-driver
+        libva-vdpau-driver  # FIX: vaapiVdpau → libva-vdpau-driver
       ];
       extraPackages32 = with pkgs.pkgsi686Linux; [
         libva
@@ -92,17 +93,6 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
-    };
-
-    opengl = {
-      enable = true;
-      # FIX: Remove deprecated driSupport options
-      # driSupport and driSupport32Bit are now automatic
-      extraPackages = with pkgs; [
-        nvidia-vaapi-driver
-        libva-vdpau-driver  # FIX: vaapiVdpau → libva-vdpau-driver
-        libvdpau-va-gl
-      ];
     };
 
     # Enable sane scanner support
@@ -130,30 +120,40 @@
       jack.enable = true;
     };
 
+    # FIX: PulseAudio moved from hardware to services
+    pulseaudio = {
+      enable = false;  # Disabled because we use PipeWire
+      support32Bit = true;
+    };
+
     xserver = {
       enable = true;
       videoDrivers = [ "nvidia" ];
-      layout = "dk";
-      xkbVariant = "";
-
-      displayManager = {
-        sddm = {
-          enable = true;
-          wayland.enable = true;
-        };
-        defaultSession = "plasma";
+      # FIX: XKB options moved
+      xkb = {
+        layout = "dk";
+        variant = "";
       };
+    };
 
-      # KDE Plasma configuration
-      desktopManager.plasma6.enable = true;
-
-      # Enable touchpad support
-      libinput = {
+    # FIX: Display manager options moved out of xserver
+    displayManager = {
+      sddm = {
         enable = true;
-        touchpad = {
-          naturalScrolling = true;
-          tapping = true;
-        };
+        wayland.enable = true;
+      };
+      defaultSession = "plasma";
+    };
+
+    # FIX: Desktop manager options moved out of xserver
+    desktopManager.plasma6.enable = true;
+
+    # FIX: Libinput options moved out of xserver
+    libinput = {
+      enable = true;
+      touchpad = {
+        naturalScrolling = true;
+        tapping = true;
       };
     };
 
@@ -478,7 +478,11 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
-      (nerd-fonts.override { fonts = [ "FiraCode" "JetBrainsMono" ]; })
+      # FIX: Updated nerd-fonts syntax - use individual packages instead
+      nerdfonts
+      # Or use specific nerd fonts:
+      # nerdfonts-fira-code
+      # nerdfonts-jetbrains-mono
       # 🔧 NEW: Additional fonts for better GUI app compatibility
       dejavu_fonts
       freefont_ttf
@@ -518,12 +522,6 @@
     MOZ_ENABLE_WAYLAND = "1";
     SDL_VIDEODRIVER = "wayland";
     _JAVA_AWT_WM_NONREPARENTING = "1";
-  };
-
-  # 🔧 NEW: Enable PulseAudio for better audio compatibility
-  hardware.pulseaudio = {
-    enable = false;  # Disabled because we use PipeWire
-    support32Bit = true;
   };
 
   system.userActivationScripts.setup-dirs = {
