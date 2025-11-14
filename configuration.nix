@@ -230,11 +230,6 @@
       enable = true;  # For MTP, AFP, SMB, and other protocols
     };
 
-    # For Android device support
-    mtp = {
-      enable = true;
-    };
-
     # USB device management
     udisks2 = {
       enable = true;
