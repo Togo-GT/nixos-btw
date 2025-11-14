@@ -1,4 +1,4 @@
-# /home/togo-gt/nixos-config/home.nix
+# /home/togo-gt/nixos-config/home.nix - UPDATED VERSION
 { config, pkgs, inputs, ... }:
 
 {
@@ -29,16 +29,27 @@
   # PROGRAM CONFIGURATION - BRUGERPROGRAMKONFIGURATION
   # ===========================================================================
   programs = {
-    # Git configuration - moved from configuration.nix
+    # Git configuration - UPDATED to new syntax
     git = {
       enable = true;
-      userName = "Togo-GT";
-      userEmail = "michael.kaare.nielsen@gmail.com";
-      extraConfig = {
-        init.defaultBranch = "main";
-        pull.rebase = false;
-        core.editor = "nvim";
-        merge.conflictstyle = "diff3";
+      # 🚨 FIXED: Use new settings structure
+      settings = {
+        user = {
+          name = "Togo-GT";
+          email = "michael.kaare.nielsen@gmail.com";
+        };
+        init = {
+          defaultBranch = "main";
+        };
+        pull = {
+          rebase = false;
+        };
+        core = {
+          editor = "nvim";
+        };
+        merge = {
+          conflictstyle = "diff3";
+        };
       };
       ignores = [
         ".DS_Store"
@@ -61,11 +72,12 @@
       vimAlias = true;
     };
 
-    # ZSH configuration (complements zsh-fix.nix)
+    # ZSH configuration (complements zsh-fix.nix) - UPDATED to new syntax
     zsh = {
       enable = true;
       enableCompletion = true;
-      enableAutosuggestions = true;
+      # 🚨 FIXED: Use new autosuggestions structure
+      autosuggestions.enable = true;
       syntaxHighlighting.enable = true;
 
       shellAliases = {
@@ -77,7 +89,8 @@
         update = "sudo nixos-rebuild switch --flake .#togo-gt && home-manager switch";
       };
 
-      initExtra = ''
+      # 🚨 FIXED: Use initContent instead of initExtra
+      initContent = ''
         # User-specific ZSH extras that don't belong in system configuration
         export PATH="$HOME/.local/bin:$PATH"
 
