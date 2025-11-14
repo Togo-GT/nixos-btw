@@ -100,7 +100,7 @@
       # driSupport and driSupport32Bit are now automatic
       extraPackages = with pkgs; [
         nvidia-vaapi-driver
-        vaapiVdpau
+        libva-vdpau-driver  # FIX: vaapiVdpau → libva-vdpau-driver
         libvdpau-va-gl
       ];
     };
