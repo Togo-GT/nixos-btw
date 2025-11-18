@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./systemPackages
+    ./systemPackages/default.nix
   ];
 
   environment.systemPackages = import ./systemPackages { inherit pkgs; };
