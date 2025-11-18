@@ -11,5 +11,5 @@ let
   system = import ./system.nix { inherit pkgs lib; };
 in
 
-# Combine all package sets
-core ++ cli ++ dev ++ gui ++ gaming ++ multimedia ++ system
+# Combine all package sets, removing duplicates
+lib.unique (core ++ cli ++ dev ++ gui ++ gaming ++ multimedia ++ system)

@@ -1,14 +1,8 @@
-# environment/default.nix
-{ pkgs, lib, ... }:
+# hardware/default.nix
 
-let
-  # Import your package sets from the systemPackages directory
-  systemPackages = import ./hardware {
-    inherit pkgs lib;
-  };
-in
+{  ... }:
+
 {
-
-
+  # Empty but valid module
 }
 

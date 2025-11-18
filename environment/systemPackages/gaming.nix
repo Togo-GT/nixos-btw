@@ -19,9 +19,11 @@ with pkgs; [
   mangohud
   goverlay
   gamemode
+  dxvk
 
   # Emulators - ALL emulators!
   retroarch
   pcsx2
   dolphin-emu
+
 ]

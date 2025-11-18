@@ -1,13 +1,10 @@
-# environment/default.nix
+# environment/default.nix - FIXED
 { pkgs, lib, ... }:
 
 let
   # Import your package sets from the systemPackages directory
-  systemPackages = import ./systemPackages {
-    inherit pkgs lib;
-  };
+  systemPackages = import ./systemPackages { inherit pkgs lib; };
 in
-
 {
   environment.systemPackages = systemPackages;
 

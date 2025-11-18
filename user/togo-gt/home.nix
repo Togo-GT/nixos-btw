@@ -1,40 +1,15 @@
 # /home/togo-gt/nixos-config/home.nix - FIXED VERSION
-{ config, pkgs, inputs, ... }:
+{ ... }:
 
 {
   home.username = "togo-gt";
   home.homeDirectory = "/home/togo-gt";
   home.stateVersion = "25.05";
 
-  home.packages = with pkgs; [
-    # Development
-    gh
-    git
-    vscode-langservers-extracted
-    nix-diff
-    nix-search
-    nixos-generators
-
-    # Utilities
-    taskwarrior2  # 🔧 FIXED: taskwarrior → taskwarrior2
-    transmission_4-gtk
-    libnotify
-    p7zip
-    pciutils
-    usbutils
-    lm_sensors
-
-    # Gaming
-    dxvk
-    mangohud
-    goverlay
-  ];
-
   programs = {
     git = {
       enable = true;
-      # 🔧 FIXED: Updated to new syntax
-      settings = {
+            settings = {
         user = {
           name = "Togo-GT";
           email = "michael.kaare.nielsen@gmail.com";

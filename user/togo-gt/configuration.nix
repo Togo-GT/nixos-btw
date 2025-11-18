@@ -2,10 +2,6 @@
 { config, pkgs, inputs, ... }:
 
 {
-  #  imports = [
-  #  ./hardware-configuration.nix    ## ind flake.nix
-  #  ];
-
   # Boot Configuration
   boot = {
     loader = {

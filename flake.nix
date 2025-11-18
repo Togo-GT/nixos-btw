@@ -1,4 +1,4 @@
-# /home/togo-gt/nixos-config/flake.nix - FIXED VERSION
+# flake.nix - UPDATED imports section
 {
   description = "NixOS system configuration for togo-gt";
 
@@ -21,14 +21,18 @@
       "togo-gt" = lib.nixosSystem {
         inherit system;
         modules = [
-        # User
+          # Hardware
           ./user/togo-gt/hardware-configuration.nix
+          #./hardware/default.nix
+
+          # System configuration
           ./user/togo-gt/configuration.nix
-        # Environment
-          ./environment/zsh-fix.nix
+
+          # Environment
           ./environment/default.nix
+          ./environment/zsh-fix.nix
 
-
+          # Hardware modules
           nixos-hardware.nixosModules.common-gpu-nvidia
 
           # Home Manager integration

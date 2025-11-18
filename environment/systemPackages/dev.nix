@@ -24,6 +24,7 @@ with pkgs; [
   jdk21
 
   # Development utilities
+  gh
   jq
   yq
   hexyl
