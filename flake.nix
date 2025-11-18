@@ -21,11 +21,13 @@
       "togo-gt" = lib.nixosSystem {
         inherit system;
         modules = [
-          ./configuration.nix
-          ./hardware-configuration.nix
-          ./zsh-fix.nix
-          ./environment/default.nix
-          #./packages.nix
+        # User
+          ./user/togo-gt/hardware-configuration.nix
+          ./user/togo-gt/configuration.nix
+        # Environment
+          ./environment/zsh-fix.nix
+          #./environment/default.nix
+
 
           nixos-hardware.nixosModules.common-gpu-nvidia
 
@@ -34,7 +36,7 @@
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.users.togo-gt = import ./home.nix;
+            home-manager.users.togo-gt = import ./user/togo-gt/home.nix;
             home-manager.extraSpecialArgs = { inherit inputs; };
           }
         ];
@@ -45,7 +47,7 @@
         inherit system;
         modules = [
           "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-          ./iso-configuration.nix
+          ./environment/iso-configuration.nix
         ];
       };
     };
@@ -54,7 +56,7 @@
       "togo-gt" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [
-          ./home.nix
+          ./user/togo-gt/home.nix
           {
             home = {
               username = "togo-gt";
