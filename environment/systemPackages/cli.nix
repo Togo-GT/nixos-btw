@@ -1,4 +1,5 @@
-{ pkgs }:
+{ pkgs, lib, ... }:
+
 
 with pkgs; [
   # Modern CLI tools
@@ -95,7 +96,7 @@ with pkgs; [
   # Information & documentation
   tldr
   cheat
-  taskwarrior
+  taskwarrior2
 
   # Fun & entertainment - ALL FUN STUFF!
   cowsay

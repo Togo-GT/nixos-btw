@@ -1,4 +1,5 @@
-{ pkgs }:
+{pkgs, lib, ... }:
+
 
 with pkgs; [
   # Graphics & GPU - COMPLETE graphics stack

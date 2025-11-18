@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, ... }:
 
 with pkgs; [
   # Development tools - COMPLETE suite

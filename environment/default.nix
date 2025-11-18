@@ -1,11 +1,15 @@
-{ config, pkgs, lib, ... }:
+# environment/default.nix
+{ pkgs, lib, ... }:
+
+let
+  # Import your package sets from the systemPackages directory
+  systemPackages = import ./systemPackages {
+    inherit pkgs lib;
+  };
+in
 
 {
-  imports = [
-    ./systemPackages/default.nix
-  ];
-
-  environment.systemPackages = import ./systemPackages { inherit pkgs; };
+  environment.systemPackages = systemPackages;
 
   environment.variables = {
     # Wayland support for Electron apps
@@ -19,11 +23,7 @@
   nixpkgs.config = {
     # Allow proprietary packages
     allowUnfree = true;
-
-    # Allow packages with broken dependencies (use with caution)
     allowBroken = false;
-
-    # Allow unsupported system packages
     allowUnsupportedSystem = false;
   };
 }

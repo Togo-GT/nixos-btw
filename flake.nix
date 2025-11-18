@@ -24,8 +24,9 @@
           ./configuration.nix
           ./hardware-configuration.nix
           ./zsh-fix.nix
-          #./packages.nix
           ./environment/default.nix
+          #./packages.nix
+
           nixos-hardware.nixosModules.common-gpu-nvidia
 
           # Home Manager integration
