@@ -510,7 +510,7 @@
     joplin-desktop            # 📝 Note taking
     typora                     # ✍️ Markdown editor
     marktext                 # 📘 Markdown notes
-    figma-linux               # 🎨 Design tool
+   # figma-linux               # 🎨 Design tool
   ];
 
   # ========================
