@@ -26,7 +26,7 @@
           ./user/togo-gt/configuration.nix
         # Environment
           ./environment/zsh-fix.nix
-          #./environment/default.nix
+          ./environment/default.nix
 
 
           nixos-hardware.nixosModules.common-gpu-nvidia
