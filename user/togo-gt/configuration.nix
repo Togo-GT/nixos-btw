@@ -384,7 +384,7 @@
     kdeconnect.enable = true;  # KDE Connect for device integration
 
     # File manager integration
-    file-roller.enable = true;  # Archive manager
+  #  file-roller.enable = true;  # Archive manager
 
     # System monitoring
     gnome-disks.enable = true;

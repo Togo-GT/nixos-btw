@@ -1,10 +1,15 @@
 # /home/togo-gt/nixos-config/home.nix - FIXED VERSION
-{ ... }:
+{ pkgs, ... }:
 
 {
   home.username = "togo-gt";
   home.homeDirectory = "/home/togo-gt";
   home.stateVersion = "25.05";
+
+  home.packages = with pkgs; [
+  file-roller
+
+];
 
   programs = {
     git = {
