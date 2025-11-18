@@ -1,5 +1,5 @@
 # /etc/nixos/configuration.nix - FIXED VERSION
-{ config, pkgs, inputs, ... }:
+{ config, pkgs,  ... }:
 
 {
   # Boot Configuration
