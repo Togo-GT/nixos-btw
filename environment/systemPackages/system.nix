@@ -8,7 +8,7 @@ with pkgs; [
   cpupower-gui             # CPU power management GUI
   powerstat                # Power consumption measurements
   smartmontools            # SMART disk monitoring
-  s-tui                    # |* Terminal UI for stress testing *# |
+  s-tui                    # Terminal UI for stress testing
   stress-ng                # System stress tester
   inxi                     # System information script
   radeontop                # AMD GPU monitoring
@@ -21,7 +21,7 @@ with pkgs; [
   gparted                  # Partition editor
   parted                   # Partition manipulation
   hdparm                   # Hard disk parameter control
-  ncdu                     # |* NCurses disk usage *# # |
+  ncdu                     # NCurses disk usage
   duf                      # Disk usage/free utility
   agedu                    # Disk usage tracking over time
   rsync                    # File synchronization
@@ -41,9 +41,9 @@ with pkgs; [
   borgbackup               # Deduplicating backup program
   rsnapshot                # Filesystem snapshot backup
   timeshift                # System restore tool
-  burp                     # Network backup and restore
+  # burp                     # Network backup and restore - FJERNET (ikke tilgængelig)
   duplicity                # Encrypted bandwidth-efficient backup
-  backupninja              # Backup coordination tool
+  # backupninja              # Backup coordination tool - FJERNET (ikke tilgængelig)
 
   # ===== NETWORK TOOLS =====
   ethtool                  # Ethernet device settings

@@ -3,13 +3,13 @@
 with pkgs; [
   # ===== GRAPHICS & GPU STACK =====
   nvidia-vaapi-driver      # NVIDIA VA-API driver
-  nvitop                   # |* NVIDIA GPU monitoring *|
+  nvitop                   # NVIDIA GPU monitoring
   vulkan-tools             # Vulkan utilities and demos
   vulkan-loader            # Vulkan loader
   mesa-demos               # Mesa OpenGL demos
   libva-utils              # VA-API utilities
   vdpauinfo                # VDPAU capability info
-  clinfo                   # |* OpenCL information *|
+  clinfo                   # OpenCL information
   glmark2                  # OpenGL benchmark
   gpu-viewer               # GPU information viewer
   intel-gpu-tools          # Intel GPU tools
@@ -21,7 +21,7 @@ with pkgs; [
   pulsemixer               # CLI PulseAudio mixer
   pavucontrol              # PulseAudio volume control
   alsa-utils               # ALSA sound utilities
-  easyeffects              # |* Audio effects for PipeWire *|
+  easyeffects              # Audio effects for PipeWire
   carla                    # Audio plugin host
   helvum                   # PipeWire patchbay
   qjackctl                 # JACK audio control
@@ -41,37 +41,37 @@ with pkgs; [
   element-desktop          # Matrix client
   slack                    # Team collaboration
   zoom                     # Video conferencing
-  mattermost-desktop       # Team communication
-  teams                    # Microsoft Teams
+  # mattermost-desktop       # Team communication - FJERNET (ikke tilgængelig)
+  # teams                    # Microsoft Teams - FJERNET (ikke tilgængelig)
 
   # ===== PRODUCTIVITY & OFFICE =====
   libreoffice-fresh        # Office suite
   onlyoffice-desktopeditors # Office suite
   obsidian                 # Note-taking
   logseq                   # Knowledge management
-  notion-app               # All-in-one workspace
+  # notion-app               # All-in-one workspace - FJERNET (ikke tilgængelig)
   zotero                   # Reference management
   xournalpp                # Handwritten notes
-  masterpdfeditor          # PDF editor
+  # masterpdfeditor          # PDF editor - FJERNET (ikke tilgængelig)
   freeplane                # Mind mapping
   cherrytree               # Hierarchical note taking
   joplin-desktop           # Note taking
-  typora                   # Markdown editor
-  marktext                 # Markdown editor
+  # typora                   # Markdown editor - FJERNET (ikke tilgængelig)
+  # marktext                 # Markdown editor - FJERNET (ikke tilgængelig)
   drawio                   # Diagram creation
 
   # ===== DEVELOPMENT GUI TOOLS =====
   vscode                   # Visual Studio Code
-  zed-editor               # High-performance code editor
+  # zed-editor               # High-performance code editor - FJERNET (ikke tilgængelig)
   dbeaver-bin              # Database administration
   postman                  # API development
   beekeeper-studio         # SQL editor and manager
   sqlitebrowser            # SQLite database browser
-  lens                     # Kubernetes IDE
+  # lens                     # Kubernetes IDE - FJERNET (ikke tilgængelig)
   kdePackages.kdevelop     # KDE development environment
-  jetbrains.idea-ultimate  # IntelliJ IDEA Ultimate
-  jetbrains.pycharm-professional # PyCharm Professional
-  jetbrains.webstorm       # WebStorm IDE
+  # jetbrains.idea-ultimate  # IntelliJ IDEA Ultimate - FJERNET (ikke tilgængelig)
+  # jetbrains.pycharm-professional # PyCharm Professional - FJERNET (ikke tilgængelig)
+  # jetbrains.webstorm       # WebStorm IDE - FJERNET (ikke tilgængelig)
   android-studio           # Android development
   arduino-ide              # Arduino development
 
@@ -80,13 +80,13 @@ with pkgs; [
   filezilla                # FTP client
   remmina                  # Remote desktop client
   gnome-system-monitor     # System monitor
-  anydesk                  # Remote desktop
-  teamviewer               # Remote control
+  # anydesk                  # Remote desktop - FJERNET (ikke tilgængelig)
+  # teamviewer               # Remote control - FJERNET (ikke tilgængelig)
 
   # ===== SECURITY GUI =====
   bitwarden-desktop        # Password manager
   keepassxc                # Password manager
-  totp-cli                 # TOTP authenticator
+  # totp-cli                 # TOTP authenticator - FJERNET (ikke tilgængelig)
   veracrypt                # Disk encryption
 
   # ===== SCIENTIFIC & EDUCATION =====
@@ -125,7 +125,7 @@ with pkgs; [
   imv                      # Image viewer
 
   # ===== THEMES & APPEARANCE =====
-  catppuccin-kde           # Catppuccin theme for KDE
+  # catppuccin-kde           # Catppuccin theme for KDE - FJERNET (ikke tilgængelig)
   catppuccin-gtk           # Catppuccin theme for GTK
   tela-circle-icon-theme   # Tela circle icons
   papirus-icon-theme       # Papirus icon theme

@@ -1,33 +1,41 @@
 { pkgs, lib, ... }:
 
 with pkgs; [
-  # ===== ABSOLUTELY ESSENTIAL SYSTEM =====
-  sudo                    # Superuser permissions management
-  polkit                  # PolicyKit for privilege escalation
-  dbus                    # Message bus system
-  networkmanager          # Network connection management
-  openssh                 # SSH server and client
+  # ===== SYSTEM ABSOLUTES =====
+  sudo                    # Superuser permissions
+  polkit                  # PolicyKit authorization
+  dbus                    # Inter-process communication
+  networkmanager          # Network connection manager
+  openssh                 # Secure shell access
+  avahi                   # Zero-configuration networking
+  cups                    # Printing system
 
-  # ===== CORE UNIX UTILITIES =====
-  coreutils-full          # Complete GNU core utilities (ls, cp, mv, etc.)
-  findutils               # find, locate, xargs
+  # ===== CORE UNIX =====
+  coreutils               # Complete GNU core utilities (brug coreutils i stedet for coreutils-full)
+  util-linux              # System utilities (mount, fdisk, etc.)
+  findutils               # find, xargs, locate
+  diffutils               # diff, cmp, patch
   gnused                  # GNU stream editor
-  gnugrep                 # GNU grep pattern matching
+  gnugrep                 # GNU pattern matching
   gawk                    # GNU awk text processing
-  diffutils               # diff, cmp utilities
-  which                   # Locate command in PATH
-  time                    # Time command execution
+  gnutar                  # Tape archiver
+  gzip                    # Compression utility
+  bzip2                   # Block-sorting compressor
+  xz                      # LZMA compression
+  zstd                    # Zstandard compression
+  file                    # File type detection
+  which                   # Command locator
+  whereis                 # Locate command binaries
+  time                    # Command execution timer
   bc                      # Arbitrary precision calculator
-  patch                   # Apply patch files
+  dc                      # Desk calculator
+  patch                   # Apply diff files
   less                    # Better file pager
   moreutils               # Additional Unix utilities
+  pv                      # Pipe viewer
+  progress                # Coreutils progress viewer
 
-  # ===== SYSTEM INFORMATION TOOLS =====
-  vim                     # Vi Improved text editor
-  neovim                  # Modern Vim fork
-  wget                    # Web content downloader
-  curl                    # URL transfer tool
-  file                    # File type detection
+  # ===== HARDWARE INFORMATION =====
   pciutils                # PCI bus utilities (lspci)
   usbutils                # USB utilities (lsusb)
   lm_sensors              # Hardware monitoring sensors
@@ -36,13 +44,34 @@ with pkgs; [
   lshw                    # Hardware lister
   lsof                    # List open files
   psmisc                  # Process utilities (killall, pstree)
+  hwdata                  # Hardware database
+  edid-decode             # Monitor EDID information
+  # biosdevname             # Network device naming - FJERNET (ikke tilgængelig)
+  ethtool                 # Ethernet device settings
+  iw                      # Wireless device configuration
+
+  # ===== ARCHIVING & COMPRESSION =====
   p7zip                   # 7-zip file archiver
   unzip                   # ZIP archive extractor
   zip                     # ZIP archive creator
+  unrar                   # RAR archive extractor
+  lz4                     # LZ4 compression
+  lzop                    # LZO compression
+  brotli                  # Brotli compression
+
+  # ===== SECURITY & CRYPTO =====
   openssl                 # Cryptography and SSL/TLS toolkit
   libnotify               # Desktop notifications
+  gnupg                   # GNU Privacy Guard
+  pinentry                # PIN entry dialog
+  pass                    # Password store
+  age                     # Simple, modern encryption
+  sops                    # Secrets management
+  libfido2                # FIDO2 support
+  yubikey-manager         # YubiKey management
+  oath-toolkit            # OATH one-time passwords
 
-  # ===== SHELL & TERMINAL ENHANCEMENTS =====
+  # ===== SHELL & TERMINAL =====
   zoxide                  # Smart directory jumping
   starship                # Cross-shell prompt
   oh-my-posh              # Prompt theme engine
@@ -50,11 +79,13 @@ with pkgs; [
   zsh                     # Z shell
   tmux                    # Terminal multiplexer
   tmuxp                   # Tmux session manager
+  screen                  # GNU screen multiplexer
+  expect                  # Automated terminal interaction
 
-  # ===== NIX PACKAGE MANAGEMENT =====
+  # ===== NIX ECOSYSTEM =====
   home-manager            # User environment management
   nix-index               # File database for nix-locate
-  nix-search              # Search nix packages
+  # nix-search              # Search nix packages - FJERNET (ikke tilgængelig)
   nixd                    # Nix language server
   nix-tree                # Browse nix dependency trees
   nix-diff                # Compare nix derivations
@@ -63,7 +94,7 @@ with pkgs; [
   nixos-option            # Inspect NixOS configuration options
   comma                   # Run temporarily installed programs
   nixpkgs-fmt             # Nix code formatter
-  nixfmt-classic          # Alternative nix formatter
+  # nixfmt-classic          # Alternative nix formatter - FJERNET (ikke tilgængelig)
   statix                  # Lints and suggestions for Nix code
   alejandra               # Fast nix code formatter
   manix                   # Nix documentation search
@@ -72,25 +103,31 @@ with pkgs; [
   nixos-generators        # Generate ISOs from configurations
   nh                      # Nix helper wrapper
   nil                     # Nix language server
+  nix-prefetch            # Prefetch nix sources
+  nix-update              # Update nix packages
+  # nixos-shell             # NixOS in a shell - FJERNET (ikke tilgængelig)
+  # nix-bundle              # Bundle nix applications - FJERNET (ikke tilgængelig)
+  # nixos-rebuild           # Rebuild system - FJERNET (allerede i system)
 
-  # ===== ESSENTIAL DEVELOPMENT =====
-  git                     # Distributed version control system
-  gnupg                   # GNU Privacy Guard encryption
-  pinentry-gnome3         # PIN entry dialog for GnuPG
-  pinentry-curses         # PIN entry dialog for GnuPG
-
-  # ===== NETWORK DIAGNOSTICS =====
+  # ===== NETWORK TOOLS =====
   inetutils               # Classic network tools (telnet, ftp)
-  iproute2                # Modern IP routing utilities (ip command)
+  iproute2                # Modern IP routing utilities
   iputils                 # Network testing tools (ping, traceroute)
-
-  # ===== SECURITY TOOLS =====
-  pass                    # Password store
-  age                     # Simple, modern encryption
-  sops                    # Secrets management
+  curl                    # URL transfer tool
+  wget                    # Web content downloader
+  # wget2                   # Modern wget - FJERNET (ikke tilgængelig)
+  aria2                   # Download utility
+  netcat-openbsd          # Network Swiss army knife
+  socat                   # Multipurpose relay
+  # openssh                 # SSH client and server - ALLEREDE TILFØJET
+  sshfs                   # SSH filesystem
+  sshpass                 # SSH password authentication
+  rsync                   # File synchronization
+  rclone                  # Cloud storage sync
 
   # ===== DOCUMENTATION =====
   man-db                  # Manual page system
   man-pages               # Linux manual pages
   texinfo                 # Documentation system
+  info                    # GNU info reader
 ]
