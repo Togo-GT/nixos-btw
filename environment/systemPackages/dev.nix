@@ -151,7 +151,7 @@ with pkgs; [
   skopeo                    # Container image utilities
   distrobox                 # Linux container manager
   nixos-container           # NixOS containers
-  systemd-nspawn            # Lightweight container manager
+  # systemd-nspawn            # Lightweight container manager
 
   # ===== FULL VIRTUALIZATION STACK =====
   virt-manager              # Virtual machine manager GUI
