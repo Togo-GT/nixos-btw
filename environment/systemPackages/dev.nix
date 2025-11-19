@@ -128,7 +128,7 @@ with pkgs; [
   # ===== DATABASE CLIENTS =====
   sqlite                    # SQLite database
   postgresql                # PostgreSQL database
-  mysql-client              # MySQL client utilities
+  mariadb.client             # MySQL client utilities
   mongodb-tools             # MongoDB utilities
 
   # ===== CODE NAVIGATION =====
