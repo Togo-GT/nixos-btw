@@ -1,29 +1,42 @@
 { pkgs, ... }:
 
 with pkgs; [
-  # Gaming - COMPLETE gaming setup
-  steam
-  heroic
-  lutris
-  bottles
-  playonlinux
-  minigalaxy
+  # ===== GAMING PLATFORMS =====
+  steam                    # Steam gaming platform
+  heroic                   # Epic Games and GOG launcher
+  lutris                   # Open gaming platform
+  bottles                  # Easy Wine wrapper
+  playonlinux              # Wine frontend
+  minigalaxy               # GOG.com client
 
-  # Wine & compatibility
-  wine
-  wineWowPackages.stable
-  winetricks
-  protontricks
+  # ===== WINE & COMPATIBILITY =====
+  wine                     # Windows compatibility layer
+  wineWowPackages.stable   # 32-bit and 64-bit Wine
+  winetricks               # Wine setup helper
+  protontricks             # Proton and Steam tricks
 
-  # Gaming performance tools
-  mangohud
-  goverlay
-  gamemode
-  dxvk
+  # ===== GAMING PERFORMANCE TOOLS =====
+  mangohud                 # |* Vulkan/OpenGL overlay for monitoring *|
+  goverlay                 # |* MangoHud configuration tool *|
+  gamemode                 # Optimize system for gaming
+  dxvk                     # DirectX to Vulkan translation
+  vkd3d-proton             # Direct3D 12 to Vulkan translation
+  vkbasalt                 # Vulkan post processing layer
 
-  # Emulators - ALL emulators!
-  retroarch
-  pcsx2
-  dolphin-emu
+  # ===== EMULATORS =====
+  retroarch                # Multi-system emulator frontend
+  pcsx2                    # PlayStation 2 emulator
+  dolphin-emu              # GameCube and Wii emulator
+  yuzu                     # Nintendo Switch emulator
+  ryujinx                  # Nintendo Switch emulator
+  cemu                     # Wii U emulator
+  mame                     # |* Multiple Arcade Machine Emulator *|
+  dosbox                   # DOS emulator
 
+  # ===== ADDITIONAL GAMING PLATFORMS =====
+  prismlauncher            # Minecraft launcher
+  minecraft                # Minecraft game
+  gamescope                # |* SteamOS compositor *|
+  itch                     # Itch.io game platform
+  gnome-games              # GNOME games collection
 ]
