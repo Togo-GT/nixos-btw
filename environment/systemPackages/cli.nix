@@ -166,7 +166,7 @@ with pkgs; [
   tealdeer                  # Rust implementation of tldr
   cheat                     # Create and view cheatsheets
   navi                      # Interactive cheatsheets
-  taskwarrior               # Task management
+  taskwarrior2               # Task management
   # taskwarrior-tui           # Taskwarrior TUI - FJERNET (ikke tilgængelig)
   timewarrior               # Time tracking
   khal                      # Calendar
