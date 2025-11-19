@@ -129,5 +129,4 @@ with pkgs; [
   man-db                  # Manual page system
   man-pages               # Linux manual pages
   texinfo                 # Documentation system
-  info                    # GNU info reader
 ]
