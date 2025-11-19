@@ -20,7 +20,7 @@ with pkgs; [
   sd                        # Intuitive find and replace
   choose                    # Better cut command
   # fselect                   # Find files with SQL-like queries - FJERNET (ikke tilgængelig)
-  xsv                       # CSV toolkit
+  # xsv                       # CSV toolkit
   tree                      # Directory listing as tree
   broot                     # Terminal file manager
   zellij                    # Terminal workspace
