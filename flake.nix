@@ -1,10 +1,10 @@
-# flake.nix - FIXED VERSION with pinned nixpkgs
+# flake.nix - FIXED for 25.05 unstable
 {
   description = "NixOS system configuration for togo-gt";
 
   inputs = {
-    # Pinned to a known working revision to avoid Python package conflicts
-    nixpkgs.url = "github:NixOS/nixpkgs/b6eaf85cba3f6c68d752d2c1d9eec1f4c4b5e5f0";
+    # Use current unstable channel (25.05)
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager";

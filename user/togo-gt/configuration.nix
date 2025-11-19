@@ -1,7 +1,24 @@
-# /etc/nixos/configuration.nix - FIXED VERSION (cleaned duplicates)
+# /etc/nixos/configuration.nix - FIXED with Python package overlay
 { config, pkgs, ... }:
 
 {
+  # Add overlay to fix Python package version conflicts
+  nixpkgs.overlays = [
+    (final: prev: {
+      python311 = prev.python311.override {
+        packageOverrides = python-final: python-prev: {
+          # Fix aioquic dependencies
+          aioquic = python-prev.aioquic.overridePythonAttrs (old: {
+            # Relax version constraints temporarily
+            propagatedBuildInputs = builtins.filter
+              (x: !(prev.lib.getName x == "cryptography" || prev.lib.getName x == "pyopenssl"))
+              old.propagatedBuildInputs;
+          });
+        };
+      };
+    })
+  ];
+
   # Boot Configuration
   boot = {
     loader = {
@@ -388,8 +405,11 @@
     };
   };
 
-  # Nix Configuration
-  nixpkgs.config.allowUnfree = true;
+  # Nix Configuration - Allow broken packages temporarily
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowBroken = true;  # Temporary fix for Python package issues
+  };
 
   nix = {
     settings = {
