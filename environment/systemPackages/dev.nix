@@ -236,6 +236,6 @@ with pkgs; [
   insomnia                  # API design platform
   vegeta                    # HTTP load testing tool
   wrk                       # HTTP benchmarking tool
-  ab                        # Apache benchmarking tool
+ # ab                        # Apache benchmarking tool
   siege                     # HTTP regression testing
 ]
