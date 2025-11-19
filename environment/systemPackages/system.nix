@@ -14,7 +14,7 @@ with pkgs; [
   radeontop                # AMD GPU monitoring
   nvitop                    # GPU process monitoring
   i7z                      # Intel i7 CPU monitoring
-  turbostat                # Intel processor statistics
+  # turbostat                # Intel processor statistics
 
   # ===== STORAGE & FILESYSTEMS =====
   gnome-disk-utility       # Disk management GUI
