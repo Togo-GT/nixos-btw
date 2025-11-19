@@ -14,8 +14,8 @@ with pkgs; [
   hadolint
 
   # Programming languages - ALL major languages
- # python3
- # python3Packages.pip
+  python3
+  python3Packages.pip
   pipx
   go
   nodejs
@@ -24,7 +24,7 @@ with pkgs; [
   jdk21
 
   # Development utilities
- # gh
+  gh
   jq
   yq
   hexyl
@@ -37,7 +37,7 @@ with pkgs; [
   nodePackages.typescript-language-server
   nodePackages.vscode-langservers-extracted
   rust-analyzer
- # python3Packages.python-lsp-server
+  python3Packages.python-lsp-server
   lua-language-server
   marksman
   clang-tools
@@ -50,7 +50,7 @@ with pkgs; [
   distrobox
   virt-manager
   virt-viewer
- # qemu
+  qemu
   qemu-utils
   qemu_full
   quickemu
