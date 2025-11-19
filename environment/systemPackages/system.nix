@@ -12,7 +12,7 @@ with pkgs; [
   stress-ng                # System stress tester
   inxi                     # System information script
   radeontop                # AMD GPU monitoring
-  nvtop                    # GPU process monitoring
+  nvitop                    # GPU process monitoring
   i7z                      # Intel i7 CPU monitoring
   turbostat                # Intel processor statistics
 
