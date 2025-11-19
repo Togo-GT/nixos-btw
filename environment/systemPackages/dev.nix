@@ -84,7 +84,7 @@ with pkgs; [
   lua                     # Lua programming language
   luajit                  # Just-in-time Lua compiler
   php                     # PHP programming language
-  composer                # PHP dependency manager
+  # composer                # PHP dependency manager
   dotnet-sdk              # .NET SDK
   # fsharp                  # F# programming language - FJERNET (ikke tilgængelig)
   haskellPackages.ghc     # Glasgow Haskell Compiler
