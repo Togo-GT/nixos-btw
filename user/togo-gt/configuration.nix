@@ -1,5 +1,5 @@
-# /etc/nixos/configuration.nix - FIXED VERSION
-{ config, pkgs,  ... }:
+# /etc/nixos/configuration.nix - FIXED VERSION (cleaned duplicates)
+{ config, pkgs, ... }:
 
 {
   # Boot Configuration
@@ -32,8 +32,7 @@
     };
 
     kernelModules = [
-      "fuse" "v4l2loopback" "snd-aloop" "nvidia"
-      "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
+      "fuse" "v4l2loopback" "snd-aloop" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
       "vboxdrv" "vboxnetadp" "vboxnetflt" "vboxpci"
       "kvm" "kvm-intel"
     ];
@@ -56,13 +55,10 @@
       forceFullCompositionPipeline = true;
       powerManagement = {
         enable = true;
-        # FIX: Disable finegrained since it requires offload mode
-        finegrained = false;
       };
 
       prime = {
         sync.enable = true;
-        # FIX: Cannot use offload with sync mode
         offload.enable = false;
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
@@ -79,7 +75,6 @@
         libvdpau-va-gl
         mesa
         nvidia-vaapi-driver
-        libva-vdpau-driver  # FIX: vaapiVdpau → libva-vdpau-driver
       ];
       extraPackages32 = with pkgs.pkgsi686Linux; [
         libva
@@ -104,7 +99,6 @@
   services = {
     printing = {
       enable = true;
-      # Enable CUPS web interface for printer management
       webInterface = true;
     };
 
@@ -118,23 +112,20 @@
       jack.enable = true;
     };
 
-    # FIX: PulseAudio moved from hardware to services
     pulseaudio = {
-      enable = false;  # Disabled because we use PipeWire
+      enable = false;
       support32Bit = true;
     };
 
     xserver = {
       enable = true;
       videoDrivers = [ "nvidia" ];
-      # FIX: XKB options moved
       xkb = {
         layout = "dk";
         variant = "";
       };
     };
 
-    # FIX: Display manager options moved out of xserver
     displayManager = {
       sddm = {
         enable = true;
@@ -143,10 +134,8 @@
       defaultSession = "plasma";
     };
 
-    # FIX: Desktop manager options moved out of xserver
     desktopManager.plasma6.enable = true;
 
-    # FIX: Libinput options moved out of xserver
     libinput = {
       enable = true;
       touchpad = {
@@ -155,7 +144,6 @@
       };
     };
 
-    # Security services
     openssh = {
       enable = true;
       settings = {
@@ -179,7 +167,6 @@
 
     power-profiles-daemon.enable = false;
 
-    # Other services
     avahi = {
       enable = true;
       nssmdns4 = true;
@@ -195,7 +182,6 @@
     thermald.enable = true;
     hardware.bolt.enable = true;
 
-    # Database services
     postgresql = {
       enable = true;
       package = pkgs.postgresql_16;
@@ -220,36 +206,29 @@
       configDir = "/home/togo-gt/.config/syncthing";
     };
 
-    # 🔧 NEW SERVICES FOR GUI APPLICATIONS
     gnome = {
       gnome-keyring.enable = true;
-      # FIX: Disable GNOME SSH agent to avoid conflict
       gcr-ssh-agent.enable = false;
     };
 
-    # File system and device support
     gvfs = {
-      enable = true;  # For MTP, AFP, SMB, and other protocols
+      enable = true;
     };
 
-    # USB device management
     udisks2 = {
       enable = true;
     };
 
-    # Network file sharing
     samba = {
       enable = true;
       openFirewall = true;
     };
 
-    # For some GUI apps that need D-Bus
     dbus = {
       enable = true;
       packages = with pkgs; [ dconf ];
     };
 
-    # Location services (for maps apps like QGIS)
     geoclue2 = {
       enable = true;
     };
@@ -286,7 +265,6 @@
     hostName = "nixos-btw";
     networkmanager = {
       enable = true;
-      # Enable WiFi and Bluetooth support
       wifi = {
         backend = "wpa_supplicant";
         powersave = false;
@@ -304,15 +282,15 @@
       allowedTCPPorts = [
         22 80 443 24800 5432
         27015 27016 27017 27036 27037
-        631   # CUPS printing
-        5353  # Avahi
+        631
+        5353
       ];
       allowedTCPPortRanges = [
         { from = 27015; to = 27030; }
       ];
       allowedUDPPorts = [
         24800 27031 27036 3659 27015 27016
-        5353  # Avahi
+        5353
       ];
       allowedUDPPortRanges = [
         { from = 27000; to = 27031; }
@@ -354,7 +332,7 @@
       extraPortals = with pkgs; [
         kdePackages.xdg-desktop-portal-kde
         xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr  # For Wayland support
+        xdg-desktop-portal-wlr
       ];
     };
     mime.enable = true;
@@ -364,10 +342,8 @@
 
   programs = {
     dconf.enable = true;
-    # FIX: Disable SSH agent to avoid conflict with GNOME keyring
     ssh.startAgent = false;
 
-    # Gaming
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
@@ -379,14 +355,9 @@
     gamescope.enable = true;
     gamemode.enable = true;
 
-    # 🔧 NEW: Better support for GUI applications
-    partition-manager.enable = true;  # For KDE Partition Manager
-    kdeconnect.enable = true;  # KDE Connect for device integration
+    partition-manager.enable = true;
+    kdeconnect.enable = true;
 
-    # File manager integration
-  #  file-roller.enable = true;  # Archive manager
-
-    # System monitoring
     gnome-disks.enable = true;
   };
 
@@ -405,7 +376,6 @@
     };
     polkit.enable = true;
 
-    # 🔧 NEW: For password managers and keyring
     pam = {
       services = {
         sddm = {
@@ -459,7 +429,7 @@
       "networkmanager" "wheel" "input" "docker"
       "libvirtd" "vboxusers" "syncthing" "kvm"
       "audio" "video" "plugdev" "adb"
-      "scanner" "lp" "samba"  # 🔧 NEW: For scanner and printer access
+      "scanner" "lp" "samba"
     ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPzs4vJf1MW9Go0FzrBlUuqwwYDyDG7kP5KQYkxSplxF michael.kaare.nielsen@gmail.com"
@@ -469,7 +439,7 @@
     ];
   };
 
-  # Fonts - MINIMAL WORKING VERSION
+  # Fonts
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -498,7 +468,6 @@
     "vm.vfs_cache_pressure" = 50;
     "net.core.rmem_max" = 134217728;
     "net.core.wmem_max" = 134217728;
-    # 🔧 NEW: Better desktop responsiveness
     "vm.dirty_writeback_centisecs" = 1500;
     "vm.dirty_expire_centisecs" = 3000;
   };
@@ -507,7 +476,6 @@
   environment.variables = {
     NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
     NIXOS_FLAKE = "/home/togo-gt/nixos-config";
-    # 🔧 NEW: Better GUI application support
     QT_AUTO_SCREEN_SCALE_FACTOR = "1";
     QT_SCALE_FACTOR = "1";
     GDK_SCALE = "1";
@@ -523,13 +491,10 @@
     '';
   };
 
-
   nixpkgs.config.permittedInsecurePackages = [
     "beekeeper-studio-5.3.4"
-     "jitsi-meet-1.0.8792"
+    "jitsi-meet-1.0.8792"
   ];
-
-
 
   system.stateVersion = "25.05";
 }

@@ -1,9 +1,10 @@
-# flake.nix - UPDATED imports section
+# flake.nix - FIXED VERSION with pinned nixpkgs
 {
   description = "NixOS system configuration for togo-gt";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # Pinned to a known working revision to avoid Python package conflicts
+    nixpkgs.url = "github:NixOS/nixpkgs/b6eaf85cba3f6c68d752d2c1d9eec1f4c4b5e5f0";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -23,7 +24,7 @@
         modules = [
           # Hardware
           ./user/togo-gt/hardware-configuration.nix
-          #./hardware/default.nix
+          ./hardware/default.nix
 
           # System configuration
           ./user/togo-gt/configuration.nix
@@ -34,6 +35,8 @@
 
           # Hardware modules
           nixos-hardware.nixosModules.common-gpu-nvidia
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-pc
 
           # Home Manager integration
           home-manager.nixosModules.home-manager

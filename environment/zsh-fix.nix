@@ -1,5 +1,5 @@
-# zsh-fix.nix - Komplet ZSH konfiguration
-{ config, pkgs, lib, ... }:
+# zsh-fix.nix - FIXED VERSION
+{  pkgs, ... }:
 
 {
   # Set ZSH as default shell
@@ -90,10 +90,6 @@
       alias ping='prettyping --nolegend'
 
       # Quality of Life Aliases
-      alias ..='cd ..'
-      alias ...='cd ../..'
-      alias ....='cd ../../..'
-      alias .....='cd ../../../..'
       alias rm='rm -i'
       alias cp='cp -i'
       alias mv='mv -i'

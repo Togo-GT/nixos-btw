@@ -1,4 +1,4 @@
-# environment/systemPackages/default.nix
+# environment/systemPackages/default.nix - FIXED VERSION
 { pkgs, lib }:
 
 let

@@ -1,5 +1,5 @@
-# iso-configuration.nix - FIXED VERSION
-{ config, pkgs, lib, ... }:
+# iso-configuration.nix - FIXED IMPORT PATH
+{ config, pkgs, ... }:
 
 {
   nixpkgs.config.allowUnfree = true;
@@ -66,13 +66,13 @@
     isNormalUser = true;
     description = "Live ISO User";
     extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
-    password = ""; # Empty password for live environment
+    password = "";
     uid = 1000;
   };
 
   security.sudo.wheelNeedsPassword = false;
 
-  # Import packages
+  # FIXED: Correct import path
   imports = [ ../default.nix ];
 
   # Services
