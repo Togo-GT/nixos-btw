@@ -74,7 +74,7 @@ with pkgs; [
   marksman                                   # Markdown LSP
   clang-tools                                # Clang-based C/C++ tools
   haskell-language-server                    # Haskell LSP
-  nodePackages_latest.pyright                # Python LSP (Microsoft)
+  pyright                                    # Python LSP (Microsoft)
   ccls                                       # C/C++ LSP
   gopls                                      # Go LSP
   ocamlPackages.ocaml-lsp                    # OCaml LSP
