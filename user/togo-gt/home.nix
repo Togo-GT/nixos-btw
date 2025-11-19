@@ -7,14 +7,13 @@
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
-  file-roller
-
-];
+    file-roller
+  ];
 
   programs = {
     git = {
       enable = true;
-            settings = {
+      settings = {
         user = {
           name = "Togo-GT";
           email = "michael.kaare.nielsen@gmail.com";
