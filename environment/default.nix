@@ -3,8 +3,12 @@
 { pkgs, lib, ... }:
 
 let
-  # Import your package sets from the systemPackages directory
-  systemPackages = import ./systemPackages/default.nix { inherit pkgs lib; };
+  systemPackages = let
+    essential = import ./systemPackages/essential.nix { inherit pkgs lib; };
+    core = import ./systemPackages/core.nix { inherit pkgs lib; };
+    optional = import ./systemPackages/optional.nix { inherit pkgs lib; };
+  in
+    lib.lists.unique (essential ++ core ++ optional);
 in
 {
   environment.systemPackages = systemPackages;
@@ -18,11 +22,10 @@ in
     VK_LAYER_PATH = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
   };
 
-
   nixpkgs.config = {
     # Allow proprietary packages
     allowUnfree = true;
-    allowBroken = false;
+    allowBroken = true;
     allowUnsupportedSystem = false;
   };
 }
