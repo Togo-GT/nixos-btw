@@ -128,12 +128,12 @@
       # ===== RUST DEVELOPMENT =====
       export RUSTUP_HOME="$HOME/.rustup"  # Rust toolchain manager
       export CARGO_HOME="$HOME/.cargo"    # Rust package manager
-      path=("$CARGO_HOME/bin" $path)      # Add Rust binaries to PATH
+      export PATH="$CARGO_HOME/bin:$PATH"      # Add Rust binaries to PATH
 
       # ===== GO DEVELOPMENT =====
       export GOPATH="$HOME/go"        # Go workspace directory
       export GOBIN="$GOPATH/bin"      # Go binary output directory
-      path=("$GOBIN" $path)           # Add Go binaries to PATH
+      export PATH="$GOBIN:$PATH"           # Add Go binaries to PATH
 
       # ===== NODE.JS DEVELOPMENT =====
       export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"  # npm config location

@@ -5,8 +5,6 @@ with pkgs; [
   # ===== MODERN CLI REPLACEMENTS =====
   eza                       # Modern ls replacement
   bat                       # Cat clone with syntax highlighting
-  bat-extras.batdiff        # Git diff with bat
-  bat-extras.batman         # Manual pages with bat
   fd                        # Fast find replacement
   ripgrep                   # Fast grep replacement
   fzf                       # Fuzzy finder
@@ -123,7 +121,7 @@ with pkgs; [
   tealdeer                  # Rust implementation of tldr
   cheat                     # Create and view cheatsheets
   navi                      # Interactive cheatsheets
-  taskwarrior2               # Task management
+  vit                       # Modern task manager (replacement for taskwarrior)
   timewarrior               # Time tracking
   khal                      # Calendar
   vdirsyncer                # Calendar and contacts sync
