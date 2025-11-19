@@ -123,7 +123,7 @@ with pkgs; [
   tealdeer                  # Rust implementation of tldr
   cheat                     # Create and view cheatsheets
   navi                      # Interactive cheatsheets
-  taskwarrior               # Task management
+  taskwarrior2               # Task management
   timewarrior               # Time tracking
   khal                      # Calendar
   vdirsyncer                # Calendar and contacts sync
