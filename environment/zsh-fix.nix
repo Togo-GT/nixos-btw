@@ -1,5 +1,6 @@
-# zsh-fix.nix - FIXED VERSION
-{  pkgs, ... }:
+# zsh-fix.nix
+# ZSH configuration with modern shell enhancements and aliases
+{ pkgs, ... }:
 
 {
   # Set ZSH as default shell

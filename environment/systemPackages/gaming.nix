@@ -1,3 +1,4 @@
+# Gaming packages - platforms, emulators, and compatibility tools
 { pkgs, ... }:
 
 with pkgs; [
@@ -19,24 +20,15 @@ with pkgs; [
   mangohud                 # Vulkan/OpenGL overlay for monitoring
   goverlay                 # MangoHud configuration tool
   gamemode                 # Optimize system for gaming
-  dxvk                     # DirectX to Vulkan translation
-  vkd3d-proton             # Direct3D 12 to Vulkan translation
-  vkbasalt                 # Vulkan post processing layer
 
   # ===== EMULATORS =====
   retroarch                # Multi-system emulator frontend
   pcsx2                    # PlayStation 2 emulator
   dolphin-emu              # GameCube and Wii emulator
-  # yuzu                     # Nintendo Switch emulator - FJERNET (ikke tilgængelig)
-  # ryujinx                  # Nintendo Switch emulator - FJERNET (ikke tilgængelig)
-  # cemu                     # Wii U emulator - FJERNET (ikke tilgængelig)
   mame                     # Multiple Arcade Machine Emulator
   dosbox                   # DOS emulator
 
   # ===== ADDITIONAL GAMING PLATFORMS =====
   prismlauncher            # Minecraft launcher
-  # minecraft                # Minecraft game
   gamescope                # SteamOS compositor
-  # itch                     # Itch.io game platform - FJERNET (ikke tilgængelig)
-  # gnome-games              # GNOME games collection - FJERNET (ikke tilgængelig)
 ]

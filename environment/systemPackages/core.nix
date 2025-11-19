@@ -1,3 +1,4 @@
+# Core system packages - essential utilities and tools
 { pkgs, lib, ... }:
 
 with pkgs; [
@@ -11,7 +12,7 @@ with pkgs; [
   cups                    # Printing system
 
   # ===== CORE UNIX =====
-  coreutils               # Complete GNU core utilities (brug coreutils i stedet for coreutils-full)
+  coreutils               # Complete GNU core utilities
   util-linux              # System utilities (mount, fdisk, etc.)
   findutils               # find, xargs, locate
   diffutils               # diff, cmp, patch
@@ -25,9 +26,8 @@ with pkgs; [
   zstd                    # Zstandard compression
   file                    # File type detection
   which                   # Command locator
-  # whereis               # Locate command binaries - FJERNET (allerede i system)
   time                    # Command execution timer
-  bc                      # Arbitrary precision calculator (inkluderer dc)
+  bc                      # Arbitrary precision calculator (includes dc)
   patch                   # Apply diff files
   less                    # Better file pager
   moreutils               # Additional Unix utilities
@@ -45,7 +45,6 @@ with pkgs; [
   psmisc                  # Process utilities (killall, pstree)
   hwdata                  # Hardware database
   edid-decode             # Monitor EDID information
-  # biosdevname             # Network device naming - FJERNET (ikke tilgængelig)
   ethtool                 # Ethernet device settings
   iw                      # Wireless device configuration
 
@@ -85,7 +84,6 @@ with pkgs; [
   # ===== NIX ECOSYSTEM =====
   home-manager            # User environment management
   nix-index               # File database for nix-locate
-  # nix-search              # Search nix packages - FJERNET (ikke tilgængelig)
   nixd                    # Nix language server
   nix-tree                # Browse nix dependency trees
   nix-diff                # Compare nix derivations
@@ -94,7 +92,6 @@ with pkgs; [
   nixos-option            # Inspect NixOS configuration options
   comma                   # Run temporarily installed programs
   nixpkgs-fmt             # Nix code formatter
-  # nixfmt-classic          # Alternative nix formatter - FJERNET (ikke tilgængelig)
   statix                  # Lints and suggestions for Nix code
   alejandra               # Fast nix code formatter
   manix                   # Nix documentation search
@@ -105,9 +102,6 @@ with pkgs; [
   nil                     # Nix language server
   nix-prefetch            # Prefetch nix sources
   nix-update              # Update nix packages
-  # nixos-shell             # NixOS in a shell - FJERNET (ikke tilgængelig)
-  # nix-bundle              # Bundle nix applications - FJERNET (ikke tilgængelig)
-  # nixos-rebuild           # Rebuild system - FJERNET (allerede i system)
 
   # ===== NETWORK TOOLS =====
   inetutils               # Classic network tools (telnet, ftp)
@@ -115,11 +109,9 @@ with pkgs; [
   iputils                 # Network testing tools (ping, traceroute)
   curl                    # URL transfer tool
   wget                    # Web content downloader
-  # wget2                   # Modern wget - FJERNET (ikke tilgængelig)
   aria2                   # Download utility
   netcat-openbsd          # Network Swiss army knife
   socat                   # Multipurpose relay
-  # openssh                 # SSH client and server - ALLEREDE TILFØJET
   sshfs                   # SSH filesystem
   sshpass                 # SSH password authentication
   rsync                   # File synchronization

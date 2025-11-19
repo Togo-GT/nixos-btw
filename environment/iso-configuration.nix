@@ -1,4 +1,5 @@
-# iso-configuration.nix - FIXED IMPORT PATH
+# iso-configuration.nix
+# Live ISO configuration with KDE Plasma 6
 { config, pkgs, ... }:
 
 {

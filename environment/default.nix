@@ -1,4 +1,5 @@
 # environment/default.nix
+# Main environment configuration combining system packages and variables
 { pkgs, lib, ... }:
 
 let

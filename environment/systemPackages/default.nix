@@ -1,4 +1,5 @@
-# environment/systemPackages/default.nix - FIXED VERSION
+# environment/systemPackages/default.nix
+# Combines all package sets and removes duplicates
 { pkgs, lib }:
 
 let

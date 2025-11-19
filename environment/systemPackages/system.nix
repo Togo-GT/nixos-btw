@@ -1,3 +1,4 @@
+# System utilities - hardware monitoring, storage, and diagnostics
 { pkgs, lib, ... }:
 
 with pkgs; [
@@ -12,9 +13,8 @@ with pkgs; [
   stress-ng                # System stress tester
   inxi                     # System information script
   radeontop                # AMD GPU monitoring
-  nvitop                    # GPU process monitoring
+  nvitop                   # GPU process monitoring
   i7z                      # Intel i7 CPU monitoring
-  # turbostat                # Intel processor statistics
 
   # ===== STORAGE & FILESYSTEMS =====
   gnome-disk-utility       # Disk management GUI
@@ -24,7 +24,6 @@ with pkgs; [
   ncdu                     # NCurses disk usage
   duf                      # Disk usage/free utility
   agedu                    # Disk usage tracking over time
-  rsync                    # File synchronization
   btrfs-progs              # BTRFS filesystem tools
   xfsprogs                 # XFS filesystem tools
   e2fsprogs                # ext2/ext3/ext4 filesystem tools
@@ -32,7 +31,6 @@ with pkgs; [
   lvm2                     # Logical Volume Manager
   cryptsetup               # Disk encryption setup
   nvme-cli                 # NVMe storage management
-  util-linux               # System utilities (mount, fdisk, etc.)
   testdisk                 # Data recovery
   gsmartcontrol            # GUI for smartmontools
   ntfs3g                   # NTFS filesystem support
@@ -41,14 +39,9 @@ with pkgs; [
   borgbackup               # Deduplicating backup program
   rsnapshot                # Filesystem snapshot backup
   timeshift                # System restore tool
-  # burp                     # Network backup and restore - FJERNET (ikke tilgængelig)
   duplicity                # Encrypted bandwidth-efficient backup
-  # backupninja              # Backup coordination tool - FJERNET (ikke tilgængelig)
 
   # ===== NETWORK TOOLS =====
-  ethtool                  # Ethernet device settings
-  iw                       # Wireless device configuration
-  # rfkill                   # RF kill switch management
   wavemon                  # Wireless network monitor
 
   # ===== POWER MANAGEMENT =====
