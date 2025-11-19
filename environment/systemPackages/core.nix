@@ -58,4 +58,13 @@ with pkgs; [
   nixos-generators
   nh
   nil
+
+  # Essential system tools
+  man-db
+  man-pages
+  texinfo
+  which
+  time
+  bc
+  patch
 ]

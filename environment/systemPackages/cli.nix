@@ -23,7 +23,6 @@ with pkgs; [
   watch
 
   # Git - ALL git tools!
-  git
   gitFull
   git-extras
   delta

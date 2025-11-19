@@ -35,4 +35,9 @@ with pkgs; [
   borgbackup
   rsnapshot
   timeshift
+
+  # Additional system tools
+  iotop-c  # better iotop
+  nvtop  # GPU monitoring
+  radeontop  # AMD GPU monitoring
 ]

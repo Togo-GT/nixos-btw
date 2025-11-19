@@ -76,4 +76,13 @@ with pkgs; [
   terraform
   kubernetes-helm
   kubectl
+
+  # Additional development tools
+  gnumake
+  bear  # compile_commands.json generator
+  ctags
+  universal-ctags
+  cmakeCurses
+  ninja
+   meson
 ]
