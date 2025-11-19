@@ -18,6 +18,15 @@ in
     VK_LAYER_PATH = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
   };
 
+  # TILFØJET: Package Management Optimering
+  nix.settings = {
+    auto-optimise-store = true;
+    trusted-users = [ "root" "togo-gt" ];
+    # Ekstra optimeringer
+    min-free = 536870912; # 512MB minimum free space
+    max-free = 2147483648; # 2GB maximum free space
+  };
+
   nixpkgs.config = {
     # Allow proprietary packages
     allowUnfree = true;

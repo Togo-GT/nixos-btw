@@ -1,7 +1,11 @@
 # hardware/default.nix
-# Hardware configuration module (currently empty but valid)
-{ ... }:
+# Hardware configuration with performance optimizations
+{  ... }:
 
 {
-  # Empty but valid module
+  imports = [
+    # Import hardware-specific configurations if needed
+  ];
+
+  # Empty but valid module (bevar eksisterende)
 }

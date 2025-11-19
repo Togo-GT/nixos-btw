@@ -13,4 +13,4 @@ let
 in
 
 # Combine all package sets, removing duplicates
-lib.unique (core ++ cli ++ dev ++ gui ++ gaming ++ multimedia ++ system)
+lib.lists.unique (core ++ cli ++ dev ++ gui ++ gaming ++ multimedia ++ system)
