@@ -137,7 +137,7 @@ with pkgs; [
   john                      # Password cracker
   hashcat                   # Advanced password recovery
   hydra                     # Login cracker
-  patator                   # Multi-purpose brute-forcer
+  # patator                   # Multi-purpose brute-forcer
   # crowbar                   # Brute forcing tool - FJERNET (ikke tilgængelig)
   lynis                     # Security auditing tool
 
