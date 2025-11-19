@@ -14,8 +14,8 @@ with pkgs; [
   hadolint
 
   # Programming languages - ALL major languages
-  python3
-  python3Packages.pip
+ # python3
+ # python3Packages.pip
   pipx
   go
   nodejs
