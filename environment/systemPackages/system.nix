@@ -48,7 +48,7 @@ with pkgs; [
   # ===== NETWORK TOOLS =====
   ethtool                  # Ethernet device settings
   iw                       # Wireless device configuration
-  rfkill                   # RF kill switch management
+  # rfkill                   # RF kill switch management
   wavemon                  # Wireless network monitor
 
   # ===== POWER MANAGEMENT =====
