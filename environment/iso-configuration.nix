@@ -73,7 +73,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   # Import packages
-  imports = [ ./default.nix ];
+  imports = [ ../default.nix ];
 
   # Services
   services = {
