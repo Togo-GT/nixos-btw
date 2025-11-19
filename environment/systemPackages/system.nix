@@ -11,6 +11,7 @@ with pkgs; [
   s-tui
   stress-ng
   inxi
+  radeontop  # AMD GPU monitoring
 
   # Storage & filesystems - EVERY filesystem tool!
   gnome-disk-utility
@@ -36,8 +37,4 @@ with pkgs; [
   rsnapshot
   timeshift
 
-  # Additional system tools
-  iotop-c  # better iotop
-  nvtop  # GPU monitoring
-  radeontop  # AMD GPU monitoring
 ]

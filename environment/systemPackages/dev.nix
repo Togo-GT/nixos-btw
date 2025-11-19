@@ -84,5 +84,5 @@ with pkgs; [
   universal-ctags
   cmakeCurses
   ninja
-   meson
+  meson
 ]
