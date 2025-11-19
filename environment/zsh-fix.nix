@@ -1,4 +1,4 @@
-# environment/zsh-fix.nix - ULTRA OPTIMIZED VERSION
+# environment/zsh-fix.nix - FIXED VERSION
 { pkgs, ... }:
 
 {
@@ -11,7 +11,7 @@
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     enableBashCompletion = true;  # Tilføj bash completion support
-    enableVteIntegration = true;  # Bedre terminal integration
+    vteIntegration = true;  # FIXED: Skal være vteIntegration ikke enableVteIntegration
 
     ohMyZsh = {
       enable = true;
@@ -23,24 +23,33 @@
         "pip" "virtualenv" "terraform" "ansible"  # Tilføjede plugins
       ];
       theme = "agnoster";
-      custom = "$HOME/.config/zsh/custom";  # Custom plugins sti
+      # FJERN: custom = "$HOME/.config/zsh/custom"; - Denne option findes ikke
     };
 
-    history = {
-      size = 100000;
-      save = 100000;
-      path = "$HOME/.local/state/zsh/history";
-      ignoreDups = true;
-      ignoreSpace = true;
-      expireDuplicatesFirst = true;
-    };
-
-    dotDir = ".config/zsh";  # Flyt ZSH config til XDG standard
+    # FJERN: history blokken - brug shellInit i stedet
+    # FJERN: dotDir - denne option findes ikke
 
     shellInit = ''
       # ===== PERFORMANCE OPTIMIZATIONS =====
       zmodload zsh/zprof  # Performance profiling
       __zsh_load_start=$((EPOCHREALTIME*1000))  # Load timing
+
+      # ===== ZSH HISTORY CONFIGURATION =====
+      HISTSIZE=100000
+      SAVEHIST=100000
+      HISTFILE="$HOME/.local/state/zsh/history"
+      setopt HIST_IGNORE_ALL_DUPS
+      setopt HIST_IGNORE_SPACE
+      setopt HIST_REDUCE_BLANKS
+      setopt INC_APPEND_HISTORY
+      setopt SHARE_HISTORY
+      setopt EXTENDED_HISTORY
+      setopt HIST_EXPIRE_DUPS_FIRST
+      setopt HIST_IGNORE_DUPS
+      setopt HIST_SAVE_NO_DUPS
+
+      # Create necessary directories
+      mkdir -p "$HOME/.local/state/zsh"
 
       # ===== ENVIRONMENT VARIABLES =====
       export LANG="en_DK.UTF-8"
@@ -52,9 +61,6 @@
       export XDG_DATA_HOME="$HOME/.local/share"
       export XDG_CACHE_HOME="$HOME/.cache"
       export XDG_STATE_HOME="$HOME/.local/state"
-
-      # Create necessary directories
-      mkdir -p "$XDG_CONFIG_HOME/zsh" "$XDG_DATA_HOME/zsh" "$XDG_CACHE_HOME/zsh" "$XDG_STATE_HOME/zsh"
 
       # Editor & Pager Configuration
       export EDITOR="nvim"
@@ -106,17 +112,6 @@
       export QT_QPA_PLATFORM=wayland
       export SDL_VIDEODRIVER=wayland
       export _JAVA_AWT_WM_NONREPARENTING=1
-
-      # ===== HISTORY CONFIGURATION =====
-      setopt HIST_IGNORE_ALL_DUPS
-      setopt HIST_IGNORE_SPACE
-      setopt HIST_REDUCE_BLANKS
-      setopt INC_APPEND_HISTORY
-      setopt SHARE_HISTORY
-      setopt EXTENDED_HISTORY
-      setopt HIST_EXPIRE_DUPS_FIRST
-      setopt HIST_IGNORE_DUPS
-      setopt HIST_SAVE_NO_DUPS
 
       # ===== MODERN COMMAND REPLACEMENTS =====
       alias ls='eza --icons --group-directories-first --time-style=long-iso'
@@ -432,11 +427,6 @@
       "la" = "eza -la --icons --git";
     };
 
-    sessionVariables = {
-      # Critical session variables for reliability
-      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=8";
-      ZSH_AUTOSUGGEST_STRATEGY = "match_prev_cmd";
-      DISABLE_MAGIC_FUNCTIONS = "true"; # Fix paste issues
-    };
+    # FJERN: sessionVariables blokken - disse options findes ikke i NixOS
   };
 }
