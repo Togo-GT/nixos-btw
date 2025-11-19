@@ -62,7 +62,8 @@ with pkgs; [
   openssl                 # Cryptography and SSL/TLS toolkit
   libnotify               # Desktop notifications
   gnupg                   # GNU Privacy Guard
-  pinentry                # PIN entry dialog
+  pinentry-curses         # PIN entry dialog
+  pinentry-gnome3         # PIN entry dialog
   pass                    # Password store
   age                     # Simple, modern encryption
   sops                    # Secrets management
