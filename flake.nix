@@ -29,7 +29,7 @@
           ./user/togo-gt/configuration.nix
 
           # Environment
-          ./environment/default.nix
+          #./environment/default.nix
           ./environment/zsh-fix.nix
 
           # Hardware modules
