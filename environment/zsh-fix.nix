@@ -1,4 +1,4 @@
-# environment/zsh-fix.nix - ULTRA OPTIMIZED ZSH CONFIGURATION WITH EXPLANATIONS
+# environment/zsh-fix.nix - CLEANED VERSION (NO PACKAGES)
 { pkgs, ... }:
 
 {
@@ -407,7 +407,7 @@
         echo "  pkill <process>   - Kill processes by name (with confirmation)"
       }
 
-      # benchmark: Test system performance
+      # Performance benchmarking
       benchmark() {
         echo "⏱️  System Benchmark"
         echo "===================="
@@ -424,7 +424,7 @@
         echo -n "  nvim --version: "; time (nvim --version >/dev/null 2>&1)
       }
 
-      # git-overview: Show git repository status
+      # Git overview
       git-overview() {
         echo "📊 Git Repository Overview"
         echo "=========================="
@@ -436,7 +436,7 @@
         git log --oneline -5
       }
 
-      # docker-clean: Clean up Docker system
+      # Docker cleanup
       docker-clean() {
         echo "🧹 Cleaning Docker system..."
         docker system prune -af
@@ -483,4 +483,8 @@
       "la" = "eza -la --icons --git";   # List all files (including hidden)
     };
   };
+
+  # ===== FJERNET: environment.systemPackages =====
+  # Alle pakker er nu i de andre filer (core.nix, cli.nix, dev.nix, etc.)
+  # Så vi behøver ikke definere pakker her - kun ZSH konfiguration!
 }

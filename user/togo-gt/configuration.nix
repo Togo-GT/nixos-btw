@@ -2,23 +2,6 @@
 { config, pkgs, ... }:
 
 {
-  # Add overlay to fix Python package version conflicts
-  nixpkgs.overlays = [
-    (final: prev: {
-      python311 = prev.python311.override {
-        packageOverrides = python-final: python-prev: {
-          # Fix aioquic dependencies
-          aioquic = python-prev.aioquic.overridePythonAttrs (old: {
-            # Relax version constraints temporarily
-            propagatedBuildInputs = builtins.filter
-              (x: !(prev.lib.getName x == "cryptography" || prev.lib.getName x == "pyopenssl"))
-              old.propagatedBuildInputs;
-          });
-        };
-      };
-    })
-  ];
-
   # Boot Configuration
   boot = {
     loader = {
