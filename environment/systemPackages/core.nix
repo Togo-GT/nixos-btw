@@ -25,7 +25,7 @@ with pkgs; [
   zstd                    # Zstandard compression
   file                    # File type detection
   which                   # Command locator
-  whereis                 # Locate command binaries
+  # whereis               # Locate command binaries - FJERNET (er tilgængelig)
   time                    # Command execution timer
   bc                      # Arbitrary precision calculator
   dc                      # Desk calculator
