@@ -35,7 +35,6 @@ with pkgs; [
 
   # ===== ADDITIONAL GAMING PLATFORMS =====
   prismlauncher            # Minecraft launcher
-  minecraft                # Minecraft game
   gamescope                # SteamOS compositor
   # itch                     # Itch.io game platform - FJERNET (ikke tilgængelig)
   gnome-games              # GNOME games collection
