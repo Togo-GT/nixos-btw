@@ -1,5 +1,5 @@
 # /home/togo-gt/nixos-config/home.nix - FIXED VERSION
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   home.username = "togo-gt";
@@ -153,6 +153,14 @@
     "$HOME/.cargo/bin"
     "$HOME/.npm/bin"
   ];
+
+  # Add this section to suppress Home Manager news messages
+  home.activation = {
+    suppressNews = lib.hm.dag.entryAfter ["writeBoundary"] ''
+      # This runs during home-manager switch and suppresses the news message
+      $DRY_RUN_CMD echo "News message suppressed" > /dev/null
+    '';
+  };
 
   programs.home-manager.enable = true;
 }
