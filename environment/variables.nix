@@ -1,55 +1,39 @@
-# /home/togo-gt/nixos-config/environment/variables.nix
-{ lib, pkgs, ... }:
+# environment/variables.nix
+{ pkgs, ... }:
 
-let
-  # Helper function to create variable definitions
-  mkVar = value: lib.mkDefault value;
-in
 {
-  environment.sessionVariables = lib.mkMerge {
-    # ========== APPLICATION CONFIGURATION ==========
-
-    # Editor & Pager
-    EDITOR = mkVar "nvim";
-    VISUAL = mkVar "nvim";
-    PAGER = mkVar "bat";
-    MANPAGER = mkVar "sh -c 'col -bx | bat -l man -p'";
-
-    # Terminal & UI
-    BAT_THEME = mkVar "TwoDark";
-
-    # ========== GRAPHICS & DISPLAY ==========
-
-    # Wayland
-    MOZ_ENABLE_WAYLAND = mkVar "1";
-    NIXOS_OZONE_WL = mkVar "1";  # Electron Wayland support
-    SDL_VIDEODRIVER = mkVar "wayland";
-
-    # Scaling & HiDPI
-    QT_AUTO_SCREEN_SCALE_FACTOR = mkVar "1";
-    QT_SCALE_FACTOR = mkVar "1";
-    GDK_SCALE = mkVar "1";
-
-    # Graphics Performance
-    __GL_THREADED_OPTIMIZATIONS = mkVar "1";
-
-    # Vulkan
-    VK_LAYER_PATH = mkVar "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
-
-    # Java GUI applications
-    _JAVA_AWT_WM_NONREPARENTING = mkVar "1";
-
-    # ========== NIXOS SPECIFIC ==========
-
-    # Nix configuration
-    NIX_CONFIG = mkVar "experimental-features = nix-command flakes";
-    NIXOS_CONFIG = mkVar "/home/togo-gt/nixos-config/configuration.nix";
-    NIXOS_FLAKE = mkVar "/home/togo-gt/nixos-config";
+  # System-wide environment variables
+  environment.variables = {
+    NIX_CONFIG = "experimental-features = nix-command flakes";
   };
 
-  # Optional: System-wide environment variables (if needed)
-  # environment.variables = {
-  #   # Variables that should be available system-wide, not just in user sessions
-  #   SYSTEM_VAR = "value";
-  # };
+  # User session variables
+  environment.sessionVariables = {
+    # Wayland support for Electron apps
+    NIXOS_OZONE_WL = "1";
+    # Better performance for some applications
+    __GL_THREADED_OPTIMIZATIONS = "1";
+    # Vulkan layer path
+    VK_LAYER_PATH = "${pkgs.vulkan-validation-layers}/share/vulkan/explicit_layer.d";
+
+    # Your existing variables from configuration.nix
+    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
+    QT_SCALE_FACTOR = "1";
+    GDK_SCALE = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    SDL_VIDEODRIVER = "wayland";
+    _JAVA_AWT_WM_NONREPARENTING = "1";
+    NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
+    NIXOS_FLAKE = "/home/togo-gt/nixos-config";
+
+    # Common shell configurations that apply to both
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    PAGER = "bat";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+
+    # Variables available in all shells
+    BAT_THEME = "TwoDark";
+    COLORTERM = "truecolor";
+  };
 }
