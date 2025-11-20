@@ -235,6 +235,16 @@
 
       # ===== ENHANCED SHELL FUNCTIONS =====
 
+      # Home Manager news filter - suppresses the unread news message
+      home-manager() {
+          if [ "$1" = "switch" ]; then
+              # Filter out the unread news message but show everything else
+              command home-manager "$@" 2>&1 | grep -v "unread and relevant news item"
+          else
+              command home-manager "$@"
+          fi
+      }
+
       # mkcd: Create directory and immediately cd into it
       mkcd() {
         if [ -z "$1" ]; then
