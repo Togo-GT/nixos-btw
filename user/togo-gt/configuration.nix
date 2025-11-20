@@ -388,12 +388,6 @@
     };
   };
 
-  # Nix Configuration - Allow broken packages temporarily
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowBroken = true;  # Temporary fix for Python package issues
-  };
-
   nix = {
     settings = {
       experimental-features = [ "nix-command" "flakes" ];
@@ -473,18 +467,6 @@
     "net.core.wmem_max" = 134217728;
     "vm.dirty_writeback_centisecs" = 1500;
     "vm.dirty_expire_centisecs" = 3000;
-  };
-
-  # Environment
-  environment.variables = {
-    NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
-    NIXOS_FLAKE = "/home/togo-gt/nixos-config";
-    QT_AUTO_SCREEN_SCALE_FACTOR = "1";
-    QT_SCALE_FACTOR = "1";
-    GDK_SCALE = "1";
-    MOZ_ENABLE_WAYLAND = "1";
-    SDL_VIDEODRIVER = "wayland";
-    _JAVA_AWT_WM_NONREPARENTING = "1";
   };
 
   system.userActivationScripts.setup-dirs = {

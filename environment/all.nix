@@ -1,5 +1,5 @@
-# environment/systemPackages/default.nix
-# Combines all package sets and removes duplicates
+# environment/systemPackages/all.nix
+
 { pkgs, lib }:
 
 let
@@ -10,7 +10,17 @@ let
   gaming = import ./gaming.nix { inherit pkgs lib; };
   multimedia = import ./multimedia.nix { inherit pkgs lib; };
   system = import ./system.nix { inherit pkgs lib; };
+  essential = import ./systemPackages/essential.nix { inherit pkgs lib; };
 in
 
 # Combine all package sets, removing duplicates
-lib.lists.unique (core ++ cli ++ dev ++ gui ++ gaming ++ multimedia ++ system)
+lib.lists.unique (
+                  core
+               ++ cli
+               ++ dev
+               ++ gui
+               ++ gaming
+               ++ multimedia
+               ++ system
+               ++ essential
+               )

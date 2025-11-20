@@ -28,8 +28,6 @@ with pkgs; [
   jack2                    # JACK audio connection kit
 
   # ===== BROWSERS & COMMUNICATION =====
-  chromium                 # Chromium browser
-  firefox                  # Firefox browser
   brave                    # Brave privacy browser
   google-chrome            # Google Chrome browser
   tor-browser              # Tor anonymity browser

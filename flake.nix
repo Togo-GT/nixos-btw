@@ -1,13 +1,13 @@
-# flake.nix - FIXED for 25.05 unstable
+# flake.nix
 {
   description = "NixOS system configuration for togo-gt";
 
   inputs = {
-    # Use current unstable channel (25.05)
+    # Use current unstable channel
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -29,9 +29,8 @@
           # System configuration
           ./user/togo-gt/configuration.nix
 
-          # Environment
+          # Environment modules
           ./environment/default.nix
-          ./environment/zsh-fix.nix
 
           # Hardware modules
           nixos-hardware.nixosModules.common-gpu-nvidia
