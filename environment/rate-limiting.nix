@@ -1,5 +1,5 @@
 # environment/rate-limiting.nix
-{ config, pkgs, ... }:
+{  ... }:
 
 {
   # Systemd services with rate limiting
