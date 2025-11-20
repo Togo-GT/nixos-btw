@@ -72,8 +72,5 @@
         extraSpecialArgs = { inherit inputs; };
       };
     };
-
-    # Clean devShells definition
-    devShells.${system}.default = import ./shell/devshell.nix { inherit pkgs; };
   };
 }
