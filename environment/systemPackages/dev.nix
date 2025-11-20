@@ -108,9 +108,9 @@ with pkgs; [
   ocamlPackages.ocaml-lsp                    # OCaml LSP
 
   # ===== CONTAINERS & VIRTUALIZATION =====
-  docker                    # Container platform
-  docker-compose            # Multi-container Docker applications
-  docker-buildx             # Docker build extensions
+ # docker                    # Container platform
+ # docker-compose            # Multi-container Docker applications
+ # docker-buildx             # Docker build extensions
   podman                    # Daemonless container engine
   buildah                   # OCI image builder
   skopeo                    # Container image utilities
