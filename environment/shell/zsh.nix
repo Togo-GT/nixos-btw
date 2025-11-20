@@ -28,6 +28,10 @@
 
     # ===== SHELL ALIASES =====
     shellAliases = {
+      # Shell switching
+      "switch-to-fish" = "chsh -s ${pkgs.fish}/bin/fish";
+      "switch-to-bash" = "chsh -s ${pkgs.bash}/bin/bash";
+
       # ... keep all your existing aliases ...
     };
 
@@ -70,12 +74,10 @@
       # ===== RUST DEVELOPMENT =====
       export RUSTUP_HOME="$HOME/.rustup"
       export CARGO_HOME="$HOME/.cargo"
-      export PATH="$CARGO_HOME/bin:$PATH"
 
       # ===== GO DEVELOPMENT =====
       export GOPATH="$HOME/go"
       export GOBIN="$GOPATH/bin"
-      export PATH="$GOBIN:$PATH"
 
       # ===== NODE.JS DEVELOPMENT =====
       export NPM_CONFIG_USERCONFIG="$HOME/.config/npm/npmrc"
@@ -106,8 +108,7 @@
       fi
 
       if [ -f "$HOME/.config/zsh/local.zsh" ]; then
-        source "$HOME/.config/zsh/local.zsh"
-        echo "📁 Loaded local ZSH configuration"
+        source "$HOME/.config/zsh/local.zsh" 2>/dev/null && echo "📁 Loaded local ZSH configuration" || echo "⚠️  Local ZSH config not found"
       fi
 
       if [ -z "$TMUX" ] && [ -t 1 ]; then
@@ -115,6 +116,7 @@
         echo "🌟 NixOS ZSH Ultra Configuration v2.0"
         echo "💡 Type 'nix-help' for useful commands"
         echo "⚡ ZSH loaded in ''${ZSH_LOAD_TIME}ms"
+        echo "🐚 Other shells: 'switch-to-fish' or 'switch-to-bash'"
         echo ""
       fi
     '';

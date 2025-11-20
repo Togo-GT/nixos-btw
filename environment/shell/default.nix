@@ -7,5 +7,4 @@
     ./zsh.nix
     ./fish.nix
   ];
-
 }
