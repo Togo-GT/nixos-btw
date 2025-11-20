@@ -132,8 +132,6 @@ with pkgs; [
   keepassxc
 
   # ===== VIRTUALIZATION (CORE) =====
-  docker
-  docker-compose
   virt-manager
   qemu
 
