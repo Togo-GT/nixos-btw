@@ -16,7 +16,7 @@ let
 );
 in
 {
-  imports = [ ./zsh.nix ];
+  imports = [  ./shell/default.nix ];
   environment.systemPackages = systemPackages;
   environment.variables = variables;
   nixpkgs.config = nixpkgsConfig.nixpkgs.config;
