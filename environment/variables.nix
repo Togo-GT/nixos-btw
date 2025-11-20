@@ -2,7 +2,7 @@
 { pkgs, ... }:
 
 {
-  environment.variables = {
+
     # Wayland support for Electron apps
     NIXOS_OZONE_WL = "1";
     # Better performance for some applications
@@ -19,5 +19,4 @@
     _JAVA_AWT_WM_NONREPARENTING = "1";
     NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
     NIXOS_FLAKE = "/home/togo-gt/nixos-config";
-  };
-}
+  }

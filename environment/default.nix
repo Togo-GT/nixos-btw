@@ -3,7 +3,7 @@
 { pkgs, lib, ... }:
 
 let
-  variables = import ./variables.nix { inherit pkgs lib; };
+  variables = import ./variables.nix { inherit pkgs; };
   nixpkgsConfig = import ./nixpkgs.nix;
   systemPackages = let
     all = import ./all.nix { inherit pkgs lib; };
