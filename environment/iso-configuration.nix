@@ -74,7 +74,7 @@
   security.sudo.wheelNeedsPassword = false;
 
   # FIXED: Correct import path
-  imports = [ ../default.nix ];
+  imports = [ ./environment/default.nix ];
 
   # Services
   services = {

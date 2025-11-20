@@ -19,4 +19,20 @@
     _JAVA_AWT_WM_NONREPARENTING = "1";
     NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
     NIXOS_FLAKE = "/home/togo-gt/nixos-config";
+
+
+    # Common shell configurations that apply to both
+    environment.variables = {
+    EDITOR = "nvim";
+    VISUAL = "nvim";
+    PAGER = "bat";
+    MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+  };
+
+    environment.sessionVariables = {
+    # Variables available in all shells
+    NIX_CONFIG = "experimental-features = nix-command flakes";
+    BAT_THEME = "TwoDark";
+  };
+
   }

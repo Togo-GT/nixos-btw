@@ -1,4 +1,4 @@
-# environment/zsh-fix.nix - CLEANED VERSION (NO PACKAGES)
+# environment/shell/zsh.nix - CLEANED VERSION (NO PACKAGES)
 { pkgs, ... }:
 
 {
@@ -92,26 +92,6 @@
       # Create directory for ZSH history file
       mkdir -p "$HOME/.local/state/zsh"
 
-      # ===== ENVIRONMENT VARIABLES =====
-      # System locale and timezone settings
-      export LANG="en_DK.UTF-8"      # Language: English in Denmark
-      export LC_ALL="en_DK.UTF-8"    # All locale settings
-      export TZ="Europe/Copenhagen"  # Timezone: Copenhagen
-
-      # ===== XDG BASE DIRECTORY STANDARD =====
-      # Modern standard for where config files should live
-      export XDG_CONFIG_HOME="$HOME/.config"    # Configuration files
-      export XDG_DATA_HOME="$HOME/.local/share" # Application data
-      export XDG_CACHE_HOME="$HOME/.cache"      # Cache files
-      export XDG_STATE_HOME="$HOME/.local/state" # State files (like history)
-
-      # ===== EDITOR AND PAGER CONFIGURATION =====
-      # Set default editors (nvim is NeoVim - modern Vim)
-      export EDITOR="nvim"    # Default text editor
-      export VISUAL="nvim"    # Visual editor (for GUI apps)
-      export PAGER="bat"      # Pager for viewing files (better than 'less')
-      export MANPAGER="sh -c 'col -bx | bat -l man -p'"  # Use bat for man pages
-
       # ===== DEVELOPMENT ENVIRONMENT =====
       # Python settings
       export PIP_REQUIRE_VIRTUALENV=true  # Force using virtual environments
@@ -140,7 +120,6 @@
       export NODE_REPL_HISTORY="$XDG_DATA_HOME/node_repl_history" # Node.js REPL history
 
       # ===== NIX PACKAGE MANAGER =====
-      export NIX_CONFIG="experimental-features = nix-command flakes"  # Enable new Nix features
       export NIXOS_CONFIG="/home/togo-gt/nixos-config/configuration.nix"  # Your NixOS config
       export NIXOS_FLAKE="/home/togo-gt/nixos-config"  # Your flake directory
 
@@ -149,8 +128,6 @@
       export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"  # SSH agent socket location
 
       # ===== APPLICATION SPECIFIC SETTINGS =====
-      export BAT_THEME="TwoDark"  # Color theme for 'bat' command (syntax highlighter)
-
       # FZF (fuzzy finder) settings:
       export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --preview 'bat --color=always {}'"
       export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'  # Use fd instead of find
@@ -493,8 +470,4 @@
       "la" = "eza -la --icons --git";   # List all files (including hidden)
     };
   };
-
-  # ===== FJERNET: environment.systemPackages =====
-  # Alle pakker er nu i de andre filer (core.nix, cli.nix, dev.nix, etc.)
-  # Så vi behøver ikke definere pakker her - kun ZSH konfiguration!
 }
