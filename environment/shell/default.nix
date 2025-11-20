@@ -6,6 +6,5 @@
     ./bash.nix
     ./zsh.nix
     ./fish.nix
-    ./devshell.nix
   ];
 }
