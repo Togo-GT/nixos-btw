@@ -26,13 +26,7 @@
       theme = "agnoster";
     };
 
-    # ===== ZSH HISTORY CONFIGURATION =====
-    histSize = 100000;
-    saveHist = 100000;
-    histFile = "$HOME/.local/state/zsh/history";
-
     # ===== SHELL ALIASES =====
-    # FLYTT ALLE ALIASES HERIND - DETTE ER DET ENESTE DER SKAL ÆNDRES!
     shellAliases = {
       # Basic navigation
       ".." = "cd ..";
@@ -103,11 +97,27 @@
     };
 
     # ===== SHELL INIT =====
-    # BEHOLDER ALT DIT EKSISTERENDE SHELLINIT - BARE FJERN ALIASES DERFRA!
     shellInit = ''
       # ===== PERFORMANCE OPTIMIZATIONS =====
       zmodload zsh/zprof
       __zsh_load_start=$((EPOCHREALTIME*1000))
+
+      # ===== ZSH HISTORY CONFIGURATION =====
+      # HISTORY SETTINGS - DISSE SKAL VÆRE I shellInit I NIXOS!
+      HISTSIZE=100000
+      SAVEHIST=100000
+      HISTFILE="$HOME/.local/state/zsh/history"
+
+      # History behavior options:
+      setopt HIST_IGNORE_ALL_DUPS
+      setopt HIST_IGNORE_SPACE
+      setopt HIST_REDUCE_BLANKS
+      setopt INC_APPEND_HISTORY
+      setopt SHARE_HISTORY
+      setopt EXTENDED_HISTORY
+      setopt HIST_EXPIRE_DUPS_FIRST
+      setopt HIST_IGNORE_DUPS
+      setopt HIST_SAVE_NO_DUPS
 
       # Create directory for ZSH history file
       mkdir -p "$HOME/.local/state/zsh"
@@ -157,7 +167,6 @@
       export _JAVA_AWT_WM_NONREPARENTING=1
 
       # ===== ENHANCED SHELL FUNCTIONS =====
-      # BEHOLDER ALLE DINE FUNKTIONER!
       home-manager() {
           if [ "$1" = "switch" ]; then
               command home-manager "$@" 2>&1 | grep -v "unread and relevant news item"
@@ -181,8 +190,185 @@
         echo "🌤️  Weather service unavailable for $location"
       }
 
-      # ... BEHOLDER ALLE DINE ANDRE FUNKTIONER ...
-      # (find-file, find-dir, extract, backup, fs, myip, pkill, nix-help, benchmark, git-overview, docker-clean)
+      find-file() {
+        if [ -z "$1" ]; then
+          echo "Usage: find-file <pattern>"
+          return 1
+        fi
+        local result=$(fd -t f -s "$1" 2>/dev/null | head -20)
+        if [ -n "$result" ]; then
+          echo "🔍 Found files:"
+          echo "$result"
+          echo ""
+          echo "📄 Preview of first result:"
+          bat --color=always --style=numbers "$(echo "$result" | head -1)" 2>/dev/null | head -20
+        else
+          echo "❌ No files found matching: $1"
+        fi
+      }
+
+      find-dir() {
+        if [ -z "$1" ]; then
+          echo "Usage: find-dir <pattern>"
+          return 1
+        fi
+        fd -t d -s "$1" 2>/dev/null
+      }
+
+      extract() {
+        if [ -z "$1" ]; then
+          echo "Usage: extract <file>"
+          echo "Supported formats: .tar.gz .tar.bz2 .tar.xz .tar .zip .rar .7z .gz .bz2 .xz .zst .deb .rpm"
+          return 1
+        fi
+
+        if [ ! -f "$1" ]; then
+          echo "❌ Error: '$1' is not a valid file"
+          return 1
+        fi
+
+        case "$1" in
+          *.tar.bz2|*.tbz2) tar xjf "$1" ;;
+          *.tar.gz|*.tgz)   tar xzf "$1" ;;
+          *.tar.xz|*.txz)   tar xJf "$1" ;;
+          *.tar.zst|*.tzst) tar --zstd -xf "$1" ;;
+          *.tar)            tar xf "$1" ;;
+          *.zip)            unzip "$1" ;;
+          *.rar)            unrar x "$1" ;;
+          *.7z)             7z x "$1" ;;
+          *.gz)             gunzip "$1" ;;
+          *.bz2)            bunzip2 "$1" ;;
+          *.xz)             unxz "$1" ;;
+          *.zst)            unzstd "$1" ;;
+          *.deb)            ar x "$1" ;;
+          *.rpm)            rpm2cpio "$1" | cpio -idmv ;;
+          *)                echo "❌ '$1' cannot be extracted via extract()" ; return 1 ;;
+        esac
+
+        if [ $? -eq 0 ]; then
+          echo "✅ Successfully extracted: $1"
+        else
+          echo "❌ Failed to extract: $1"
+        fi
+      }
+
+      backup() {
+        if [ -z "$1" ]; then
+          echo "Usage: backup <file>"
+          return 1
+        fi
+        local timestamp=$(date +%Y%m%d_%H%M%S)
+        local backup_file="$1.backup_$timestamp"
+        cp -v "$1" "$backup_file" && echo "✅ Backup created: $backup_file"
+      }
+
+      fs() {
+        if [ -z "$1" ]; then
+          echo "Usage: fs <file_or_directory>"
+          return 1
+        fi
+        if [ -e "$1" ]; then
+          du -sh "$1" 2>/dev/null || echo "❌ Error getting size for: $1"
+        else
+          echo "❌ File not found: $1"
+        fi
+      }
+
+      myip() {
+        echo "🌐 Network Information:"
+        echo "   Public IP: $(curl -s --connect-timeout 3 ifconfig.me 2>/dev/null || echo 'Unknown')"
+        echo "   Local IP: $(hostname -I 2>/dev/null | awk '{print $1}' || echo 'Unknown')"
+      }
+
+      pkill() {
+        if [ -z "$1" ]; then
+          echo "Usage: pkill <process_name>"
+          return 1
+        fi
+        local pids=$(pgrep -f "$1")
+        if [ -n "$pids" ]; then
+          echo "🛑 Killing processes: $pids"
+          echo "Process details:"
+          ps -p $pids -o pid,user,command
+          echo ""
+          read "?Are you sure? [y/N] " response
+          case "$response" in
+            [yY][eE][sS]|[yY])
+              kill -9 $pids
+              echo "✅ Processes killed"
+              ;;
+            *)
+              echo "❌ Operation cancelled"
+              ;;
+          esac
+        else
+          echo "❌ No processes found matching: $1"
+        fi
+      }
+
+      nix-help() {
+        echo "🚀 NixOS ZSH Help"
+        echo "=================="
+        echo "🛠️  System Management:"
+        echo "  nix-update        - Update system configuration"
+        echo "  nix-clean         - Clean old generations and optimize"
+        echo "  nix-search        - Search for packages"
+        echo "  rebuild           - Alias for nix-update"
+        echo ""
+        echo "📦 Package Management:"
+        echo "  update-all        - Update system and flatpaks"
+        echo "  nix-shell         - Enter nix shell"
+        echo "  nix-develop       - Enter development shell"
+        echo ""
+        echo "📁 File Operations:"
+        echo "  mkcd <dir>        - Create and enter directory"
+        echo "  extract <file>    - Extract any archive"
+        echo "  backup <file>     - Create timestamped backup"
+        echo "  fs <file/dir>     - Show file/directory size"
+        echo ""
+        echo "🌐 Network & Info:"
+        echo "  weather [city]    - Show weather forecast"
+        echo "  myip              - Show network information"
+        echo "  sysinfo           - Show system information"
+        echo ""
+        echo "⚡ Process Management:"
+        echo "  pkill <process>   - Kill processes by name (with confirmation)"
+      }
+
+      benchmark() {
+        echo "⏱️  System Benchmark"
+        echo "===================="
+        echo "💻 CPU: $(lscpu | grep 'Model name' | cut -d: -f2 | xargs)"
+        echo "💾 Memory: $(free -h | grep Mem | awk '{print $2}')"
+        echo "💿 Disk: $(lsblk -o SIZE,MODEL | head -2 | tail -1)"
+        echo ""
+
+        echo "ZSH load time: $((($((EPOCHREALTIME*1000)) - __zsh_load_start))ms"
+
+        echo "Command execution times:"
+        echo -n "  ls:          "; time (ls >/dev/null 2>&1)
+        echo -n "  git status:  "; time (git status >/dev/null 2>&1)
+        echo -n "  nvim --version: "; time (nvim --version >/dev/null 2>&1)
+      }
+
+      git-overview() {
+        echo "📊 Git Repository Overview"
+        echo "=========================="
+        git branch -av
+        echo ""
+        git status -s
+        echo ""
+        echo "📝 Recent commits:"
+        git log --oneline -5
+      }
+
+      docker-clean() {
+        echo "🧹 Cleaning Docker system..."
+        docker system prune -af
+        docker volume prune -f
+        docker network prune -f
+        echo "✅ Docker cleanup complete!"
+      }
 
       # ===== STARTUP MESSAGES =====
       __zsh_load_end=$((EPOCHREALTIME*1000))
