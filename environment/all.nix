@@ -11,7 +11,8 @@ let
   multimedia = import ./systemPackages/multimedia.nix { inherit pkgs lib; };
   system = import ./systemPackages/system.nix { inherit pkgs lib; };
   essential = import ./systemPackages/essential.nix { inherit pkgs lib; };
-in
+  dockerFix = import ./systemPackages/docker-fix.nix { inherit pkgs lib; };
+  in
 
 # Combine all package sets, removing duplicates
 lib.lists.unique (
@@ -23,4 +24,5 @@ lib.lists.unique (
                ++ multimedia
                ++ system
                ++ essential
+               ++ dockerFix
                )
