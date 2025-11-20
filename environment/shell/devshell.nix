@@ -1,10 +1,14 @@
 # shell/devshell.nix
-{ pkgs,lib, ... }:
+{ pkgs, lib, ... }:
+
+let
+  optional = import ./optional.nix pkgs lib;
+in
 
 pkgs.mkShell {
   name = "nixos-config-dev";
 
- optional = import ./optional.nix { inherit pkgs lib; };
+  buildInputs = optional;
 
   shellHook = ''
     echo "🔧 NixOS Configuration Development Shell"
