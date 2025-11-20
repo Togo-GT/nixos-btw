@@ -4,8 +4,8 @@
 {
   nixpkgs.config = {
     # Allow proprietary packages
-    allowUnfree = true;
-    allowBroken = true;
+    # allowUnfree = true;
+    # allowBroken = true;
     allowUnsupportedSystem = false;
     permittedInsecurePackages = [
       "beekeeper-studio-5.3.4"
