@@ -1,9 +1,7 @@
-# flake.nix
 {
   description = "NixOS system configuration for togo-gt";
 
   inputs = {
-    # Use current unstable channel
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     home-manager = {
@@ -29,7 +27,7 @@
           # System configuration
           ./user/togo-gt/configuration.nix
 
-          # Environment modules
+          # Environment modules (includes shell configurations)
           ./environment/default.nix
 
           # Hardware modules
@@ -75,14 +73,7 @@
       };
     };
 
-    # Devshell for easy development
-    devShells.${system}.default = pkgs.mkShell {
-      packages = with pkgs; [
-        nixpkgs-fmt
-        statix
-        alejandra
-        git
-      ];
-    };
+    # Clean devShells definition
+    devShells.${system}.default = import ./shell/devshell.nix { inherit pkgs; };
   };
 }
