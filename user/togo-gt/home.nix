@@ -1,124 +1,138 @@
-# /home/togo-gt/nixos-config/home.nix - FIXED VERSION
-{ pkgs, ... }:
+# /home/togo-gt/nixos-config/home.nix - Home Manager Configuration
+{ ... }:
 
 {
+  # Basic user information
   home.username = "togo-gt";
   home.homeDirectory = "/home/togo-gt";
   home.stateVersion = "25.05";
 
-  home.packages = with pkgs; [
-    file-roller
+  # Turn off Home Manager news messages
+  news.display = "silent";
+
+  # List of packages to install (only user-specific packages)
+  # Most packages are already in system configuration
+  home.packages = [
+    # Only include packages that are NOT in your system configuration
+    # or that you want specific user versions of
   ];
 
+  # Program configurations
   programs = {
+    # Git version control setup
     git = {
       enable = true;
-      userName = "Togo-GT";  # Fixed: moved outside settings
-      userEmail = "michael.kaare.nielsen@gmail.com";  # Fixed: moved outside settings
+      userName = "Togo-GT";  # Your Git username
+      userEmail = "michael.kaare.nielsen@gmail.com";  # Your Git email
       settings = {
         init = {
-          defaultBranch = "main";
+          defaultBranch = "main";  # Use 'main' as default branch instead of 'master'
         };
         pull = {
-          rebase = false;
+          rebase = false;  # Don't use rebase when pulling
         };
         core = {
-          editor = "nvim";
+          editor = "nvim";  # Use Neovim as Git editor
         };
         merge = {
-          conflictstyle = "diff3";
+          conflictstyle = "diff3";  # Better merge conflict display
         };
       };
+      # Files and folders for Git to ignore
       ignores = [
-        ".DS_Store"
-        "*.swp"
-        "*.swo"
-        ".direnv/"
-        "node_modules/"
-        "__pycache__/"
-        "*.pyc"
-        ".mypy_cache/"
-        ".pytest_cache/"
+        ".DS_Store"  # macOS system file
+        "*.swp"      # Vim swap files
+        "*.swo"      # Vim swap files
+        ".direnv/"   # Direnv directories
+        "node_modules/"  # Node.js packages
+        "__pycache__/"   # Python cache
+        "*.pyc"          # Python compiled files
+        ".mypy_cache/"   # MyPy cache
+        ".pytest_cache/" # Pytest cache
       ];
     };
 
+    # Neovim text editor setup
     neovim = {
       enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
+      defaultEditor = true;  # Set as default editor
+      viAlias = true;       # Create 'vi' command that points to nvim
+      vimAlias = true;      # Create 'vim' command that points to nvim
     };
 
-    # Disable ZSH in Home Manager (managed by system)
+    # Don't manage ZSH with Home Manager (using system ZSH instead)
     zsh.enable = false;
 
+    # Fuzzy file finder
     fzf = {
       enable = true;
-      enableZshIntegration = false; # Managed by system
+      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
     };
 
+    # Smart directory jumping
     zoxide = {
       enable = true;
-      enableZshIntegration = false; # Managed by system
+      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
     };
 
+    # Pretty command prompt
     starship = {
       enable = true;
-      enableZshIntegration = false; # Managed by system
+      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
       settings = {
-        add_newline = true;
-        format = "$all";
+        add_newline = true;  # Add blank line between commands
+        format = "$all";     # Show all prompt sections
         character = {
-          success_symbol = "[➜](bold green)";
-          error_symbol = "[➜](bold red)";
+          success_symbol = "[➜](bold green)";  # Green arrow when commands succeed
+          error_symbol = "[➜](bold red)";      # Red arrow when commands fail
         };
       };
     };
 
+    # Better cat command with syntax highlighting
     bat = {
       enable = true;
       config = {
-        theme = "TwoDark";
-        style = "numbers,changes,header";
-        pager = "less -FR";  # Added: better pager support
+        theme = "TwoDark";              # Color theme
+        style = "numbers,changes,header";  # Show line numbers, git changes, headers
+        pager = "less -FR";             # Use less as pager with better formatting
       };
-      # Optional: Add extra themes if needed
-      # themes = {
-      #   bat-themes = pkgs.fetchFromGitHub {
-      #     owner = "bat-extras";
-      #     repo = "bat-themes";
-      #     rev = "master";
-      #     sha256 = "sha256-..."; # You'll need to get the actual hash
-      #   };
-      # };
     };
   };
 
+  # Background services
   services = {
-    syncthing.enable = false; # Use system service instead
+    syncthing.enable = false;  # Don't use Home Manager's Syncthing (use system service)
   };
 
+  # Custom files to create
   home.file = {
+    # ZSH functions file with useful commands
     ".config/zsh/user-functions.zsh" = {
       text = ''
         # User-specific ZSH functions
 
+        # Edit NixOS configuration
         nix-edit() {
           nvim /home/togo-gt/nixos-config/configuration.nix
         }
 
+        # Edit Home Manager configuration
         hm-edit() {
           nvim /home/togo-gt/nixos-config/home.nix
         }
 
+        # Rebuild NixOS system
         nix-rebuild() {
           sudo nixos-rebuild switch --flake /home/togo-gt/nixos-config#togo-gt
         }
 
+        # Rebuild Home Manager
         hm-rebuild() {
           home-manager switch --flake /home/togo-gt/nixos-config#togo-gt
         }
 
+        # Update everything: flake, NixOS, and Home Manager
         update-all() {
           echo "🔄 Updating flake inputs..."
           nix flake update /home/togo-gt/nixos-config
@@ -135,46 +149,55 @@
     };
   };
 
+  # Environment variables
   home.sessionVariables = {
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-    BROWSER = "firefox";
-    TERMINAL = "konsole";
+    EDITOR = "nvim";      # Default text editor
+    VISUAL = "nvim";      # Default visual editor
+    BROWSER = "firefox";  # Default web browser
+    TERMINAL = "konsole"; # Default terminal
 
+    # Go language paths
     GOPATH = "$HOME/go";
     GOBIN = "$HOME/go/bin";
+
+    # Rust language paths
     CARGO_HOME = "$HOME/.cargo";
     RUSTUP_HOME = "$HOME/.rustup";
 
+    # XDG base directories (standard locations for config files)
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_DATA_HOME = "$HOME/.local/share";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_STATE_HOME = "$HOME/.local/state";
 
+    # NixOS configuration paths
     NIXOS_CONFIG = "/home/togo-gt/nixos-config/configuration.nix";
     NIXOS_FLAKE = "/home/togo-gt/nixos-config";
   };
 
+  # Add these directories to your PATH (where system looks for commands)
   home.sessionPath = [
-    "$HOME/.local/bin"
-    "$HOME/go/bin"
-    "$HOME/.cargo/bin"
-    "$HOME/.npm/bin"
+    "$HOME/.local/bin"    # User's local binaries
+    "$HOME/go/bin"        # Go language binaries
+    "$HOME/.cargo/bin"    # Rust language binaries
+    "$HOME/.npm/bin"      # npm packages
   ];
 
-  # Create a wrapper script that filters out the news message
+  # Custom wrapper for home-manager command (filters out news messages)
   home.file.".local/bin/hm" = {
     text = ''
       #!/bin/sh
       if [ "$1" = "switch" ]; then
-        # Filter out the news message but show everything else
-        command home-manager "$@" 2>&1 | grep -v "unread and relevant news item"
+        # Run home-manager switch but remove news messages
+        command home-manager "$@" 2>&1 | sed '/unread and relevant news item/d'
       else
+        # For other commands, just run normally
         command home-manager "$@"
       fi
     '';
-    executable = true;
+    executable = true;  # Make this file executable
   };
 
+  # Enable Home Manager itself
   programs.home-manager.enable = true;
 }
