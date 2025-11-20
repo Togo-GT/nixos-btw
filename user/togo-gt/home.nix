@@ -13,11 +13,9 @@
   programs = {
     git = {
       enable = true;
+      userName = "Togo-GT";  # Fixed: moved outside settings
+      userEmail = "michael.kaare.nielsen@gmail.com";  # Fixed: moved outside settings
       settings = {
-        user = {
-          name = "Togo-GT";
-          email = "michael.kaare.nielsen@gmail.com";
-        };
         init = {
           defaultBranch = "main";
         };
@@ -82,7 +80,17 @@
       config = {
         theme = "TwoDark";
         style = "numbers,changes,header";
+        pager = "less -FR";  # Added: better pager support
       };
+      # Optional: Add extra themes if needed
+      # themes = {
+      #   bat-themes = pkgs.fetchFromGitHub {
+      #     owner = "bat-extras";
+      #     repo = "bat-themes";
+      #     rev = "master";
+      #     sha256 = "sha256-..."; # You'll need to get the actual hash
+      #   };
+      # };
     };
   };
 
