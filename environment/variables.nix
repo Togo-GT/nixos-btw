@@ -1,12 +1,12 @@
 # /home/togo-gt/nixos-config/environment/variables.nix
-{ pkgs, lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   # Helper function to create variable definitions
   mkVar = value: lib.mkDefault value;
 in
 {
-  environment.sessionVariables = {
+  environment.sessionVariables = lib.mkMerge {
     # ========== APPLICATION CONFIGURATION ==========
 
     # Editor & Pager
