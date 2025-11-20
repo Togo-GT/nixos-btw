@@ -4,7 +4,7 @@
 
 let
   variables = import ./variables.nix { inherit pkgs lib; };
-  nixpkgs = import ./nixpkgs.nix { inherit pkgs lib; };
+  nixpkgsConfig = import ./nixpkgs.nix;
   systemPackages = let
     all = import ./all.nix { inherit pkgs lib; };
   # optional = import ./optional.nix { inherit pkgs lib; };
@@ -19,5 +19,5 @@ in
   imports = [ ./zsh.nix ];
   environment.systemPackages = systemPackages;
   environment.variables = variables;
-  environment.nixpkgs = nixpkgs;
+  nixpkgs.config = nixpkgsConfig.nixpkgs.config;
   }
