@@ -1,5 +1,4 @@
 # /home/togo-gt/nixos-config/environment/nixpkgs.nix
-{ ... }:
 
 {
   nixpkgs.config = {
