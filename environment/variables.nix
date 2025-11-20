@@ -5,6 +5,14 @@
   # System-wide environment variables
   environment.variables = {
     NIX_CONFIG = "experimental-features = nix-command flakes";
+
+    # ===== REDDIT API RATE LIMITING =====
+    PRAW_RATELIMIT_SECONDS = "600";           # 10 minutes between batches
+    REDDIT_API_DELAY = "2";                   # 2 seconds between requests
+    REQUESTS_PER_MINUTE = "60";               # Max 60 requests per minute
+    HTTP_MAX_RETRIES = "3";                   # Max retries on failure
+    HTTP_RETRY_DELAY = "5";                   # 5 seconds between retries
+    # =====================================
   };
 
   # User session variables
@@ -35,5 +43,11 @@
     # Variables available in all shells
     BAT_THEME = "TwoDark";
     COLORTERM = "truecolor";
+
+    # ===== REDDIT RATE LIMITING FOR USER APPS =====
+    PRAW_RATELIMIT_SECONDS = "600";
+    REDDIT_API_DELAY = "2";
+    REQUESTS_TIMEOUT = "30";
+    # ==============================================
   };
 }

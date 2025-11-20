@@ -16,6 +16,7 @@ in
   imports = [
     ./shell/default.nix
     ./variables.nix  # This imports the module properly
+    ./rate-limiting.nix
   ];
 
   environment.systemPackages = systemPackages;

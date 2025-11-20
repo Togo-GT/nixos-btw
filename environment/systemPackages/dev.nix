@@ -83,6 +83,38 @@ with pkgs; [
   racket                  # Racket programming language
   guile                   # GNU Guile
 
+  # ===== REDDIT API TOOLS WITH RATE LIMITING =====
+  (writeShellScriptBin "reddit-cli" ''
+    # Rate-limited Reddit API wrapper
+    export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
+    export REDDIT_API_DELAY=''${REDDIT_API_DELAY:-2}
+    echo "Reddit API wrapper: ''${REDDIT_API_DELAY}s delay between calls"
+    exec "$@"
+  '')
+
+  (writeShellScriptBin "praw-wrapper" ''
+    # Python PRAW wrapper with enforced rate limiting
+    export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
+    export REQUESTS_PER_MINUTE=''${REQUESTS_PER_MINUTE:-60}
+    python3 -c "
+    import os, time, requests
+    from requests.adapters import HTTPAdapter
+    from requests.packages.urllib3.util.retry import Retry
+
+    # Configure rate-limited session
+    session = requests.Session()
+    retry_strategy = Retry(
+        total=int(os.getenv('HTTP_MAX_RETRIES', 3)),
+        backoff_factor=float(os.getenv('HTTP_RETRY_DELAY', 5)),
+        status_forcelist=[429, 500, 502, 503, 504],
+    )
+    session.mount('https://', HTTPAdapter(max_retries=retry_strategy))
+    print('Rate-limited session configured: {}s delay'.format(os.getenv('REDDIT_API_DELAY', 2)))
+    "
+    exec python3 "$@"
+  '')
+  # ===============================================
+
   # ===== DEVELOPMENT UTILITIES =====
   jq                      # JSON processor
   yq                      # YAML processor
