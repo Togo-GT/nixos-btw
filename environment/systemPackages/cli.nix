@@ -139,4 +139,15 @@ with pkgs; [
   archivemount              # FUSE based archive mounter
   curlftpfs                 # FTP filesystem
   fuseiso                   # ISO mount
+
+  # ===== CONTAINER MONITORING =====
+  dive          # Explore Docker image layers and analyze contents
+  lazydocker    # Terminal UI for comprehensive Docker management
+
+  # Container Security & Utilities
+  trivy                     # Vulnerability scanner for containers and filesystems
+  skopeo                    # Work with remote container registries
+  podman                    # Daemonless container engine (Docker alternative)
+  buildah                   # OCI image builder
+
 ]

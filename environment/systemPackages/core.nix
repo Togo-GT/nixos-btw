@@ -121,4 +121,10 @@ with pkgs; [
   man-db                  # Manual page system
   man-pages               # Linux manual pages
   texinfo                 # Documentation system
+
+  # ===== CONTAINER PLATFORM =====
+  docker
+  docker-compose
+  docker-buildx
+  docker-credential-helpers
 ]

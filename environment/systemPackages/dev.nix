@@ -217,4 +217,8 @@ with pkgs; [
   vegeta                    # HTTP load testing tool
   wrk                       # HTTP benchmarking tool
   siege                     # HTTP regression testing
+
+  # ===== CONTAINER DEVELOPMENT =====
+  dockerfile-language-server  # LSP for Dockerfile syntax, validation, and completion
+
 ]
