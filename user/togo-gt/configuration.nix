@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - FIXED with Python package overlay
+# /etc/nixos/configuration.nix - UPDATED - Duplicates removed
 { config, pkgs, ... }:
 
 {
@@ -41,6 +41,18 @@
       options nvidia NVreg_EnableMSI=1
       options nvidia-drm modeset=1
     '';
+
+    # FJERN denne sysctl blok - den er flyttet til gaming-optimization.nix
+    # kernel.sysctl = {
+    #   "vm.swappiness" = 10;
+    #   "vm.dirty_ratio" = 15;
+    #   "vm.dirty_background_ratio" = 5;
+    #   "vm.vfs_cache_pressure" = 50;
+    #   "net.core.rmem_max" = 134217728;
+    #   "net.core.wmem_max" = 134217728;
+    #   "vm.dirty_writeback_centisecs" = 1500;
+    #   "vm.dirty_expire_centisecs" = 3000;
+    # };
   };
 
   nixpkgs.config.allowUnsupportedSystem = true;
@@ -159,10 +171,11 @@
 
     tlp = {
       enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      };
+      # FJERN settings blokken - den er flyttet til gaming-optimization.nix
+      # settings = {
+      #   CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      #   CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      # };
     };
 
     power-profiles-daemon.enable = false;
@@ -457,17 +470,17 @@
     };
   };
 
-  # System optimizations
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 10;
-    "vm.dirty_ratio" = 15;
-    "vm.dirty_background_ratio" = 5;
-    "vm.vfs_cache_pressure" = 50;
-    "net.core.rmem_max" = 134217728;
-    "net.core.wmem_max" = 134217728;
-    "vm.dirty_writeback_centisecs" = 1500;
-    "vm.dirty_expire_centisecs" = 3000;
-  };
+  # FJERN denne sysctl blok - den er flyttet til gaming-optimization.nix
+  # boot.kernel.sysctl = {
+  #   "vm.swappiness" = 10;
+  #   "vm.dirty_ratio" = 15;
+  #   "vm.dirty_background_ratio" = 5;
+  #   "vm.vfs_cache_pressure" = 50;
+  #   "net.core.rmem_max" = 134217728;
+  #   "net.core.wmem_max" = 134217728;
+  #   "vm.dirty_writeback_centisecs" = 1500;
+  #   "vm.dirty_expire_centisecs" = 3000;
+  # };
 
   system.userActivationScripts.setup-dirs = {
     text = ''

@@ -1,6 +1,6 @@
 # services/systemd-optimization.nix
 # Systemd tuning for faster boot times and better performance
-{  pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # ===== SYSTEMD OPTIMIZATIONS =====
@@ -14,19 +14,6 @@
 
         # Enable parallel service starting
         DefaultTasksMax = "infinity";
-      };
-    };
-
-    # Service-specific optimizations
-    services = {
-      # NetworkManager - start early for faster network
-      NetworkManager-wait-online = {
-        serviceConfig.ExecStart = [ "" "${pkgs.networkmanager}/bin/nm-online -q -t 30" ];
-      };
-
-      # Systemd-udev - reduce settle time
-      "systemd-udev-settle" = {
-        serviceConfig.ExecStart = [ "" "${pkgs.systemd}/bin/udevadm settle -t 10" ];
       };
     };
 
@@ -67,18 +54,6 @@
 
   # ===== CUSTOM SYSTEMD SERVICES =====
   systemd.services = {
-    # Gaming performance service
-    "gaming-mode" = {
-      description = "Enable gaming performance optimizations";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'";
-        ExecStop = "${pkgs.bash}/bin/bash -c 'echo powersave | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor'";
-        RemainAfterExit = true;
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-
     # System maintenance service
     "system-maintenance" = {
       description = "Weekly system maintenance tasks";
