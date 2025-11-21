@@ -1,6 +1,6 @@
 # services/backup.nix
 # Automated backup system with BorgBackup
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   # ===== BORGBACKUP CONFIGURATION =====

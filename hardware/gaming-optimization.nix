@@ -1,6 +1,6 @@
 # hardware/gaming-optimization.nix
 # Gaming performance tuning and power management - flyttet fra configuration.nix
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # ===== KERNEL TUNING FOR GAMING =====

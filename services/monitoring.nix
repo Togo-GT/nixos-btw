@@ -1,6 +1,6 @@
 # services/monitoring.nix
 # System monitoring, logging, and metrics collection
-{ config, pkgs, ... }:
+{ ... }:
 
 {
   # ===== ENHANCED LOGGING CONFIGURATION =====

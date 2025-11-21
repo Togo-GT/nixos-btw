@@ -1,6 +1,6 @@
 # services/systemd-optimization.nix
 # Systemd tuning for faster boot times and better performance
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # ===== SYSTEMD OPTIMIZATIONS =====
