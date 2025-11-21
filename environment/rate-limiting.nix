@@ -1,5 +1,5 @@
 # environment/rate-limiting.nix
-{  ... }:
+{ ... }:
 
 {
   # Systemd services with rate limiting
@@ -20,18 +20,9 @@
     };
   };
 
-  # Network configuration for better API handling
-  networking = {
-    # TCP keepalive settings (these are valid options)
-    extraConfig = ''
-      net.ipv4.tcp_keepalive_time = 600
-      net.ipv4.tcp_keepalive_intvl = 60
-      net.ipv4.tcp_keepalive_probes = 5
-    '';
-  };
-
-  # Boot kernel parameters for better network performance
+  # Network kernel parameters for better API handling
   boot.kernel.sysctl = {
+    # TCP keepalive settings
     "net.ipv4.tcp_keepalive_time" = 600;
     "net.ipv4.tcp_keepalive_intvl" = 60;
     "net.ipv4.tcp_keepalive_probes" = 5;
