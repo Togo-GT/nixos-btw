@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs:
+  outputs = { self, nixpkgs, "nixos-hardware" = nixos_hardware, "home-manager" = home_manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -27,9 +27,9 @@
           ./user/togo-gt/configuration.nix
 
           # Hardware modules
-          nixos-hardware.nixosModules.common-gpu-nvidia
-          nixos-hardware.nixosModules.common-cpu-intel
-          nixos-hardware.nixosModules.common-pc
+          nixos_hardware.nixosModules.common-gpu-nvidia
+          nixos_hardware.nixosModules.common-cpu-intel
+          nixos_hardware.nixosModules.common-pc
 
           # Services configuration
           ./services/systemd-optimization.nix
