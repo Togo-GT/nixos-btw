@@ -1,19 +1,21 @@
 # services/systemd-optimization.nix
 # Systemd tuning for faster boot times and better performance
-{ pkgs, ... }:
+{  pkgs, ... }:
 
 {
   # ===== SYSTEMD OPTIMIZATIONS =====
   systemd = {
-    # Faster boot by starting services in parallel
-    extraConfig = ''
-      # Reduce service start timeout
-      DefaultTimeoutStartSec=15s
-      DefaultTimeoutStopSec=10s
+    # Use the new settings format instead of extraConfig
+    settings = {
+      Manager = {
+        # Reduce service start timeout
+        DefaultTimeoutStartSec = "15s";
+        DefaultTimeoutStopSec = "10s";
 
-      # Enable parallel service starting
-      DefaultTasksMax=infinity
-    '';
+        # Enable parallel service starting
+        DefaultTasksMax = "infinity";
+      };
+    };
 
     # Service-specific optimizations
     services = {

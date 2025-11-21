@@ -1,6 +1,6 @@
 # hardware/gaming-optimization.nix
 # Gaming performance tuning and power management
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   # ===== KERNEL TUNING FOR GAMING =====
@@ -10,7 +10,6 @@
     "mce=ignore_ce"              # Ignore correctable CPU errors
     "processor.max_cstate=1"     # Limit CPU power states for responsiveness
     "intel_idle.max_cstate=0"    # Disable Intel CPU deep sleep states
-    "radeon.dpm=0"               # Disable AMD dynamic power management
     "nohpet"                     # Disable HPET for lower latency
   ];
 
@@ -38,11 +37,6 @@
     "snd_hrtimer"               # High-resolution timer for audio
   ];
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [
-    # Gaming-related kernel modules
-    v4l2loopback               # Already in your config
-  ];
-
   # ===== POWER MANAGEMENT FOR GAMING LAPTOP =====
   services.tlp = {
     enable = true;
@@ -56,10 +50,6 @@
       # CPU boost settings
       CPU_BOOST_ON_AC = 1;
       CPU_BOOST_ON_BAT = 0;
-
-      # GPU power management
-      RADEON_DPM_PERF_LEVEL_ON_AC = "high";
-      RADEON_DPM_PERF_LEVEL_ON_BAT = "low";
 
       # PCIe power management
       PCIE_ASPM_ON_AC = "performance";
@@ -80,11 +70,6 @@
       script = ''
         # Set CPU governor to performance
         echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor
-
-        # Increase GPU performance limits if available
-        if [ -f /sys/class/drm/card0/device/power_dpm_force_performance_level ]; then
-          echo high | tee /sys/class/drm/card0/device/power_dpm_force_performance_level
-        fi
 
         # Disable screen blanking during gaming
         ${pkgs.xorg.xset}/bin/xset s off
