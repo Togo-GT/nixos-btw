@@ -63,6 +63,40 @@
     # Don't manage ZSH with Home Manager (using system ZSH instead)
     zsh.enable = false;
 
+    # Add rate-limited shell functions for ZSH
+    zsh.initExtra = ''
+      # Rate-limited Reddit API functions
+      reddit-curl() {
+        local delay=''${REDDIT_API_DELAY:-2}
+        echo "[Rate Limit] Calling Reddit API with ''${delay}s delay..."
+        curl -H "User-Agent: nixos-script/1.0" "$@"
+        sleep "$delay"
+      }
+
+      reddit-api() {
+        local endpoint="$1"
+        local delay=''${REDDIT_API_DELAY:-2}
+        echo "[Rate Limit] Calling Reddit API: $endpoint (''${delay}s delay)"
+        curl -s "https://www.reddit.com/$endpoint" \
+          -H "User-Agent: nixos-script/1.0" \
+          -H "Accept: application/json"
+        sleep "$delay"
+      }
+
+      # Python script wrapper with rate limiting
+      rate-limited-python() {
+        export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
+        export REDDIT_API_DELAY=''${REDDIT_API_DELAY:-2}
+        echo "[Rate Limit] Running Python with Reddit rate limiting enabled"
+        python3 "$@"
+      }
+
+      # Make functions available in subshells
+      export -f reddit-curl
+      export -f reddit-api
+      export -f rate-limited-python
+    '';
+
     # Fuzzy file finder
     fzf = {
       enable = true;
@@ -98,52 +132,6 @@
         pager = "less -FR";             # Use less as pager with better formatting
       };
     };
-
-    # Add rate-limited shell functions
-    bash.initExtra = ''
-      # Rate-limited Reddit API functions
-      reddit_curl() {
-        local delay=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Calling Reddit API with ''${delay}s delay..."
-        curl -H "User-Agent: nixos-script/1.0" "$@"
-        sleep "$delay"
-      }
-
-      reddit_api() {
-        local endpoint="$1"
-        local delay=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Calling Reddit API: $endpoint (''${delay}s delay)"
-        curl -s "https://www.reddit.com/$endpoint" \
-          -H "User-Agent: nixos-script/1.0" \
-          -H "Accept: application/json"
-        sleep "$delay"
-      }
-
-      # Python script wrapper with rate limiting
-      rate_limited_python() {
-        export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
-        export REDDIT_API_DELAY=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Running Python with Reddit rate limiting enabled"
-        python3 "$@"
-      }
-    '';
-
-    # If you use fish shell, add this too
-    fish.interactiveShellInit = ''
-      function reddit_curl
-        set -l delay (string escape -- "''${REDDIT_API_DELAY:-2}")
-        echo "[Rate Limit] Calling Reddit API with $delay delay..."
-        curl -H "User-Agent: nixos-script/1.0" $argv
-        sleep $delay
-      end
-
-      function rate_limited_python
-        set -gx PRAW_RATELIMIT_SECONDS "''${PRAW_RATELIMIT_SECONDS:-600}"
-        set -gx REDDIT_API_DELAY "''${REDDIT_API_DELAY:-2}"
-        echo "[Rate Limit] Running Python with Reddit rate limiting enabled"
-        python3 $argv
-      end
-    '';
   };
 
   # Background services
