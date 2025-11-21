@@ -22,8 +22,6 @@
     # Git version control setup
     git = {
       enable = true;
-      userName = "Togo-GT";  # Your Git username
-      userEmail = "michael.kaare.nielsen@gmail.com";  # Your Git email
       settings = {
         init = {
           defaultBranch = "main";  # Use 'main' as default branch instead of 'master'
@@ -36,6 +34,10 @@
         };
         merge = {
           conflictstyle = "diff3";  # Better merge conflict display
+        };
+        user = {
+          name = "Togo-GT";  # Your Git username
+          email = "michael.kaare.nielsen@gmail.com";  # Your Git email
         };
       };
       # Files and folders for Git to ignore
@@ -60,59 +62,59 @@
       vimAlias = true;      # Create 'vim' command that points to nvim
     };
 
-    # Don't manage ZSH with Home Manager (using system ZSH instead)
-    zsh.enable = true;
+    # Enable ZSH management with Home Manager
+    zsh = {
+      enable = true;
+      enableCompletion = true;
+      enableAutosuggestions = true;
+      syntaxHighlighting.enable = true;
 
-    # Add rate-limited shell functions for ZSH
-    zsh.initExtra = ''
-      # Rate-limited Reddit API functions
-      reddit-curl() {
-        local delay=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Calling Reddit API with ''${delay}s delay..."
-        curl -H "User-Agent: nixos-script/1.0" "$@"
-        sleep "$delay"
-      }
+      # Use initContent instead of initExtra (newer API)
+      initContent = ''
+        # Rate-limited Reddit API functions
+        reddit-curl() {
+          local delay=''${REDDIT_API_DELAY:-2}
+          echo "[Rate Limit] Calling Reddit API with ''${delay}s delay..."
+          curl -H "User-Agent: nixos-script/1.0" "$@"
+          sleep "$delay"
+        }
 
-      reddit-api() {
-        local endpoint="$1"
-        local delay=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Calling Reddit API: $endpoint (''${delay}s delay)"
-        curl -s "https://www.reddit.com/$endpoint" \
-          -H "User-Agent: nixos-script/1.0" \
-          -H "Accept: application/json"
-        sleep "$delay"
-      }
+        reddit-api() {
+          local endpoint="$1"
+          local delay=''${REDDIT_API_DELAY:-2}
+          echo "[Rate Limit] Calling Reddit API: $endpoint (''${delay}s delay)"
+          curl -s "https://www.reddit.com/$endpoint" \
+            -H "User-Agent: nixos-script/1.0" \
+            -H "Accept: application/json"
+          sleep "$delay"
+        }
 
-      # Python script wrapper with rate limiting
-      rate-limited-python() {
-        export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
-        export REDDIT_API_DELAY=''${REDDIT_API_DELAY:-2}
-        echo "[Rate Limit] Running Python with Reddit rate limiting enabled"
-        python3 "$@"
-      }
-
-      # Make functions available in subshells
-      export -f reddit-curl
-      export -f reddit-api
-      export -f rate-limited-python
-    '';
+        # Python script wrapper with rate limiting
+        rate-limited-python() {
+          export PRAW_RATELIMIT_SECONDS=''${PRAW_RATELIMIT_SECONDS:-600}
+          export REDDIT_API_DELAY=''${REDDIT_API_DELAY:-2}
+          echo "[Rate Limit] Running Python with Reddit rate limiting enabled"
+          python3 "$@"
+        }
+      '';
+    };
 
     # Fuzzy file finder
     fzf = {
       enable = true;
-      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
+      enableZshIntegration = true;
     };
 
     # Smart directory jumping
     zoxide = {
       enable = true;
-      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
+      enableZshIntegration = true;
     };
 
     # Pretty command prompt
     starship = {
       enable = true;
-      enableZshIntegration = false;  # Don't add to ZSH (system manages this)
+      enableZshIntegration = true;
       settings = {
         add_newline = true;  # Add blank line between commands
         format = "$all";     # Show all prompt sections
