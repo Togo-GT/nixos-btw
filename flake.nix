@@ -10,7 +10,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, "nixos-hardware" = nixos_hardware, "home-manager" = home_manager, ... }@inputs:
+  outputs = { self, nixpkgs, nixos-hardware, home-manager, ... }@inputs:
   let
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
@@ -19,26 +19,21 @@
     nixosConfigurations = {
       "togo-gt" = lib.nixosSystem {
         inherit system;
-        modules = [          # Hardware
+        modules = [
+          # Hardware
           ./user/togo-gt/hardware-configuration.nix
           ./hardware/default.nix
-          ./hardware/gaming-optimization.nix
+
           # System configuration
           ./user/togo-gt/configuration.nix
-
-          # Hardware modules
-          nixos_hardware.nixosModules.common-gpu-nvidia
-          nixos_hardware.nixosModules.common-cpu-intel
-          nixos_hardware.nixosModules.common-pc
-
-          # Services configuration
-          ./services/systemd-optimization.nix
-          ./services/backup.nix
-          ./services/monitoring.nix
 
           # Environment modules (includes shell configurations)
           ./environment/default.nix
 
+          # Hardware modules
+          nixos-hardware.nixosModules.common-gpu-nvidia
+          nixos-hardware.nixosModules.common-cpu-intel
+          nixos-hardware.nixosModules.common-pc
 
           # Home Manager integration
           home-manager.nixosModules.home-manager
