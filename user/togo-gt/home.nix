@@ -61,7 +61,7 @@
     };
 
     # Don't manage ZSH with Home Manager (using system ZSH instead)
-    zsh.enable = false;
+    zsh.enable = true;
 
     # Add rate-limited shell functions for ZSH
     zsh.initExtra = ''
