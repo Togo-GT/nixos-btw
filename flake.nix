@@ -19,21 +19,26 @@
     nixosConfigurations = {
       "togo-gt" = lib.nixosSystem {
         inherit system;
-        modules = [
-          # Hardware
+        modules = [          # Hardware
           ./user/togo-gt/hardware-configuration.nix
           ./hardware/default.nix
-
+          ./hardware/gaming-optimization.nix
           # System configuration
           ./user/togo-gt/configuration.nix
-
-          # Environment modules (includes shell configurations)
-          ./environment/default.nix
 
           # Hardware modules
           nixos-hardware.nixosModules.common-gpu-nvidia
           nixos-hardware.nixosModules.common-cpu-intel
           nixos-hardware.nixosModules.common-pc
+
+          # Services configuration
+          ./services/systemd-optimization.nix
+          ./services/backup.nix
+          ./services/monitoring.nix
+
+          # Environment modules (includes shell configurations)
+          ./environment/default.nix
+
 
           # Home Manager integration
           home-manager.nixosModules.home-manager
