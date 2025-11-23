@@ -19,22 +19,6 @@
 
     # User services for your applications
     user.services = {
-      # Auto-start syncthing for user
-      syncthing = {
-        description = "Syncthing File Synchronization";
-        serviceConfig = {
-          Type = "simple";
-          ExecStart = "${pkgs.syncthing}/bin/syncthing -no-browser -no-restart -logflags=0";
-          Restart = "on-failure";
-          RestartSec = 5;
-        };
-        wantedBy = [ "default.target" ];
-        environment = {
-          STNORESTART = "1";
-          HOME = "/home/togo-gt";
-        };
-      };
-
       # Reddit API rate limiting service
       reddit-rate-limit = {
         description = "Reddit API Rate Limit Manager";
@@ -54,14 +38,28 @@
 
   # ===== CUSTOM SYSTEMD SERVICES =====
   systemd.services = {
-    # System maintenance service
+    # System maintenance service (invoked by timer)
     "system-maintenance" = {
       description = "Weekly system maintenance tasks";
-      startAt = "weekly";
       serviceConfig = {
         Type = "oneshot";
         ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.nix}/bin/nix-store --optimise && ${pkgs.nix}/bin/nix-collect-garbage -d'";
         User = "root";
+        # Forward output to journal
+        StandardOutput = "journal";
+        StandardError = "journal";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
+  };
+
+  # Timer to run the maintenance service weekly
+  systemd.timers = {
+    "system-maintenance" = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "weekly";
+        Persistent = true;
       };
     };
   };
