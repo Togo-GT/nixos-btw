@@ -61,7 +61,7 @@ with pkgs; [
   kdePackages.kdevelop     # KDE development environment
   android-studio           # Android development
   arduino-ide              # Arduino development
-  helix
+  zed-editor
 
   # ===== SYSTEM GUI TOOLS =====
   baobab                   # Disk usage analyzer
