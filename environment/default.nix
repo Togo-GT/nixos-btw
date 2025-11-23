@@ -1,6 +1,6 @@
 # environment/default.nix
-{ pkgs, lib, ... }:
-
+{ ... }:
+{
 let
   nixpkgsConfig = import ./nixpkgs.nix;
   systemPackages = let

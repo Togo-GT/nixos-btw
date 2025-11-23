@@ -1,66 +1,57 @@
 # services/systemd-optimization.nix
-# Systemd tuning for faster boot times and better performance
+# Convert the previous `system-maintenance` service to a systemd.timer-based schedule
+# and remove user-level services to avoid duplication with system-level services.
 { pkgs, ... }:
 
 {
   # ===== SYSTEMD OPTIMIZATIONS =====
   systemd = {
-    # Use the new settings format instead of extraConfig
+    # Use the newer settings structure
     settings = {
       Manager = {
-        # Reduce service start timeout
+        # Reduce service start/stop timeout for faster failures
         DefaultTimeoutStartSec = "15s";
         DefaultTimeoutStopSec = "10s";
 
-        # Enable parallel service starting
+        # Allow higher task counts for parallelism
         DefaultTasksMax = "infinity";
       };
     };
 
-    # User services for your applications
-    user.services = {
-      # Reddit API rate limiting service
-      reddit-rate-limit = {
-        description = "Reddit API Rate Limit Manager";
+    # ===== SYSTEM LEVEL SERVICES =====
+    services = {
+      "system-maintenance" = {
+        description = "Weekly system maintenance tasks (optimize store + garbage collect)";
+        path = with pkgs; [
+          bash
+          nix
+        ]; # ensure bash and nix binaries are on $PATH for the service
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${pkgs.bash}/bin/echo 'Reddit rate limiting environment configured'";
-          RemainAfterExit = true;
+          # Use bash -e so the command fails early on errors and the journal contains stderr/stdout
+          ExecStart = "${pkgs.bash}/bin/bash -e -c '${pkgs.nix}/bin/nix-store --optimise && ${pkgs.nix}/bin/nix-collect-garbage -d'";
+          Nice = 10;
+          # Keep a conservative restart policy (no restart for oneshot)
         };
-        environment = {
-          PRAW_RATELIMIT_SECONDS = "600";
-          REDDIT_API_DELAY = "2";
+        wantedBy = [ "multi-user.target" ];
+      };
+    };
+
+    # ===== TIMERS (schedule the maintenance service) =====
+    timers = {
+      # Run the above service weekly. `Persistent = true` ensures missed runs (e.g. when machine was off)
+      # are executed at next boot.
+      "system-maintenance.timer" = {
+        description = "Timer to run system-maintenance weekly";
+        wantedBy = [ "timers.target" ];
+        timerConfig = {
+          OnCalendar = "weekly";
+          Persistent = true;
         };
-        wantedBy = [ "default.target" ];
       };
     };
   };
 
-  # ===== CUSTOM SYSTEMD SERVICES =====
-  systemd.services = {
-    # System maintenance service (invoked by timer)
-    "system-maintenance" = {
-      description = "Weekly system maintenance tasks";
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.nix}/bin/nix-store --optimise && ${pkgs.nix}/bin/nix-collect-garbage -d'";
-        User = "root";
-        # Forward output to journal
-        StandardOutput = "journal";
-        StandardError = "journal";
-      };
-      wantedBy = [ "multi-user.target" ];
-    };
-  };
-
-  # Timer to run the maintenance service weekly
-  systemd.timers = {
-    "system-maintenance" = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        OnCalendar = "weekly";
-        Persistent = true;
-      };
-    };
-  };
+  # Note: user-level systemd services were intentionally removed from this module to avoid
+  # duplicate/overlapping instances with system-managed services and Home Manager user services.
 }

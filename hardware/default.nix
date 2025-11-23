@@ -1,11 +1,12 @@
 # hardware/default.nix
 # Hardware configuration with performance optimizations
-{  ... }:
+{ ... }:
 
 {
   imports = [
+    ./gaming-optimization.nix
     # Import hardware-specific configurations if needed
   ];
 
-  # Empty but valid module (bevar eksisterende)
+  # Module imports gaming-optimization.nix to centralize gaming-related tuning.
 }

@@ -1,4 +1,6 @@
+{ pkgs, ... }:
 {
+
   description = "NixOS system configuration for togo-gt";
 
   inputs = {
