@@ -6,7 +6,7 @@
   nixpkgs.config.allowUnfree = true;
 
   # ISO Configuration
-  isoImage.isoName = "nixos-live.iso";
+  image.fileName = "nixos-live.iso";
   isoImage.volumeID = "NIXOSLIVE";
 
   # Boot Configuration
@@ -18,33 +18,33 @@
       "splash"
       "nomodeset"
     ];
-    supportedFilesystems = [
-      "ntfs"
-      "btrfs"
-      "ext4"
-      "vfat"
-    ];
+    supportedFilesystems = [ "ntfs" "btrfs" "ext4" "vfat" ];
   };
 
-  # Desktop Environment
+  # Desktop Environment - FULLY UPDATED
   services.xserver = {
     enable = true;
     videoDrivers = [ "nvidia" ];
-    displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
-      autoLogin = {
-        enable = true;
-        user = "nixos";
-      };
-      defaultSession = "plasma";
+    xkb = {
+      layout = "dk";
+      variant = "";
     };
-    desktopManager.plasma6.enable = true;
-    layout = "dk";
-    xkbVariant = "";
   };
+
+  # UPDATED: Moved to top-level services
+  services.displayManager = {
+    sddm = {
+      enable = true;
+      wayland.enable = true;
+    };
+    autoLogin = {
+      enable = true;
+      user = "nixos";
+    };
+    defaultSession = "plasma";
+  };
+
+  services.desktopManager.plasma6.enable = true;
 
   # Hardware
   hardware = {
@@ -67,24 +67,19 @@
     wireless.enable = false;
   };
 
-  # Users
+  # Users - FIXED: No conflicting password options
   users.users.nixos = {
     isNormalUser = true;
     description = "Live ISO User";
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-      "video"
-      "audio"
-    ];
-    password = "";
+    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
+    initialHashedPassword = "";  # Empty password for live ISO
     uid = 1000;
   };
 
   security.sudo.wheelNeedsPassword = false;
 
-  # FIXED: Correct import path
-  imports = [ ./environment/default.nix ];
+  # Import main environment configuration
+  imports = [ ./default.nix ];
 
   # Services
   services = {
@@ -124,17 +119,14 @@
   console.keyMap = "dk";
 
   # Nix Configuration
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # Fonts
+  # Fonts - Simplified to avoid issues
   fonts.packages = with pkgs; [
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    (nerd-fonts.override { fonts = [ "FiraCode" ]; })
+    noto-fonts-emoji
+    fira-code  # Use regular fira-code instead of nerd-fonts
   ];
 
   # ISO Contents
