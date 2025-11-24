@@ -20,7 +20,7 @@
     }@inputs:
     let
       system = "x86_64-linux";
-   #   pkgs = nixpkgs.legacyPackages.${system};
+      #   pkgs = nixpkgs.legacyPackages.${system};
       lib = nixpkgs.lib;
     in
     {

@@ -18,7 +18,12 @@
       "splash"
       "nomodeset"
     ];
-    supportedFilesystems = [ "ntfs" "btrfs" "ext4" "vfat" ];
+    supportedFilesystems = [
+      "ntfs"
+      "btrfs"
+      "ext4"
+      "vfat"
+    ];
   };
 
   # Desktop Environment
@@ -66,7 +71,12 @@
   users.users.nixos = {
     isNormalUser = true;
     description = "Live ISO User";
-    extraGroups = [ "wheel" "networkmanager" "video" "audio" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "audio"
+    ];
     password = "";
     uid = 1000;
   };
@@ -114,7 +124,10 @@
   console.keyMap = "dk";
 
   # Nix Configuration
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Fonts
   fonts.packages = with pkgs; [

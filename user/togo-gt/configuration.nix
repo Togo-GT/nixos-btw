@@ -1,4 +1,4 @@
-# /etc/nixos/configuration.nix - UPDATED - Duplicates removed
+# /etc/nixos/configuration.nix
 { config, pkgs, ... }:
 
 {
@@ -42,17 +42,6 @@
       options nvidia-drm modeset=1
     '';
 
-    # FJERN denne sysctl blok - den er flyttet til gaming-optimization.nix
-    # kernel.sysctl = {
-    #   "vm.swappiness" = 10;
-    #   "vm.dirty_ratio" = 15;
-    #   "vm.dirty_background_ratio" = 5;
-    #   "vm.vfs_cache_pressure" = 50;
-    #   "net.core.rmem_max" = 134217728;
-    #   "net.core.wmem_max" = 134217728;
-    #   "vm.dirty_writeback_centisecs" = 1500;
-    #   "vm.dirty_expire_centisecs" = 3000;
-    # };
   };
 
   nixpkgs.config.allowUnsupportedSystem = true;
