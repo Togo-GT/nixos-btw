@@ -65,7 +65,5 @@
           ];
         };
       };
-
-      # homeConfigurations removed to avoid Home Manager duplication (use NixOS integrated Home Manager only)
     };
 }
