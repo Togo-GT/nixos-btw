@@ -36,7 +36,6 @@ in
     # Rate limiting for network services
     ./rate-limiting.nix
     # Language Server Protocol
-    ./lsp.nix
   ];
 
   # System-wide packages available to all users

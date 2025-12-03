@@ -6,17 +6,25 @@
   environment.variables = {
     NIX_CONFIG = "experimental-features = nix-command flakes";
 
+    # ===== NIX LSP CONFIGURATION =====
+    NIXD_AUTO_ARCHIVE = "1"; # Enable auto archive for nixd LSP
+    # ================================
+
     # ===== REDDIT API RATE LIMITING =====
-    PRAW_RATELIMIT_SECONDS = "600";           # 10 minutes between batches
-    REDDIT_API_DELAY = "2";                   # 2 seconds between requests
-    REQUESTS_PER_MINUTE = "60";               # Max 60 requests per minute
-    HTTP_MAX_RETRIES = "3";                   # Max retries on failure
-    HTTP_RETRY_DELAY = "5";                   # 5 seconds between retries
+    PRAW_RATELIMIT_SECONDS = "600"; # 10 minutes between batches
+    REDDIT_API_DELAY = "2"; # 2 seconds between requests
+    REQUESTS_PER_MINUTE = "60"; # Max 60 requests per minute
+    HTTP_MAX_RETRIES = "3"; # Max retries on failure
+    HTTP_RETRY_DELAY = "5"; # 5 seconds between retries
     # =====================================
   };
 
   # User session variables
   environment.sessionVariables = {
+    # ===== NIX LSP CONFIGURATION =====
+    NIXD_AUTO_ARCHIVE = "1"; # Enable auto archive for nixd LSP
+    # ================================
+
     # Wayland support for Electron apps
     NIXOS_OZONE_WL = "1";
     # Better performance for some applications
