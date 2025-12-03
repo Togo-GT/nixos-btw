@@ -20,7 +20,6 @@ let
   allPackages = import ./all.nix { inherit pkgs lib; };
   #                    ./optional.nix
 
-
   # Remove any duplicate packages to ensure clean installation
   systemPackages = lib.lists.unique allPackages;
 
@@ -36,6 +35,8 @@ in
 
     # Rate limiting for network services
     ./rate-limiting.nix
+    # Language Server Protocol
+    ./lsp.nix
   ];
 
   # System-wide packages available to all users

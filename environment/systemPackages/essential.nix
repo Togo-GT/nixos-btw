@@ -1,8 +1,9 @@
 # essential
 # environment/systemPackages/essential.nix
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
-with pkgs; [
+with pkgs;
+[
   # ===== SYSTEM ABSOLUTES =====
   sudo
   polkit
